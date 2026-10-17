@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Content preferences · Kijiji</title>
+<style>
+:root {
+  --cp-bg: #f0f4f1; --cp-card: #ffffff; --cp-text: #0f1a12; --cp-muted: #65727a; --cp-line: #e3eae5;
+  --cp-chip: #eaf0ec; --cp-green: #1EB53A; --cp-green-d: #0f8a2a; --cp-green-soft: #e8f7ec;
+  --cp-red: #dc2626; --cp-red-soft: #fdecec; --cp-glass: rgba(255,255,255,.92);
+  --cp-shadow: 0 2px 10px rgba(16,60,30,.07);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cp-bg: #0f1419; --cp-card: #1a2332; --cp-text: #f1f5f9; --cp-muted: #94a3b8; --cp-line: #2b3a4f;
+    --cp-chip: #243044; --cp-green-d: #4ade80; --cp-green-soft: #15351f; --cp-red: #f87171; --cp-red-soft: #3a1717;
+    --cp-glass: rgba(15,20,25,.92); --cp-shadow: 0 2px 10px rgba(0,0,0,.35);
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--cp-bg); color: var(--cp-text);
+  line-height: 1.45; min-height: 100vh; padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid color-mix(in srgb, var(--cp-green) 55%, transparent); outline-offset: 2px; }
+
+.cp-top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+  background: var(--cp-glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--cp-line); }
+.cp-back { width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--cp-chip); color: var(--cp-text); text-decoration: none; }
+.cp-back svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.cp-top h1 { font-size: 1.1rem; font-weight: 800; }
+
+.cp-wrap { max-width: 640px; margin: 0 auto; padding: 16px; }
+.cp-intro { background: var(--cp-card); border: 1px solid var(--cp-line); border-radius: 18px; padding: 16px; box-shadow: var(--cp-shadow); font-size: .93rem; color: var(--cp-muted); }
+.cp-intro b { color: var(--cp-text); }
+.cp-sum { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.cp-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; font-size: .8rem; font-weight: 800; background: var(--cp-chip); }
+.cp-pill svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.cp-pill.like { background: var(--cp-green-soft); color: var(--cp-green-d); }
+.cp-pill.hide { background: var(--cp-red-soft); color: var(--cp-red); }
+
+.cp-search { position: relative; margin: 14px 0; }
+.cp-search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; stroke: var(--cp-muted); fill: none; stroke-width: 2; stroke-linecap: round; }
+.cp-search input { width: 100%; min-height: 46px; padding: 0 14px 0 42px; border: 1.5px solid var(--cp-line); border-radius: 14px; background: var(--cp-card); color: var(--cp-text); font: inherit; font-size: 16px; outline: none; }
+.cp-search input:focus { border-color: var(--cp-green); box-shadow: 0 0 0 4px color-mix(in srgb, var(--cp-green) 15%, transparent); }
+
+.cp-list { list-style: none; display: grid; gap: 8px; }
+.cp-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px 10px 16px; background: var(--cp-card); border: 1px solid var(--cp-line); border-radius: 16px; box-shadow: var(--cp-shadow); }
+.cp-row.is-like { border-color: color-mix(in srgb, var(--cp-green) 55%, transparent); background: var(--cp-green-soft); }
+.cp-row.is-hide { border-color: color-mix(in srgb, var(--cp-red) 45%, transparent); background: var(--cp-red-soft); }
+.cp-row.is-hide .cp-name { text-decoration: line-through; opacity: .75; }
+.cp-info { flex: 1; min-width: 0; }
+.cp-name { font-weight: 800; font-size: .98rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cp-count { font-size: .76rem; color: var(--cp-muted); }
+.cp-btn { width: 44px; height: 44px; flex: 0 0 auto; border: 1.5px solid var(--cp-line); border-radius: 12px; background: var(--cp-card); color: var(--cp-muted); display: inline-flex; align-items: center; justify-content: center; transition: transform .12s; }
+.cp-btn:active { transform: scale(.94); }
+.cp-btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.cp-btn.like[aria-pressed="true"] { background: var(--cp-green); border-color: var(--cp-green); color: #fff; }
+.cp-btn.like[aria-pressed="true"] svg { fill: currentColor; }
+.cp-btn.hide[aria-pressed="true"] { background: var(--cp-red); border-color: var(--cp-red); color: #fff; }
+.cp-btn:disabled { opacity: .35; cursor: default; }
+.cp-empty { padding: 36px 16px; text-align: center; color: var(--cp-muted); background: var(--cp-card); border: 1px dashed var(--cp-line); border-radius: 16px; }
+
+.cp-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); background: var(--cp-glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--cp-line); }
+.cp-bar-in { max-width: 640px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+.cp-msg { flex: 1; font-size: .85rem; color: var(--cp-muted); min-height: 1.2em; }
+.cp-msg.err { color: var(--cp-red); }
+.cp-save { min-height: 48px; padding: 0 26px; border: 0; border-radius: 14px; background: linear-gradient(135deg, var(--cp-green), #12a04c); color: #fff; font-weight: 800; box-shadow: 0 6px 14px rgba(30,181,58,.28); }
+.cp-save:disabled { background: var(--cp-chip); color: var(--cp-muted); box-shadow: none; cursor: default; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="cp-top">
+  <a class="cp-back" href="/settings" aria-label="Rudi">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+  </a>
+  <h1>Content preferences</h1>
+</header>
+
+<main class="cp-wrap">
+  <section class="cp-intro">
+    <p>Chagua category unazopenda — tutakuonyesha <b>posts nyingi zaidi</b> za hizo kwenye feed (zikichanganywa na nyingine ili usikwame kwenye kitu kimoja).
+    Category usizotaka kuona zitafichwa kabisa kwenye feed yako.</p>
+    <div class="cp-sum">
+      <span class="cp-pill like"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>Napenda: <span id="nLike">0</span></span>
+      <span class="cp-pill hide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.9 17.9A10.9 10.9 0 0 1 12 20C5 20 1 12 1 12a18.5 18.5 0 0 1 5.1-5.9"/><path d="M9.9 4.2A9.1 9.1 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.2 3.2"/><path d="M14.1 14.1A3 3 0 1 1 9.9 9.9"/><path d="m1 1 22 22"/></svg>Sitaki: <span id="nHide">0</span></span>
+    </div>
+  </section>
+
+  <div class="cp-search">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="search" id="q" placeholder="Tafuta category…" autocomplete="off" aria-label="Tafuta category">
+  </div>
+
+  <ul class="cp-list" id="list"></ul>
+  <div class="cp-empty" id="empty" hidden>Hakuna category inayofanana. Ukiandika category mpya unapopost, itaonekana hapa.</div>
+</main>
+
+<div class="cp-bar">
+  <div class="cp-bar-in">
+    <span class="cp-msg" id="msg" role="status" aria-live="polite"></span>
+    <button type="button" class="cp-save" id="save" disabled>Hifadhi</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var CATS = ;
+  var MAX = ;
+  var liked = new Set();
+  var hidden = new Set();
+  var saved = JSON.stringify([Array.from(liked).sort(), Array.from(hidden).sort()]);
+
+  var $ = function (id) { return document.getElementById(id); };
+  var list = $('list'), empty = $('empty'), msg = $('msg'), saveBtn = $('save');
+
+  var HEART = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
+  var EYEOFF = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.9 17.9A10.9 10.9 0 0 1 12 20C5 20 1 12 1 12a18.5 18.5 0 0 1 5.1-5.9"/><path d="M9.9 4.2A9.1 9.1 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.2 3.2"/><path d="M14.1 14.1A3 3 0 1 1 9.9 9.9"/><path d="m1 1 22 22"/></svg>';
+
+  function say(t, err) { msg.textContent = t || ''; msg.className = 'cp-msg' + (err ? ' err' : ''); }
+
+  function dirty() { return JSON.stringify([Array.from(liked).sort(), Array.from(hidden).sort()]) !== saved; }
+
+  function refresh() {
+    $('nLike').textContent = liked.size;
+    $('nHide').textContent = hidden.size;
+    saveBtn.disabled = !dirty();
+    if (!dirty() && !msg.dataset.keep) say('');
+  }
+
+  function toggle(slug, kind) {
+    msg.dataset.keep = '';
+    if (kind === 'like') {
+      if (liked.has(slug)) liked.delete(slug);
+      else {
+        if (liked.size >= MAX) { say('Unaweza kuchagua hadi ' + MAX + ' unazopenda.', true); return; }
+        liked.add(slug); hidden.delete(slug);
+      }
+    } else {
+      if (hidden.has(slug)) hidden.delete(slug);
+      else {
+        if (hidden.size >= MAX) { say('Unaweza kuchagua hadi ' + MAX + ' usizotaka.', true); return; }
+        hidden.add(slug); liked.delete(slug);
+      }
+    }
+    say('');
+    render();
+  }
+
+  function mkBtn(cls, label, svg, pressed, disabled, onclick) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'cp-btn ' + cls;
+    b.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+    b.setAttribute('aria-label', label);
+    b.title = label;
+    b.disabled = !!disabled;
+    b.innerHTML = svg;
+    b.addEventListener('click', onclick);
+    return b;
+  }
+
+  function render() {
+    var q = $('q').value.trim().toLowerCase();
+    list.textContent = '';
+    var shown = 0;
+    CATS.forEach(function (c) {
+      if (q && c.name.toLowerCase().indexOf(q) < 0 && c.slug.indexOf(q.replace(/\s+/g, '-')) < 0) return;
+      shown++;
+      var li = document.createElement('li');
+      li.className = 'cp-row' + (liked.has(c.slug) ? ' is-like' : '') + (hidden.has(c.slug) ? ' is-hide' : '');
+      var info = document.createElement('div'); info.className = 'cp-info';
+      var n = document.createElement('div'); n.className = 'cp-name'; n.textContent = c.name;
+      var k = document.createElement('div'); k.className = 'cp-count'; k.textContent = c.count + ' posts';
+      info.appendChild(n); info.appendChild(k);
+      li.appendChild(info);
+      li.appendChild(mkBtn('like', 'Napenda ' + c.name, HEART, liked.has(c.slug), false, function () { toggle(c.slug, 'like'); }));
+      li.appendChild(mkBtn('hide', 'Sitaki kuona ' + c.name, EYEOFF, hidden.has(c.slug), c.slug === 'general', function () { toggle(c.slug, 'hide'); }));
+      list.appendChild(li);
+    });
+    empty.hidden = shown > 0;
+    refresh();
+  }
+
+  $('q').addEventListener('input', render);
+
+  saveBtn.addEventListener('click', function () {
+    saveBtn.disabled = true; say('Inahifadhi…');
+    fetch('/api/content-prefs', {
+      method: 'POST', credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: JSON.stringify({ liked: Array.from(liked), hidden: Array.from(hidden) })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && d.success) {
+          liked = new Set(d.liked); hidden = new Set(d.hidden);
+          saved = JSON.stringify([Array.from(liked).sort(), Array.from(hidden).sort()]);
+          msg.dataset.keep = '1';
+          render();
+          say('Imehifadhiwa. Feed yako itabadilika.');
+        } else { say((d && d.message) || 'Imeshindikana kuhifadhi', true); saveBtn.disabled = false; }
+      })
+      .catch(function () { say('Hitilafu ya mtandao. Jaribu tena.', true); saveBtn.disabled = false; });
+  });
+
+  window.addEventListener('beforeunload', function (e) { if (dirty()) { e.preventDefault(); e.returnValue = ''; } });
+  render();
+})();
+</script>
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

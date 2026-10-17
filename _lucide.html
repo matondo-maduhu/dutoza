@@ -1,0 +1,147 @@
+{# Aikoni za mstari (Lucide) + idadi fupi. Inajumuishwa na base.html na kurasa zinazojitegemea (mf. kijiji.html). #}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.469.0/font/lucide.css">
+<style>
+        /* ===== Aikoni za mstari (Lucide) — zinachukua nafasi ya Font Awesome pale zinapopatikana ===== */
+        i.kj-lu { font-family: 'lucide' !important; font-weight: normal !important; font-style: normal !important; }
+        i.kj-lu::before { content: var(--kj-g) !important; font-family: 'lucide' !important; font-weight: normal !important; }
+
+/* ===== Vitufe vya like / comment / share / save: aikoni + idadi tu ===== */
+.kj-n { font-variant-numeric: tabular-nums; font-weight: 700; }
+.post-buttons button .kj-n { font-size: 21px; line-height: 1; font-weight: 600; }
+.post-buttons button:not(.liked) { color: #50555c !important; }
+.post-buttons button i { font-size: 21px; line-height: 1; }
+.post-buttons button { gap: 7px !important; padding: 9px 0 !important; }
+</style>
+<!-- ===== AIKONI ZA MSTARI (Lucide): hubadilisha Font Awesome kwa jedwali hapa chini. Aikoni isiyopatikana inabaki ya zamani. ===== -->
+<script>
+(function () {
+  if (window.KJ_NO_LUCIDE) return;
+  var MAP = {"xmark":["x"],"arrow-left":["arrow-left"],"play":["play"],"trash":["trash-2","trash"],"trash-can":["trash-2","trash"],"circle-check":["circle-check","check-circle-2"],"check-circle":["circle-check","check-circle-2"],"link":["link"],"chevron-right":["chevron-right"],"chevron-left":["chevron-left"],"chevron-down":["chevron-down"],"chevron-up":["chevron-up"],"paper-plane":["send"],"user":["user"],"plus":["plus"],"pen":["pencil","pen"],"pen-to-square":["square-pen","pencil"],"pen-nib":["pen-tool","pen-line"],"user-pen":["user-pen","user-cog"],"file":["file"],"file-lines":["file-text"],"file-circle-xmark":["file-x"],"check":["check"],"check-double":["check-check"],"volume-xmark":["volume-x"],"volume-high":["volume-2"],"video":["video"],"video-slash":["video-off"],"microphone":["mic"],"microphone-slash":["mic-off"],"floppy-disk":["save"],"bell":["bell"],"music":["music"],"shield-halved":["shield"],"user-shield":["shield-user","shield"],"certificate":["badge-check","award"],"pause":["pause"],"house":["house","home"],"magnifying-glass":["search"],"download":["download"],"image":["image"],"images":["images","image"],"photo-film":["images","image"],"globe":["globe"],"user-plus":["user-plus"],"eye":["eye"],"eye-slash":["eye-off"],"bookmark":["bookmark"],"user-group":["users"],"users":["users"],"rotate-right":["rotate-cw"],"rotate":["rotate-cw"],"rotate-left":["rotate-ccw"],"arrow-rotate-left":["rotate-ccw"],"share":["share"],"share-nodes":["share-2"],"comment":["message-circle"],"comment-dots":["message-circle-more","message-circle"],"comments":["messages-square"],"wand-magic-sparkles":["wand-sparkles","sparkles"],"envelope":["mail"],"user-slash":["user-x"],"phone":["phone"],"phone-slash":["phone-off"],"lock":["lock"],"unlock":["lock-open","unlock"],"heart":["heart"],"ellipsis-vertical":["ellipsis-vertical","more-vertical"],"ellipsis":["ellipsis","more-horizontal"],"ban":["ban"],"arrow-up-right-from-square":["external-link","square-arrow-out-up-right"],"thumbs-up":["thumbs-up"],"hourglass-half":["hourglass"],"right-to-bracket":["log-in"],"right-from-bracket":["log-out"],"reply":["reply"],"newspaper":["newspaper"],"gear":["settings"],"circle-info":["info"],"info-circle":["info"],"chart-simple":["chart-column","bar-chart-2"],"chart-column":["chart-column","bar-chart-2"],"chart-line":["chart-line","line-chart"],"chart-pie":["chart-pie","pie-chart"],"clock":["clock"],"clock-rotate-left":["history"],"user-clock":["clock"],"user-lock":["lock"],"user-gear":["user-cog","user-round-cog"],"triangle-exclamation":["triangle-alert","alert-triangle"],"circle-exclamation":["circle-alert","alert-circle"],"tags":["tags"],"id-card":["id-card","contact"],"address-card":["contact","id-card"],"flag":["flag"],"copy":["copy"],"compass":["compass"],"campground":["tent"],"camera":["camera"],"bolt":["zap"],"bars":["menu"],"up-down":["arrow-up-down"],"left-right":["arrow-left-right"],"right-left":["arrow-left-right"],"tower-broadcast":["radio-tower"],"stop":["square"],"retweet":["repeat-2","repeat"],"lightbulb":["lightbulb"],"folder-open":["folder-open"],"film":["film"],"expand":["maximize","expand"],"up-right-and-down-left-from-center":["maximize-2","maximize"],"crop-simple":["crop"],"circle-question":["circle-help","help-circle"],"circle-pause":["circle-pause","pause-circle"],"bullhorn":["megaphone"],"calendar":["calendar"],"calendar-days":["calendar-days"],"calendar-week":["calendar-days"],"calendar-check":["calendar-check"],"calendar-xmark":["calendar-x"],"user-check":["user-check"],"thumbtack":["pin"],"star":["star"],"sliders":["sliders-horizontal"],"qrcode":["qr-code"],"mobile-screen":["smartphone"],"layer-group":["layers"],"key":["key-round","key"],"headset":["headphones"],"gauge-high":["gauge"],"font":["type"],"fire":["flame"],"envelope-circle-check":["mail-check"],"circle-plus":["circle-plus","plus-circle"],"circle-play":["circle-play","play-circle"],"circle":["circle"],"bullseye":["target"],"briefcase":["briefcase"],"box-archive":["archive"],"arrow-trend-down":["trending-down"],"trophy":["trophy"],"school":["school"],"graduation-cap":["graduation-cap"],"quote-left":["quote"],"moon":["moon"],"minus":["minus"],"location-dot":["map-pin"],"hashtag":["hash"],"gavel":["gavel"],"compact-disc":["disc-3","disc"],"cloud-arrow-up":["cloud-upload"],"circle-xmark":["circle-x","x-circle"],"circle-dot":["circle-dot"],"at":["at-sign"],"arrow-down":["arrow-down"],"align-left":["align-left"],"square-check":["square-check","check-square"],"book-open":["book-open"],"cake-candles":["cake"]};
+  var cache = {}, probe = null;
+  function glyph(name) {
+    if (name in cache) return cache[name];
+    var g = null;
+    try {
+      if (!probe) {
+        probe = document.createElement('i');
+        probe.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;left:-99px;top:0';
+        document.body.appendChild(probe);
+      }
+      probe.className = 'icon-' + name;
+      var c = getComputedStyle(probe, '::before').content;
+      if (c && c !== 'none' && c !== 'normal' && c !== '""' && c !== "''") g = c;
+    } catch (e) {}
+    cache[name] = g; return g;
+  }
+  function pick(fa) {
+    var list = MAP[fa]; if (!list) return null;
+    for (var i = 0; i < list.length; i++) { var g = glyph(list[i]); if (g) return g; }
+    return null;
+  }
+  function convert(el) {
+    if (el.nodeType !== 1 || el.tagName !== 'I') return;
+    var cl = el.classList;
+    if (!(cl.contains('fa-solid') || cl.contains('fa-regular') || cl.contains('fas') || cl.contains('far'))) return;
+    if (cl.contains('fa-spin') || cl.contains('fa-spin-pulse') || cl.contains('fa-beat') || cl.contains('fa-fade')) return;
+    var fa = null;
+    for (var i = 0; i < cl.length; i++) {
+      var c = cl[i];
+      if (c.indexOf('fa-') === 0 && MAP[c.slice(3)]) { fa = c.slice(3); break; }
+    }
+    if (!fa) { if (cl.contains('kj-lu')) { cl.remove('kj-lu'); el.style.removeProperty('--kj-g'); el.removeAttribute('data-kj-fa'); } return; }
+    if (el.getAttribute('data-kj-fa') === fa) return;
+    var g = pick(fa);
+    if (!g) return;
+    el.style.setProperty('--kj-g', g);
+    el.setAttribute('data-kj-fa', fa);
+    cl.add('kj-lu');
+  }
+  function scan(root) {
+    if (!root || root.nodeType !== 1) return;
+    if (root.tagName === 'I') convert(root);
+    var list = root.querySelectorAll ? root.querySelectorAll('i.fa-solid,i.fa-regular,i.fas,i.far') : [];
+    for (var i = 0; i < list.length; i++) convert(list[i]);
+  }
+  var started = false;
+  function start() {
+    if (started) return;
+    // Hakikisha font ya Lucide imepakiwa; ikishindikana, Font Awesome inabaki.
+    var ok = false;
+    try { ok = !!glyph('house') || !!glyph('x'); } catch (e) {}
+    if (!ok) return false;
+    started = true;
+    scan(document.body);
+    var busy = false, queue = [];
+    new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        if (m.type === 'attributes') queue.push(m.target);
+        else m.addedNodes && m.addedNodes.forEach(function (n) { queue.push(n); });
+      });
+      if (busy) return; busy = true;
+      requestAnimationFrame(function () {
+        var q = queue; queue = []; busy = false;
+        q.forEach(function (n) { scan(n); });
+      });
+    }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+    return true;
+  }
+  function boot() {
+    if (!start()) {
+      // CSS ya Lucide inaweza kuchelewa kidogo — jaribu tena mara chache
+      var tries = 0, t = setInterval(function () { if (start() || ++tries > 12) clearInterval(t); }, 400);
+    }
+    // Nav ya chini: onyesha ukurasa uliopo
+    try {
+      var p = location.pathname;
+      document.querySelectorAll('.bottom-nav a[href^="/"]').forEach(function (a) {
+        var h = a.getAttribute('href');
+        if (h === p || (h.length > 1 && p.indexOf(h) === 0)) a.classList.add('active');
+      });
+    } catch (e) {}
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  window.addEventListener('load', function () { if (!started) boot(); });
+})();
+</script>
+
+<script>
+/* Idadi fupi: 1400 -> 1.4K, 3000 -> 3K, 1200000 -> 1.2M. Pia husawazisha .kj-n[data-src] kutoka kwenye span iliyofichwa ambayo JS ya zamani inaisasisha. */
+(function () {
+  window.kjFmt = function (n) {
+    n = parseInt(n, 10) || 0;
+    if (n < 1000) return String(n);
+    var u, t;
+    if (n >= 1e6) { u = 'M'; t = (n >= 1e7) ? Math.floor(n / 1e6) : Math.floor(n / 1e5) / 10; }
+    else { u = 'K'; t = (n >= 1e5) ? Math.floor(n / 1e3) : Math.floor(n / 100) / 10; }
+    return String(t).replace(/\.0$/, '') + u;
+  };
+  function setText(el, txt) { if (el.textContent !== txt) el.textContent = txt; }
+  window.kjSyncCounts = function (root) {
+    (root || document).querySelectorAll('.kj-n[data-src]').forEach(function (el) {
+      var src = document.getElementById(el.getAttribute('data-src'));
+      if (!src) return;
+      var d = (src.textContent || '').replace(/[^0-9]/g, '');
+      setText(el, window.kjFmt(d || 0));
+    });
+    (root || document).querySelectorAll('.kj-n[data-n]').forEach(function (el) {
+      setText(el, window.kjFmt(el.getAttribute('data-n')));
+    });
+  };
+  var pending = false;
+  function later() { if (pending) return; pending = true; requestAnimationFrame(function () { pending = false; window.kjSyncCounts(); }); }
+  function init() {
+    window.kjSyncCounts();
+    new MutationObserver(later).observe(document.body, { childList: true, subtree: true, characterData: true });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/auth.js"></script>

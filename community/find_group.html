@@ -1,0 +1,175 @@
+
+
+<style>
+:root {
+  --tz-green:#1EB53A; --tz-dark:#0d6730; --tz-yellow:#FCD116;
+  --page:#f4f6f8; --text:#0f172a; --muted:#64748b;
+}
+body .navbar { display:none !important; }
+html, body { margin:0; padding:0; overflow-x:hidden; }
+.fg-page { min-height:100dvh; background:var(--page); padding-bottom:90px; }
+
+.fg-top {
+  position:sticky; top:0; z-index:40;
+  background:linear-gradient(135deg,var(--tz-green),var(--tz-dark));
+  color:#fff; padding:12px 14px; display:flex; align-items:center; gap:10px;
+  box-shadow:0 2px 12px rgba(30,181,58,.28);
+}
+.fg-top a {
+  width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,.16); color:#fff; text-decoration:none; font-size:22px; flex-shrink:0;
+}
+.fg-top h1 { margin:0; font-size:17px; font-weight:800; flex:1; }
+.fg-top .create {
+  padding:8px 14px; border-radius:10px; background:rgba(255,255,255,.22); color:#fff;
+  text-decoration:none; font-size:12px; font-weight:700; white-space:nowrap;
+}
+
+.fg-body { padding:14px; max-width:700px; margin:0 auto; }
+.fg-body .sub { color:var(--muted); font-size:13px; margin:0 0 12px; }
+
+form.search { display:flex; gap:8px; margin-bottom:12px; }
+form.search input {
+  flex:1; padding:12px 14px; border:1.5px solid #e2e8f0; border-radius:12px; font-size:15px;
+  outline:none; background:#fff;
+}
+form.search input:focus { border-color:var(--tz-green); }
+form.search button {
+  padding:12px 16px; border:0; border-radius:12px; background:var(--tz-green);
+  color:#fff; font-weight:700; cursor:pointer;
+}
+
+.cats {
+  display:flex; gap:8px; overflow-x:auto; margin-bottom:14px;
+  scrollbar-width:none; padding-bottom:2px;
+}
+.cats::-webkit-scrollbar { display:none; }
+.cats a {
+  flex-shrink:0; padding:7px 12px; border-radius:999px; background:#fff;
+  font-size:12px; font-weight:700; text-decoration:none; color:var(--text);
+  border:1px solid #e2e8f0;
+}
+.cats a.active { background:var(--tz-green); color:#fff; border-color:transparent; }
+
+.group-card {
+  background:#fff; border-radius:16px; padding:14px; margin-bottom:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,.05); border:1px solid #eef1f4;
+  display:flex; gap:12px; align-items:flex-start;
+  transition:transform .12s, box-shadow .12s;
+}
+.group-card:active { transform:scale(.99); }
+
+.group-av {
+  width:56px; height:56px; border-radius:16px; object-fit:cover; flex-shrink:0;
+  background:#e2e8f0; border:2px solid #e8f5e9;
+}
+
+.group-info { flex:1; min-width:0; }
+.group-info h3 {
+  margin:0 0 4px; font-size:15px; color:var(--text); font-weight:800;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.group-info p {
+  margin:0 0 8px; font-size:12.5px; color:#555; line-height:1.4;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.meta {
+  display:flex; gap:6px; flex-wrap:wrap; font-size:11px; color:#777; margin-bottom:10px;
+}
+.meta span {
+  background:#f1f5f2; padding:3px 9px; border-radius:20px; font-weight:600;
+}
+
+.btn-open {
+  display:inline-block; background:var(--tz-green); color:#fff !important;
+  padding:8px 14px; border-radius:10px; font-size:12px; font-weight:700;
+  text-decoration:none;
+}
+.btn-joined {
+  display:inline-block; background:#e8f5e9; color:var(--tz-dark) !important;
+  padding:8px 14px; border-radius:10px; font-size:12px; font-weight:700;
+  text-decoration:none;
+}
+
+.empty {
+  text-align:center; padding:40px 20px; color:var(--muted);
+  background:#fff; border-radius:14px;
+}
+.empty a {
+  display:inline-block; margin-top:12px; padding:10px 18px; background:var(--tz-green);
+  color:#fff; border-radius:10px; text-decoration:none; font-weight:700; font-size:13px;
+}
+</style>
+
+<div class="fg-page">
+  <div class="fg-top">
+    <a href="#" aria-label="back">‹</a>
+    <h1>🔎 Find Group</h1>
+    <a class="create" href="#">＋ Create</a>
+  </div>
+
+  <div class="fg-body">
+    <p class="sub">search group, uone members, jiunge au invite marafiki.</p>
+
+    <form class="search" action="#" method="GET">
+      <input name="q" type="search" value="" placeholder="Jina la group..." autocomplete="off">
+      <input type="hidden" name="cat" value="">
+      <button type="submit">Search</button>
+    </form>
+
+    <div class="cats">
+      <a href="#" class="active">All</a>
+      <a href="#" class="active">🎓 University</a>
+      <a href="#" class="active">🎮 Gamers</a>
+      <a href="#" class="active">🗳️ politics</a>
+      <a href="#" class="active">🌱 Kilimo</a>
+      <a href="#" class="active">💼 business_company</a>
+      <a href="#" class="active">✨ General</a>
+    </div>
+
+    
+      
+      <div class="group-card">
+        
+          <img class="group-av" src="" alt="">
+        
+          <img class="group-av" src="#" alt="">
+        
+          <img class="group-av" src="https://ui-avatars.com/api/?name=&background=1EB53A&color=fff&size=112&bold=true" alt="">
+        
+
+        <div class="group-info">
+          <h3></h3>
+          <p></p>
+          <div class="meta">
+            <span>📂 </span>
+            <span>👥 </span>
+            <span>👤 @</span>
+          </div>
+          <a href="#" class="btn-open">open_group</a>
+        </div>
+      </div>
+      
+    
+      <div class="empty">
+        
+          Hakuna group ya ""
+        
+          Hakuna groups bado.
+        
+        <br>
+        <a href="#">＋ Tengeneza Group</a>
+      </div>
+    
+  </div>
+</div>
+
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

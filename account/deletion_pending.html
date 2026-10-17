@@ -1,0 +1,31 @@
+
+
+<style>
+.dp-wrap{max-width:480px;margin:28px auto;padding:0 16px}
+.dp-card{background:#fff;border-radius:16px;padding:24px 20px;border:1px solid #eee;box-shadow:0 2px 12px rgba(0,0,0,.08);text-align:center}
+.dp-card h1{font-size:20px;color:#c62828;margin:0 0 10px}
+.dp-card p{font-size:14px;color:#555;line-height:1.6;margin:0 0 14px}
+.dp-days{font-size:44px;font-weight:800;color:#c62828;line-height:1}
+.dp-btn{display:block;width:100%;border:0;border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;margin-top:10px}
+.dp-ok{background:#1EB53A;color:#fff}.dp-out{background:#e4e6eb;color:#050505}
+</style>
+<div class="dp-wrap"><div class="dp-card">
+  <h1><i class="fa-solid fa-hourglass-half"></i> account inafutwa</h1>
+  <div class="dp-days"></div>
+  <p>siku zimebaki. @ itafutwa kabisa tarehe <strong></strong>, na data zote hazirudi.</p>
+  <p>Ukitaka kuendelea kuitumia, ghairi kufuta sasa.</p>
+  <form method="POST" action="#">
+    <button class="dp-btn dp-ok" type="submit"><i class="fa-solid fa-rotate-left"></i> cancel kufuta akaunti</button>
+  </form>
+  <a class="dp-btn dp-out" href="/logout">Ondoka</a>
+</div></div>
+
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

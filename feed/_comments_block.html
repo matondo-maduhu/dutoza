@@ -1,0 +1,166 @@
+            <div class="comments-section" id="comments-section-">
+                <div id="comments-list-" class="comments-box">
+                    
+                    <div class="comment-item hidden-comment" id="comment-" style="display:flex;gap:10px;align-items:flex-start;">
+                        <a href="" style="flex-shrink:0;">
+                            <img class="comment-avatar" src="" alt=""
+                                 style="width:36px;height:36px;border-radius:50%;object-fit:cover;background:#e4e6eb;border:1px solid #eee;"
+                                 onerror="this.onerror=null;this.src='/static/images/default-avatar.png.jfif';">
+                        </a>
+                        <div style="flex:1;min-width:0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <strong style="display: inline-flex; align-items: center; gap:4px; flex-wrap:wrap;">
+                                <a href="" style="text-decoration: none; color: inherit;">
+                                    
+                                </a>
+                                
+                                <svg class="verified-badge-custom small" viewBox="0 0 24 24" title="Verified linkup" style="width:14px;height:14px;">
+                                    <path d="M12 0L15.3 3.5L20.1 2.3L20.5 7.3L24 10.4L21.7 14.8L22.9 19.6L18 20.8L15.7 25.2L12 23L8.3 25.2L6 20.8L1.1 19.6L2.3 14.8L0 10.4L3.5 7.3L3.9 2.3L8.7 3.5L12 0Z" fill="#F5B800"/>
+                                    <path d="M9.8 15.6L6.2 12L4.8 13.4L9.8 18.4L20 8.2L18.6 6.8L9.8 15.6Z" fill="#FFFFFF"/>
+                                </svg>
+                                <span style="font-size:10px;background:#f0fdf4;color:#1EB53A;padding:1px 6px;border-radius:8px;font-weight:700;">linkup</span>
+                                
+                                <svg class="verified-badge-custom small" viewBox="0 0 24 24" title="Verified Account" style="width:14px;height:14px;">
+                                    <path d="M12 0L15.3 3.5L20.1 2.3L20.5 7.3L24 10.4L21.7 14.8L22.9 19.6L18 20.8L15.7 25.2L12 23L8.3 25.2L6 20.8L1.1 19.6L2.3 14.8L0 10.4L3.5 7.3L3.9 2.3L8.7 3.5L12 0Z" fill="#8A2BE2"/>
+                                    <path d="M9.8 15.6L6.2 12L4.8 13.4L9.8 18.4L20 8.2L18.6 6.8L9.8 15.6Z" fill="#FFFFFF"/>
+                                </svg>
+                                
+                            </strong>
+
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 11px; color: #65676b;"></span>
+
+                                <button class="comment-actions-btn" onclick="toggleCommentMenu()">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <div class="comment-actions-dropdown" id="comment-menu-">
+                                    
+                                        <button onclick="deleteComment()" style="color: #dc3545;"><i class="fa-solid fa-trash"></i> delete_comment</button>
+                                        <button onclick="hideComment()"><i class="fa-solid fa-eye-slash"></i> hide_comment</button>
+                                        <button onclick="blockUser()" style="color: #dc3545;"><i class="fa-solid fa-user-lock"></i> Block User</button>
+                                    
+                                        <button onclick="editComment()"><i class="fa-solid fa-pen"></i> Edit</button>
+                                        <button onclick="deleteComment()" style="color: #dc3545;"><i class="fa-solid fa-trash"></i> delete_comment</button>
+                                    
+                                        <button onclick="reportComment()"><i class="fa-solid fa-flag" style="color: #dc3545;"></i> report_comment</button>
+                                        <button onclick="blockUser()" style="color: #dc3545;"><i class="fa-solid fa-user-lock"></i> Block User</button>
+                                        <button onclick="copyCommentText()"><i class="fa-solid fa-copy" style="color: #1EB53A;"></i> copy</button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <p id="comment-text-" style="margin: 6px 0; color: #050505;"></p>
+                        <button type="button" class="lnk-btn sm" data-url="" data-label="" onclick="openExternalLink(this)"><i class="fa-solid fa-link"></i><span></span><i class="fa-solid fa-arrow-up-right-from-square ext"></i></button>
+                        <div class="cm-media"><video src="" controls playsinline preload="metadata"></video><img src="" alt="" loading="lazy" onclick="cmOpenMedia(this)"></div>
+
+                        <div style="font-size: 11px; display: flex; gap: 15px; color: #65676b; margin-top: 4px;">
+                            <button onclick="likeComment()" style="background:none; border:none; cursor:pointer; color: #1EB53Ainherit; font-weight: 600;" id="c-like-btn-">
+                                Like (<span id="c-likes-count-"></span>)
+                            </button>
+                            <button onclick="showReplyBox()" style="background:none; border:none; cursor:pointer; color:inherit; font-weight: 600;">Reply</button>
+                        </div>
+
+                        <div class="replies-list" style="margin-left: 12px; margin-top: 6px; border-left: 2px solid #e4e6eb; padding-left: 8px;" id="replies-list-">
+                            
+                            <div class="reply-item" style="font-size: 12px; background: #f0f2f5; padding: 6px 8px; border-radius: 6px; margin-bottom: 4px;display:flex;gap:8px;align-items:flex-start;" id="comment-">
+                                <a href="" style="flex-shrink:0;">
+                                    <img src="" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;background:#e4e6eb;">
+                                </a>
+                                <div style="flex:1;min-width:0;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <strong style="display: inline-flex; align-items: center; gap:3px; flex-wrap:wrap;">
+                                        <a href="" style="text-decoration: none; color: inherit;"></a>
+                                        
+                                        <svg class="verified-badge-custom small" viewBox="0 0 24 24" title="Verified linkup" style="width:12px;height:12px;">
+                                            <path d="M12 0L15.3 3.5L20.1 2.3L20.5 7.3L24 10.4L21.7 14.8L22.9 19.6L18 20.8L15.7 25.2L12 23L8.3 25.2L6 20.8L1.1 19.6L2.3 14.8L0 10.4L3.5 7.3L3.9 2.3L8.7 3.5L12 0Z" fill="#F5B800"/>
+                                            <path d="M9.8 15.6L6.2 12L4.8 13.4L9.8 18.4L20 8.2L18.6 6.8L9.8 15.6Z" fill="#FFFFFF"/>
+                                        </svg>
+                                        <span style="font-size:9px;background:#f0fdf4;color:#1EB53A;padding:0 5px;border-radius:6px;font-weight:700;">linkup</span>
+                                        
+                                        <svg class="verified-badge-custom small" viewBox="0 0 24 24" title="Verified Account" style="width:12px;height:12px;">
+                                            <path d="M12 0L15.3 3.5L20.1 2.3L20.5 7.3L24 10.4L21.7 14.8L22.9 19.6L18 20.8L15.7 25.2L12 23L8.3 25.2L6 20.8L1.1 19.6L2.3 14.8L0 10.4L3.5 7.3L3.9 2.3L8.7 3.5L12 0Z" fill="#8A2BE2"/>
+                                            <path d="M9.8 15.6L6.2 12L4.8 13.4L9.8 18.4L20 8.2L18.6 6.8L9.8 15.6Z" fill="#FFFFFF"/>
+                                        </svg>
+                                        :
+                                    </strong>
+                                    <span style="font-size: 10px; color: #65676b;"></span>
+                                </div>
+                                <p id="comment-text-" style="margin: 3px 0; color: #050505;"></p>
+                                <button type="button" class="lnk-btn sm" data-url="" data-label="" onclick="openExternalLink(this)"><i class="fa-solid fa-link"></i><span></span><i class="fa-solid fa-arrow-up-right-from-square ext"></i></button>
+                                <div class="cm-media"><video src="" controls playsinline preload="metadata"></video><img src="" alt="" loading="lazy" onclick="cmOpenMedia(this)"></div>
+                                <div style="font-size: 11px; margin-top: 2px; display:flex; gap:10px;">
+                                    <button onclick="replyToUser(, '')" style="background:none; border:none; cursor:pointer; color:#1EB53A; font-weight: 600;">Reply</button>
+
+                                    
+                                        <button onclick="deleteComment()" style="background:none; border:none; cursor:pointer; color:#dc3545;">delete</button>
+                                    
+                                        <button onclick="editComment()" style="background:none; border:none; cursor:pointer; color:#65676b;">Edit</button>
+                                        <button onclick="deleteComment()" style="background:none; border:none; cursor:pointer; color:#dc3545;">delete</button>
+                                    
+                                </div>
+                                </div><!-- /reply body -->
+                            </div>
+                            
+                        </div>
+
+                        <form class="reply-form cm-composer" id="reply-form-" style="display: none; margin-top: 8px;" onsubmit="addReply(event, , )" enctype="multipart/form-data">
+                            <div class="cm-preview" hidden></div>
+                            <div class="lnk-row">
+                                <input type="text" name="link_label" maxlength="30" placeholder="button_label (mfano: Kijiji)" autocomplete="off">
+                                <input type="text" name="link_url" inputmode="url" maxlength="500" placeholder="Link (https://...)" autocomplete="off">
+                            </div>
+                            <div class="cm-menu" hidden>
+                                <button type="button" onclick="cmChoose(this,'image')"><i class="fa-regular fa-image"></i><span>image</span></button>
+                                <button type="button" onclick="cmChoose(this,'video')"><i class="fa-solid fa-video"></i><span>video</span></button>
+                            </div>
+                            <div class="cm-pill">
+                                <button type="button" class="cm-plus" onclick="cmTogglePlus(this)" title="add picha au video" aria-label="add picha au video"><i class="fa-solid fa-plus"></i></button>
+                                <input type="text" name="content" placeholder="type_reply" data-ph="type_reply" autocomplete="off" enterkeyhint="send">
+                                <button type="button" class="lnk-tgl" onclick="lnkToggle(this)" title="Weka link" aria-label="Weka link"><i class="fa-solid fa-link"></i></button>
+                                <button type="submit" class="cm-send" aria-label="send"><i class="fa-solid fa-paper-plane"></i></button>
+                            </div>
+                            <input type="file" name="media" class="cm-file" accept="image/*,video/*" hidden onchange="cmFileChosen(this)">
+                        </form>
+                        </div><!-- /comment body -->
+                    </div>
+                    
+                </div>
+
+                <div class="cm-first" aria-hidden="true">
+                    <div class="cm-first-orb">
+                        <i class="fa-regular fa-comment-dots"></i>
+                        <span class="cm-spark s1"></span><span class="cm-spark s2"></span><span class="cm-spark s3"></span>
+                    </div>
+                    <div class="cm-first-badge"><i class="fa-solid fa-wand-magic-sparkles"></i><span>You're the first to comment</span></div>
+                    <p>start_conversation_first_comment</p>
+                </div>
+
+                <form class="comment-form lnk-wrap cm-composer" onsubmit="addComment(event, )" enctype="multipart/form-data">
+                    <div class="cm-preview" hidden></div>
+                    <div class="lnk-row">
+                        <input type="text" name="link_label" maxlength="30" placeholder="button_label (mfano: Kijiji)" autocomplete="off">
+                        <input type="text" name="link_url" inputmode="url" maxlength="500" placeholder="Link (https://...)" autocomplete="off">
+                    </div>
+                    <div class="cm-menu" hidden>
+                        <button type="button" onclick="cmChoose(this,'image')"><i class="fa-regular fa-image"></i><span>image</span></button>
+                        <button type="button" onclick="cmChoose(this,'video')"><i class="fa-solid fa-video"></i><span>video</span></button>
+                    </div>
+                    <div class="cm-pill">
+                        <button type="button" class="cm-plus" onclick="cmTogglePlus(this)" title="add picha au video" aria-label="add picha au video"><i class="fa-solid fa-plus"></i></button>
+                        <input type="text" name="content" placeholder="type_comment" data-ph="type_comment" autocomplete="off" enterkeyhint="send">
+                        <button type="button" class="lnk-tgl" onclick="lnkToggle(this)" title="Weka link" aria-label="Weka link"><i class="fa-solid fa-link"></i></button>
+                        <button type="submit" class="cm-send" aria-label="send"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                    <input type="file" name="media" class="cm-file" accept="image/*,video/*" hidden onchange="cmFileChosen(this)">
+                </form>
+            </div>
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simamia linkup</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f0f2f5;color:#0f172a;padding-bottom:40px}
+header{background:#0f172a;color:#fff;padding:14px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+header a{color:#F5B800;text-decoration:none;font-size:18px}
+header h1{font-size:16px;font-weight:800}
+.wrap{max-width:560px;margin:0 auto;padding:12px}
+.flash{padding:12px 14px;border-radius:12px;margin-bottom:10px;font-size:14px;background:#fff;border-left:4px solid #F5B800}
+.flash.error{border-color:#dc2626}.flash.success{border-color:#1EB53A}
+.head{display:flex;gap:12px;align-items:center;background:#fff;border-radius:14px;padding:14px;margin-bottom:12px}
+.head .av{width:48px;height:48px;border-radius:14px;background:#0f172a;color:#F5B800;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;overflow:hidden;flex-shrink:0}
+.head .av img{width:100%;height:100%;object-fit:cover}
+.head b{display:block;font-size:16px}.head small{color:#65676b}
+.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px}
+.card h2{font-size:15px;margin-bottom:6px}
+.card p{font-size:13px;color:#475569;line-height:1.55;margin-bottom:12px}
+.status{border-radius:14px;padding:16px;margin-bottom:12px;font-size:14px;line-height:1.55}
+.status.paused{background:#fff7e0;border:1px solid #F5B800}
+.status.trashed{background:#fee2e2;border:1px solid #dc2626}
+.status.blocked{background:#e2e8f0}
+.status strong{display:block;font-size:16px;margin-bottom:4px}
+.row{display:flex;gap:8px;margin-bottom:12px}
+input[type=number],input[type=text],select{width:100%;padding:12px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:15px;background:#fff}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:#334155;margin-bottom:12px}
+.chk input{margin-top:3px}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;text-align:center;text-decoration:none}
+.btn-gold{background:#F5B800;color:#0f172a}
+.btn-red{background:#dc2626;color:#fff}
+.btn-green{background:#1EB53A;color:#fff}
+.btn-dark{background:#0f172a;color:#fff}
+.item{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:14px;margin-bottom:10px;text-decoration:none;color:inherit}
+.item .tag{margin-left:auto;font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;background:#e2e8f0}
+.item .tag.paused{background:#fff7e0;color:#92400e}.item .tag.trashed{background:#fee2e2;color:#b91c1c}.item .tag.active{background:#dcfce7;color:#166534}
+.item small{color:#65676b;display:block}
+</style>
+</head>
+<body>
+<header>
+  <a href="#"><i class="fa-solid fa-arrow-left"></i></a>
+  <h1>linkup zanguSimamia linkup</h1>
+</header>
+<div class="wrap">
+  
+    <div class="flash "></div>
+  
+
+
+  
+    
+    <a class="item" href="#">
+      <div>
+        <b></b>
+        <small>@
+           · inarudi 
+           · itafutwa  (siku )
+          </small>
+      </div>
+      <span class="tag ">ImepumzishwaTupioniImezuiwaHai</span>
+    </a>
+    
+  
+    <div class="card"><p>Huna linkup bado.</p><a class="btn btn-green" href="#">Tengeneza linkup</a></div>
+  
+
+
+  <div class="head">
+    <div class="av"><img src="#" alt=""></div>
+    <div><b></b><small>@</small></div>
+  </div>
+
+  
+    <div class="status trashed">
+      <strong><i class="fa-solid fa-trash-can"></i> Iko Tupioni</strong>
+      Itafutwa kabisa tarehe <b></b> (siku  zimebaki). Baada ya hapo posts, followers na data zote hazirudi tena.
+    </div>
+    <div class="card">
+      <h2>Rejesha linkup</h2>
+      <p>Itarudi kama ilivyokuwa, pamoja na posts na followers wake.</p>
+      <form method="POST" action="#">
+        <button class="btn btn-green" type="submit"><i class="fa-solid fa-rotate-left"></i> Rejesha sasa</button>
+      </form>
+    </div>
+
+  
+    <div class="status blocked">
+      <strong>Imezuiwa na admin</strong>
+      Huwezi kuipumzisha, kuifuta au kuirejesha mwenyewe. Wasiliana na admin.
+    </div>
+
+  
+    
+    <div class="status paused">
+      <strong><i class="fa-solid fa-circle-pause"></i> Imepumzishwa</strong>
+      Haionekani kwa mtu yeyote na huwezi kuitumia hadi <b></b> (siku ). Itarudi yenyewe muda ukiisha.
+    </div>
+    
+    <div class="card">
+      <h2><i class="fa-solid fa-circle-pause" style="color:#F5B800"></i> Pumzisha linkup</h2>
+      <p>linkup na posts zake zinafichwa kwa muda uliochagua. Muda ukiisha inarudi yenyewe. Kabla ya hapo huwezi kuitumia wala kuirudisha mapema.</p>
+      <form method="POST" action="#">
+        <div class="row">
+          <input type="number" name="amount" min="1" max="365" value="7" required>
+          <select name="unit">
+            <option value="days">days</option>
+            <option value="months">months</option>
+          </select>
+        </div>
+        <label class="chk"><input type="checkbox" name="confirm" required> Naelewa kuwa sitaweza kuitumia hadi muda uishe.</label>
+        <button class="btn btn-gold" type="submit">Pumzisha</button>
+      </form>
+    </div>
+    
+
+    <div class="card">
+      <h2><i class="fa-solid fa-trash-can" style="color:#dc2626"></i> delete_linkup</h2>
+      <p>linkup inahamishiwa Tupioni na kufichwa mara moja. Utakuwa na siku  za kuirejesha. Baada ya hapo data zake zote (posts, followers, comments zake) zinafutwa kabisa na hazirudi.</p>
+      <form method="POST" action="#">
+        <input type="text" name="confirm_word" placeholder='Andika FUTA' autocomplete="off" required style="margin-bottom:12px">
+        <button class="btn btn-red" type="submit">delete_linkup</button>
+      </form>
+    </div>
+  
+
+  <a class="btn btn-dark" href="#">linkup zangu zote</a>
+
+</div>
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

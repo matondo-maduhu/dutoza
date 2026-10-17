@@ -1,0 +1,945 @@
+
+
+<style>
+:root {
+  --tz-green:#1EB53A; --tz-dark:#0d6730; --tz-yellow:#FCD116;
+  --page:#f0f2f5; --text:#0f172a; --muted:#64748b; --border:#e5e7eb;
+  --card:#fff; --hover:#f8fafc;
+}
+body .navbar { display:none !important; }
+html, body { margin:0; padding:0; overflow-x:hidden; background:var(--page); }
+.gr-page { min-height:100dvh; background:var(--page); padding-bottom:130px; }
+
+/* ── Top bar ── */
+.gr-top {
+  position:sticky; top:0; z-index:40;
+  background:linear-gradient(135deg,var(--tz-green),var(--tz-dark));
+  color:#fff; padding:10px 12px; display:flex; align-items:center; gap:10px;
+  box-shadow:0 2px 12px rgba(30,181,58,.25);
+}
+.gr-top .back {
+  width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,.15); color:#fff; text-decoration:none; font-size:20px; flex-shrink:0;
+}
+.gr-top .top-info { flex:1; min-width:0; display:flex; align-items:center; gap:10px; }
+.gr-top .top-av {
+  width:36px; height:36px; border-radius:11px; object-fit:cover; flex-shrink:0;
+  border:1.5px solid rgba(255,255,255,.3); background:rgba(255,255,255,.1);
+}
+.gr-top .top-text { min-width:0; }
+.gr-top .top-text h1 {
+  margin:0; font-size:15px; font-weight:800; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.gr-top .top-text span { font-size:11px; opacity:.8; }
+.gr-top .icon-btn {
+  width:38px; height:38px; border-radius:11px; border:none; cursor:pointer;
+  background:rgba(255,255,255,.15); color:#fff; font-size:18px;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+
+.gr-body { padding:12px; max-width:680px; margin:0 auto; }
+
+/* ── Header card ── */
+.header-card {
+  background:var(--card); border-radius:16px; padding:16px; margin-bottom:10px;
+  box-shadow:0 1px 4px rgba(0,0,0,.04); border:1px solid var(--border);
+}
+.header-top { display:flex; gap:12px; align-items:flex-start; }
+.group-av {
+  width:60px; height:60px; border-radius:16px; object-fit:cover; flex-shrink:0;
+  background:#e2e8f0; border:2px solid #e8f5e9;
+}
+.header-info { flex:1; min-width:0; }
+.header-info h2 { margin:0 0 3px; font-size:17px; font-weight:800; color:var(--text); }
+.header-info p { margin:0; font-size:12.5px; color:#64748b; line-height:1.4; }
+.meta { display:flex; gap:6px; flex-wrap:wrap; margin:10px 0 12px; }
+.meta span {
+  font-size:11px; font-weight:600; color:#64748b; background:#f1f5f9;
+  padding:3px 9px; border-radius:20px;
+}
+.meta .admin-badge { background:rgba(30,181,58,.12); color:var(--tz-dark); }
+.action-row { display:flex; gap:8px; flex-wrap:wrap; }
+.btn {
+  display:inline-flex; align-items:center; gap:5px; padding:8px 14px; border-radius:10px;
+  font-weight:700; font-size:12.5px; border:none; cursor:pointer; text-decoration:none;
+}
+.btn-join { background:var(--tz-green); color:#fff; }
+.btn-invite { background:#e8f5e9; color:var(--tz-dark); }
+.btn-edit { background:#f1f5f9; color:var(--text); }
+.btn-leave { background:#fef2f2; color:#b91c1c; }
+
+/* ── Members ── */
+.section-label {
+  font-size:12.5px; font-weight:800; color:var(--text); margin:12px 0 6px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.section-label a { font-size:12px; color:var(--tz-green); text-decoration:none; font-weight:700; }
+.members { display:flex; gap:10px; overflow-x:auto; padding:2px 0 8px; }
+.members .mem { flex-shrink:0; width:52px; text-align:center; position:relative; }
+.members a { text-decoration:none; color:var(--text); font-size:10px; font-weight:600; }
+.members img {
+  width:42px; height:42px; border-radius:50%; object-fit:cover; display:block;
+  margin:0 auto 3px; background:#e2e8f0; border:2px solid #fff; box-shadow:0 1px 3px rgba(0,0,0,.08);
+}
+.members .admin-dot {
+  position:absolute; top:0; right:2px; width:13px; height:13px; background:var(--tz-green);
+  border-radius:50%; font-size:8px; color:#fff; display:flex; align-items:center; justify-content:center;
+  border:1.5px solid #fff;
+}
+.members .remove-btn {
+  position:absolute; top:-2px; right:0; width:16px; height:16px; border-radius:50%;
+  background:#ef4444; color:#fff; border:none; font-size:10px; cursor:pointer;
+  display:none; align-items:center; justify-content:center;
+}
+.members.admin-mode .remove-btn { display:flex; }
+
+/* ── Tabs ── */
+.tabs {
+  display:flex; gap:3px; background:var(--card); border-radius:12px; padding:3px;
+  margin-bottom:10px; border:1px solid var(--border);
+}
+.tab {
+  flex:1; text-align:center; padding:9px 6px; border-radius:9px; font-size:12.5px;
+  font-weight:700; color:var(--muted); cursor:pointer; border:none; background:transparent;
+}
+.tab.active { background:var(--tz-green); color:#fff; }
+
+/* ── Post card ── */
+.feed { display:flex; flex-direction:column; gap:8px; }
+.post-card {
+  background:var(--card); border-radius:14px; padding:12px 14px;
+  border:1px solid var(--border); box-shadow:0 1px 2px rgba(0,0,0,.03);
+}
+.post-head { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.post-head img {
+  width:38px; height:38px; border-radius:50%; object-fit:cover; background:#e2e8f0; flex-shrink:0;
+}
+.post-head .who { flex:1; min-width:0; }
+.post-head .who .name-row { display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
+.post-head .who .full-name {
+  font-size:13.5px; font-weight:800; color:var(--text); text-decoration:none;
+}
+.post-head .who .full-name:hover { text-decoration:underline; }
+.post-head .who .uname { font-size:12px; color:var(--muted); font-weight:500; }
+.post-head .who .verified { display:inline-flex; width:15px; height:15px; flex-shrink:0; }
+.post-head .who .verified svg { width:15px; height:15px; }
+.post-head .who .time { display:block; font-size:11px; color:#94a3b8; margin-top:1px; }
+.post-menu {
+  width:30px; height:30px; border:none; background:transparent; border-radius:8px;
+  font-size:16px; cursor:pointer; color:#94a3b8; display:flex; align-items:center; justify-content:center;
+}
+.post-body { font-size:14px; color:#1e293b; line-height:1.5; white-space:pre-wrap; margin-bottom:6px; word-break:break-word; }
+.post-media { margin:6px 0; border-radius:12px; overflow:hidden; }
+.post-media img, .post-media video {
+  width:100%; max-height:340px; object-fit:cover; display:block; border-radius:12px;
+}
+
+/* Actions — SVG icons, not emoji */
+.post-actions {
+  display:flex; gap:2px; border-top:1px solid #f1f5f9; padding-top:6px; margin-top:4px;
+}
+.post-actions button {
+  flex:1; display:flex; align-items:center; justify-content:center; gap:5px;
+  padding:8px 4px; border:none; background:transparent; border-radius:8px;
+  font-size:12px; font-weight:600; color:var(--muted); cursor:pointer;
+  transition:background .12s, color .12s;
+}
+.post-actions button:hover { background:var(--hover); }
+.post-actions button:active { background:#f1f5f9; }
+.post-actions button.liked { color:var(--tz-green); }
+.post-actions button svg { width:16px; height:16px; flex-shrink:0; }
+.post-actions button.liked svg { fill:var(--tz-green); stroke:var(--tz-green); }
+
+/* Comments */
+.comments-box { margin-top:6px; padding-top:6px; border-top:1px solid #f1f5f9; }
+.comment { display:flex; gap:8px; margin-bottom:8px; align-items:flex-start; }
+.comment img { width:28px; height:28px; border-radius:50%; object-fit:cover; background:#e2e8f0; flex-shrink:0; }
+.comment .c-body {
+  flex:1; background:#f8fafc; border-radius:12px; padding:7px 10px; font-size:13px;
+}
+.comment .c-body .c-name { font-size:12px; font-weight:800; color:var(--text); }
+.comment .c-body .c-uname { font-size:11px; color:var(--muted); font-weight:500; margin-left:3px; }
+.comment .c-body p { margin:2px 0 0; color:#334155; white-space:pre-wrap; }
+.c-actions { display:flex; gap:12px; margin-top:1px; padding-left:36px; }
+.c-actions button {
+  border:none; background:none; font-size:11px; font-weight:700; color:var(--muted); cursor:pointer; padding:0;
+}
+.comment-form { display:flex; gap:8px; margin-top:6px; align-items:center; }
+.comment-form input {
+  flex:1; padding:8px 12px; border:1.5px solid var(--border); border-radius:20px;
+  font-size:13px; outline:none; background:#f8fafc;
+}
+.comment-form input:focus { border-color:var(--tz-green); }
+.comment-form button {
+  padding:8px 14px; border:0; border-radius:20px; background:var(--tz-green);
+  color:#fff; font-weight:700; font-size:12px; cursor:pointer;
+}
+
+/* ── Composer (Grok-style) ── */
+.composer {
+  position:fixed; left:0; right:0; bottom:55px; z-index:30;
+  background:var(--card); border-top:1px solid var(--border);
+  box-shadow:0 -4px 20px rgba(0,0,0,.06);
+  padding:8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+}
+.composer-inner { max-width:680px; margin:0 auto; }
+
+.attach-panel {
+  display:none; gap:8px; margin-bottom:8px; padding:8px;
+  background:#f8fafc; border-radius:12px; border:1px solid var(--border);
+  flex-wrap:wrap;
+}
+.attach-panel.open { display:flex; }
+.attach-panel label {
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  padding:10px 14px; border-radius:12px; border:1.5px solid var(--border);
+  background:#fff; font-size:11px; font-weight:700; color:var(--text);
+  cursor:pointer; min-width:70px;
+}
+.attach-panel label:active { background:#f1f5f9; }
+.attach-panel svg { width:22px; height:22px; stroke:var(--tz-green); }
+
+.media-preview {
+  display:none; position:relative; margin-bottom:8px;
+  border-radius:12px; overflow:hidden; max-width:200px;
+}
+.media-preview.show { display:block; }
+.media-preview img, .media-preview video {
+  max-height:140px; max-width:100%; border-radius:12px; display:block;
+}
+.media-preview .rm {
+  position:absolute; top:4px; right:4px; width:26px; height:26px; border-radius:50%;
+  background:rgba(0,0,0,.65); color:#fff; border:none; font-size:14px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+.media-preview .file-meta {
+  font-size:11px; color:var(--muted); padding:4px 2px; font-weight:600;
+}
+
+.composer-row {
+  display:flex; align-items:flex-end; gap:6px;
+  background:#f8fafc; border:1.5px solid var(--border); border-radius:16px;
+  padding:6px 6px 6px 4px; transition:border-color .15s;
+}
+.composer-row:focus-within { border-color:var(--tz-green); background:#fff; }
+
+.composer .plus-btn {
+  width:36px; height:36px; border:none; border-radius:12px; background:transparent;
+  color:var(--muted); cursor:pointer; display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; transition:color .12s, background .12s;
+}
+.composer .plus-btn:hover, .composer .plus-btn.active {
+  color:var(--tz-green); background:rgba(30,181,58,.1);
+}
+.composer .plus-btn svg { width:22px; height:22px; }
+
+.composer textarea {
+  flex:1; border:none; outline:none; resize:none; background:transparent;
+  font-size:14.5px; font-family:inherit; line-height:1.4;
+  min-height:36px; max-height:120px; padding:7px 4px; color:var(--text);
+}
+.composer textarea::placeholder { color:#94a3b8; }
+
+.composer .send-btn {
+  width:36px; height:36px; border:none; border-radius:12px;
+  background:var(--tz-green); color:#fff; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  transition:opacity .12s, transform .1s;
+}
+.composer .send-btn:disabled { opacity:.4; cursor:default; }
+.composer .send-btn:not(:disabled):active { transform:scale(.92); }
+.composer .send-btn svg { width:18px; height:18px; }
+
+.composer-meta {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:3px 4px 0; font-size:11px; color:var(--muted); font-weight:600;
+  min-height:16px;
+}
+.composer-meta .char-count.warn { color:#f59e0b; }
+.composer-meta .char-count.over { color:#ef4444; }
+.composer-meta .file-size { color:var(--tz-dark); }
+
+.lock {
+  text-align:center; padding:14px; background:#fffbeb; border-radius:12px;
+  color:#78716c; font-size:13px; margin:0 12px 12px; border:1px solid #fde68a;
+}
+.empty { text-align:center; color:#94a3b8; padding:36px 20px; font-size:13.5px; }
+
+/* ── Modals ── */
+.modal-overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:10000;
+  opacity:0; visibility:hidden; transition:opacity .2s, visibility .2s;
+  display:flex; align-items:flex-end; justify-content:center;
+}
+.modal-overlay.open { opacity:1; visibility:visible; }
+.modal {
+  background:#fff; border-radius:18px 18px 0 0; width:100%; max-width:500px;
+  max-height:85dvh; overflow-y:auto; padding:18px 16px calc(18px + env(safe-area-inset-bottom));
+  transform:translateY(100%); transition:transform .25s cubic-bezier(.4,0,.2,1);
+}
+.modal-overlay.open .modal { transform:translateY(0); }
+.modal h3 { margin:0 0 12px; font-size:16px; font-weight:800; }
+.modal label { display:block; font-size:12px; font-weight:700; color:#333; margin-bottom:4px; }
+.modal input, .modal textarea, .modal select {
+  width:100%; padding:10px 12px; border:1.5px solid var(--border); border-radius:11px;
+  font-size:14px; outline:none; margin-bottom:10px; background:#f8fafc;
+  box-sizing:border-box; font-family:inherit;
+}
+.modal input:focus, .modal textarea:focus { border-color:var(--tz-green); }
+.modal textarea { min-height:72px; resize:vertical; }
+.modal .btn-row { display:flex; gap:8px; margin-top:6px; }
+.modal .btn-row button {
+  flex:1; padding:11px; border-radius:11px; font-weight:800; font-size:13.5px;
+  border:none; cursor:pointer;
+}
+.modal .btn-cancel { background:#f1f5f9; color:#333; }
+.modal .btn-ok { background:var(--tz-green); color:#fff; }
+.modal .btn-danger { background:#ef4444; color:#fff; }
+
+.invite-results { max-height:200px; overflow-y:auto; margin-bottom:8px; }
+.invite-user {
+  display:flex; align-items:center; gap:10px; padding:9px; border-radius:11px;
+  cursor:pointer; border:1.5px solid transparent;
+}
+.invite-user:hover, .invite-user.selected { background:#f0fdf4; border-color:var(--tz-green); }
+.invite-user img { width:34px; height:34px; border-radius:50%; object-fit:cover; background:#e2e8f0; }
+.invite-user .iu-info { flex:1; min-width:0; }
+.invite-user .iu-info strong { display:block; font-size:13px; font-weight:700; }
+.invite-user .iu-info span { font-size:11px; color:var(--muted); }
+.invite-user .check { color:var(--tz-green); font-size:15px; display:none; }
+.invite-user.selected .check { display:block; }
+
+.report-item {
+  background:#fef2f2; border-radius:11px; padding:11px; margin-bottom:7px; border:1px solid #fecaca;
+}
+.report-item strong { font-size:12.5px; }
+.report-item p { margin:3px 0; font-size:12px; color:#555; }
+.report-item .r-actions { display:flex; gap:6px; margin-top:7px; }
+.report-item .r-actions button {
+  padding:5px 11px; border-radius:7px; border:none; font-size:11.5px; font-weight:700; cursor:pointer;
+}
+</style>
+
+<div class="gr-page">
+  <div class="gr-top">
+    <a class="back" href="#" aria-label="back">‹</a>
+    <div class="top-info">
+      
+        <img class="top-av" src="" alt="">
+      
+        <img class="top-av" src="#" alt="">
+      
+        <img class="top-av" src="https://ui-avatars.com/api/?name=&background=ffffff&color=1EB53A&size=72&bold=true" alt="">
+      
+      <div class="top-text">
+        <h1></h1>
+        <span> members</span>
+      </div>
+    </div>
+    
+    <button type="button" class="icon-btn" id="adminMenuBtn" aria-label="Settings">⚙</button>
+    
+  </div>
+
+  <div class="gr-body">
+    <div class="header-card">
+      <div class="header-top">
+        
+          <img class="group-av" src="" alt="">
+        
+          <img class="group-av" src="#" alt="">
+        
+          <img class="group-av" src="https://ui-avatars.com/api/?name=&background=1EB53A&color=fff&size=128&bold=true" alt="">
+        
+        <div class="header-info">
+          <h2></h2>
+          <p></p>
+        </div>
+      </div>
+      <div class="meta">
+        <span></span>
+        <span> members</span>
+        <span>@</span>
+        <span class="admin-badge">Admin</span>
+      </div>
+      <div class="action-row">
+        
+        <form action="#" method="POST" style="display:inline">
+          <button type="submit" class="btn btn-join">Join Group</button>
+        </form>
+        
+        <button type="button" class="btn btn-invite" id="inviteBtn">Invite</button>
+        
+        <button type="button" class="btn btn-edit" id="editGroupBtn">Edit</button>
+        
+        <form action="#" method="POST" style="display:inline"
+              onsubmit="return confirm('Una uhakika unataka kuondoka?')">
+          <button type="submit" class="btn btn-leave">Leave</button>
+        </form>
+        
+        
+      </div>
+    </div>
+
+    
+    <div class="section-label">
+      <span>Members ()</span>
+      <a href="#" id="toggleAdminMode">Manage</a>
+    </div>
+    <div class="members" id="membersStrip">
+      
+      <div class="mem">
+        <a href="#">
+          
+            <img src="" alt="">
+          
+            <img src="#" alt="">
+          
+            <img src="https://ui-avatars.com/api/?name=&background=1EB53A&color=fff&size=80" alt="">
+          
+          
+        </a>
+        
+          <span class="admin-dot">A</span>
+        
+        
+        <form action="#" method="POST"
+              onsubmit="return confirm('Ondoa ?')" style="display:contents">
+          <button type="submit" class="remove-btn" title="Remove">×</button>
+        </form>
+        
+      </div>
+      
+    </div>
+    
+
+    <div class="tabs">
+      <button type="button" class="tab active" data-tab="posts">Posts</button>
+      <button type="button" class="tab" data-tab="chat">chat</button>
+      
+      <button type="button" class="tab" data-tab="reports">Reports ()</button>
+      
+    </div>
+
+    <div class="feed" id="postsTab">
+      
+        
+        <div class="post-card" data-post-id="">
+          <div class="post-head">
+            
+              <img src="" alt="">
+            
+              <img src="#" alt="">
+            
+              <img src="https://ui-avatars.com/api/?name=&background=1EB53A&color=fff&size=72" alt="">
+            
+            <div class="who">
+              <div class="name-row">
+                <a class="full-name" href="#"></a>
+                
+                <span class="verified" title="Verified">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#1EB53A"/><path d="M9 12.5l2 2 4-4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                
+                <span class="uname">@</span>
+              </div>
+              <span class="time"></span>
+            </div>
+            <button type="button" class="post-menu" data-post-id="" aria-label="Menu">⋯</button>
+          </div>
+          <div class="post-body"></div>
+          
+          <div class="post-media">
+            
+              <video src="" controls playsinline></video>
+            
+              <img src="" alt="">
+            
+          </div>
+          
+          <div class="post-actions">
+            <button type="button" class="like-btn liked" data-post-id="">
+              <svg viewBox="0 0 24 24" fill="currentColornone" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <span class="like-count"></span>
+            </button>
+            <button type="button" class="comment-toggle" data-post-id="">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              
+            </button>
+            <button type="button" class="report-btn" data-post-id="">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+              Report
+            </button>
+          </div>
+
+          <div class="comments-box" id="comments-" style="display:none">
+            
+              
+              <div class="comment" data-comment-id="">
+                
+                  <img src="" alt="">
+                
+                  <img src="#" alt="">
+                
+                  <img src="https://ui-avatars.com/api/?name=&background=1EB53A&color=fff&size=56" alt="">
+                
+                <div class="c-body">
+                  <span class="c-name"></span>
+                  <span class="c-uname">@</span>
+                  <p></p>
+                </div>
+              </div>
+              <div class="c-actions">
+                <button type="button" class="reply-btn" data-comment-id="" data-post-id="">Reply</button>
+              </div>
+              
+                
+                <div class="comment" style="padding-left:28px" data-comment-id="">
+                  
+                    <img src="" alt="">
+                  
+                    <img src="#" alt="">
+                  
+                    <img src="https://ui-avatars.com/api/?name=&background=1EB53A&color=fff&size=56" alt="">
+                  
+                  <div class="c-body">
+                    <span class="c-name"></span>
+                    <span class="c-uname">@</span>
+                    <p></p>
+                  </div>
+                </div>
+                
+              
+              
+            
+            
+            <form class="comment-form" action="#" method="POST">
+              <input type="text" name="content" placeholder="Andika comment..." required maxlength="500" autocomplete="off">
+              <button type="submit">Reply</button>
+            </form>
+            
+          </div>
+        </div>
+        
+      
+        <div class="empty">no_posts_start_chat</div>
+      
+    </div>
+
+    <div class="feed" id="chatTab" style="display:none">
+      
+        
+        <div class="post-card">
+          <div class="post-head">
+            
+              <img src="" alt="">
+            
+              <img src="#" alt="">
+            
+              <img src="https://ui-avatars.com/api/?name=&background=1EB53A&color=fff&size=72" alt="">
+            
+            <div class="who">
+              <div class="name-row">
+                <a class="full-name" href="#"></a>
+                <span class="uname">@</span>
+              </div>
+              <span class="time"></span>
+            </div>
+          </div>
+          <div class="post-body"></div>
+        </div>
+        
+      
+        <div class="empty">no_messages_dot</div>
+      
+    </div>
+
+    
+    <div class="feed" id="reportsTab" style="display:none">
+      
+        
+        <div class="report-item">
+          <strong>Report from @</strong>
+          <p>Post by @: ""</p>
+          <p><em>Reason: </em></p>
+          <div class="r-actions">
+            <form action="#" method="POST" style="display:inline">
+              <button type="submit" style="background:#f1f5f9;color:#333">Dismiss</button>
+            </form>
+            <form action="#" method="POST" style="display:inline"
+                  onsubmit="return confirm('delete post hii?')">
+              <button type="submit" style="background:#ef4444;color:#fff">Delete Post</button>
+            </form>
+          </div>
+        </div>
+        
+      
+        <div class="empty">no_reports</div>
+      
+    </div>
+    
+  </div>
+
+  
+  <form class="composer" id="composerForm" action="#" method="POST" enctype="multipart/form-data">
+    <div class="composer-inner">
+      <div class="attach-panel" id="attachPanel">
+        <label for="mediaInput">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          Photo
+        </label>
+        <label for="mediaInputVid">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          video
+        </label>
+        <input type="file" id="mediaInput" name="media" accept="image/*" style="display:none">
+        <input type="file" id="mediaInputVid" accept="video/*" style="display:none">
+      </div>
+
+      <div class="media-preview" id="mediaPreview">
+        <button type="button" class="rm" id="rmMedia">×</button>
+        <img id="previewImg" alt="" style="display:none">
+        <video id="previewVid" controls playsinline style="display:none"></video>
+        <div class="file-meta" id="fileMeta"></div>
+      </div>
+
+      <div class="composer-row">
+        <button type="button" class="plus-btn" id="plusBtn" aria-label="Attach" title="Attach file">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <textarea name="content" id="postContent" placeholder="Andika kitu..." rows="1" maxlength="2000"></textarea>
+        <input type="hidden" name="post_type" id="postType" value="text">
+        <button type="submit" class="send-btn" id="sendBtn" disabled aria-label="send">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+      <div class="composer-meta">
+        <span class="file-size" id="fileSize"></span>
+        <span class="char-count" id="charCount"></span>
+      </div>
+    </div>
+  </form>
+  
+  <div class="lock">Jiunge na group ili kuweza kupost na kuchati.</div>
+  
+</div>
+
+<div class="modal-overlay" id="inviteModal">
+  <div class="modal">
+    <h3>Invite Members</h3>
+    <label>search username au jina</label>
+    <input type="text" id="inviteSearch" placeholder="Andika jina..." autocomplete="off">
+    <div class="invite-results" id="inviteResults"></div>
+    <form action="#" method="POST" id="inviteForm">
+      <input type="hidden" name="user_ids" id="inviteUserIds" value="">
+      <div class="btn-row">
+        <button type="button" class="btn-cancel" id="inviteCancel">cancel</button>
+        <button type="submit" class="btn-ok">Invite</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <h3>Edit Group</h3>
+    <form action="#" method="POST" enctype="multipart/form-data">
+      <label>group_name_label</label>
+      <input type="text" name="name" value="" required maxlength="80">
+      <label>details</label>
+      <textarea name="description" maxlength="500"></textarea>
+      <label>Category</label>
+      <select name="category">
+        <option value="university" selected>University</option>
+        <option value="gamers" selected>Gamers</option>
+        <option value="politics" selected>politics</option>
+        <option value="agriculture" selected>Agriculture</option>
+        <option value="business" selected>business_company</option>
+        <option value="general" selected>General</option>
+      </select>
+      <label>Profile Picture (hiari)</label>
+      <input type="file" name="profile_pic" accept="image/*">
+      <div class="btn-row">
+        <button type="button" class="btn-cancel" id="editCancel">cancel</button>
+        <button type="submit" class="btn-ok">save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="reportModal">
+  <div class="modal">
+    <h3>Report Post</h3>
+    <form action="#" method="POST" id="reportForm">
+      <input type="hidden" name="post_id" id="reportPostId" value="">
+      <label>reason</label>
+      <select name="reason">
+        <option value="spam">Spam</option>
+        <option value="harassment">Harassment / Uonevu</option>
+        <option value="hate">Hate speech</option>
+        <option value="inappropriate">Maudhui yasiyofaa</option>
+        <option value="other">other_option</option>
+      </select>
+      <label>Maelezo (hiari)</label>
+      <textarea name="details" placeholder="Eleza zaidi..." maxlength="300"></textarea>
+      <div class="btn-row">
+        <button type="button" class="btn-cancel" id="reportCancel">cancel</button>
+        <button type="submit" class="btn-danger">Report</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  var MAX_CHARS = 2000;
+
+  var tabs = document.querySelectorAll('.tab');
+  var postsTab = document.getElementById('postsTab');
+  var chatTab = document.getElementById('chatTab');
+  var reportsTab = document.getElementById('reportsTab');
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      tabs.forEach(function (x) { x.classList.remove('active'); });
+      t.classList.add('active');
+      var tab = t.getAttribute('data-tab');
+      if (postsTab) postsTab.style.display = tab === 'posts' ? '' : 'none';
+      if (chatTab) chatTab.style.display = tab === 'chat' ? '' : 'none';
+      if (reportsTab) reportsTab.style.display = tab === 'reports' ? '' : 'none';
+    });
+  });
+
+  var toggleAdmin = document.getElementById('toggleAdminMode');
+  var membersStrip = document.getElementById('membersStrip');
+  if (toggleAdmin && membersStrip) {
+    toggleAdmin.addEventListener('click', function (e) {
+      e.preventDefault();
+      membersStrip.classList.toggle('admin-mode');
+      toggleAdmin.textContent = membersStrip.classList.contains('admin-mode') ? 'Done' : 'Manage';
+    });
+  }
+
+  function openModal(el) { if (el) el.classList.add('open'); }
+  function closeModal(el) { if (el) el.classList.remove('open'); }
+
+  var inviteBtn = document.getElementById('inviteBtn');
+  var inviteModal = document.getElementById('inviteModal');
+  var inviteCancel = document.getElementById('inviteCancel');
+  var inviteSearch = document.getElementById('inviteSearch');
+  var inviteResults = document.getElementById('inviteResults');
+  var inviteUserIds = document.getElementById('inviteUserIds');
+  var selectedUsers = {};
+
+  if (inviteBtn) inviteBtn.addEventListener('click', function () { openModal(inviteModal); });
+  if (inviteCancel) inviteCancel.addEventListener('click', function () { closeModal(inviteModal); });
+  if (inviteModal) inviteModal.addEventListener('click', function (e) {
+    if (e.target === inviteModal) closeModal(inviteModal);
+  });
+
+  if (inviteSearch) {
+    var searchTimer;
+    inviteSearch.addEventListener('input', function () {
+      clearTimeout(searchTimer);
+      var q = inviteSearch.value.trim();
+      if (q.length < 2) { inviteResults.innerHTML = ''; return; }
+      searchTimer = setTimeout(function () {
+        fetch('/api/search_users?q=' + encodeURIComponent(q))
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            inviteResults.innerHTML = '';
+            (data.users || []).forEach(function (u) {
+              var div = document.createElement('div');
+              div.className = 'invite-user' + (selectedUsers[u.id] ? ' selected' : '');
+              var av = u.avatar || ('https://ui-avatars.com/api/?name=' + encodeURIComponent(u.username) + '&background=1EB53A&color=fff&size=72');
+              div.innerHTML = '<img src="' + av + '" alt="">' +
+                '<div class="iu-info"><strong>' + (u.full_name || u.username) + '</strong><span>@' + u.username + '</span></div>' +
+                '<span class="check">✓</span>';
+              div.addEventListener('click', function () {
+                if (selectedUsers[u.id]) { delete selectedUsers[u.id]; div.classList.remove('selected'); }
+                else { selectedUsers[u.id] = u; div.classList.add('selected'); }
+                inviteUserIds.value = Object.keys(selectedUsers).join(',');
+              });
+              inviteResults.appendChild(div);
+            });
+          })
+          .catch(function () {
+            inviteResults.innerHTML = '<p style="color:#999;font-size:13px;padding:8px">no_results</p>';
+          });
+      }, 300);
+    });
+  }
+
+  var editBtn = document.getElementById('editGroupBtn');
+  var editModal = document.getElementById('editModal');
+  var editCancel = document.getElementById('editCancel');
+  if (editBtn) editBtn.addEventListener('click', function () { openModal(editModal); });
+  if (editCancel) editCancel.addEventListener('click', function () { closeModal(editModal); });
+  if (editModal) editModal.addEventListener('click', function (e) {
+    if (e.target === editModal) closeModal(editModal);
+  });
+
+  var reportModal = document.getElementById('reportModal');
+  var reportCancel = document.getElementById('reportCancel');
+  var reportPostId = document.getElementById('reportPostId');
+  document.querySelectorAll('.report-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      reportPostId.value = btn.getAttribute('data-post-id');
+      openModal(reportModal);
+    });
+  });
+  if (reportCancel) reportCancel.addEventListener('click', function () { closeModal(reportModal); });
+  if (reportModal) reportModal.addEventListener('click', function (e) {
+    if (e.target === reportModal) closeModal(reportModal);
+  });
+
+  document.querySelectorAll('.like-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-post-id');
+      fetch('/api/group_post_like/' + id, { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          btn.classList.toggle('liked', d.liked);
+          var svg = btn.querySelector('svg');
+          if (svg) svg.setAttribute('fill', d.liked ? 'currentColor' : 'none');
+          var cnt = btn.querySelector('.like-count');
+          if (cnt) cnt.textContent = d.count;
+        }).catch(function () {});
+    });
+  });
+
+  document.querySelectorAll('.comment-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var box = document.getElementById('comments-' + btn.getAttribute('data-post-id'));
+      if (box) box.style.display = box.style.display === 'none' ? '' : 'none';
+    });
+  });
+
+  /* Composer */
+  var plusBtn = document.getElementById('plusBtn');
+  var attachPanel = document.getElementById('attachPanel');
+  var mediaInput = document.getElementById('mediaInput');
+  var mediaInputVid = document.getElementById('mediaInputVid');
+  var mediaPreview = document.getElementById('mediaPreview');
+  var previewImg = document.getElementById('previewImg');
+  var previewVid = document.getElementById('previewVid');
+  var rmMedia = document.getElementById('rmMedia');
+  var fileMeta = document.getElementById('fileMeta');
+  var fileSizeEl = document.getElementById('fileSize');
+  var charCount = document.getElementById('charCount');
+  var postContent = document.getElementById('postContent');
+  var postType = document.getElementById('postType');
+  var sendBtn = document.getElementById('sendBtn');
+  var activeFile = null;
+
+  function formatBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+    return (b / 1048576).toFixed(2) + ' MB';
+  }
+
+  function updateSendState() {
+    var hasText = postContent && postContent.value.trim().length > 0;
+    var hasFile = !!activeFile;
+    var over = postContent && postContent.value.length > MAX_CHARS;
+    if (sendBtn) sendBtn.disabled = (!hasText && !hasFile) || over;
+  }
+
+  function updateCharCount() {
+    if (!charCount || !postContent) return;
+    var n = postContent.value.length;
+    if (n === 0) { charCount.textContent = ''; charCount.className = 'char-count'; return; }
+    charCount.textContent = n + ' / ' + MAX_CHARS;
+    charCount.className = 'char-count' + (n > MAX_CHARS ? ' over' : n > MAX_CHARS * 0.9 ? ' warn' : '');
+  }
+
+  if (plusBtn && attachPanel) {
+    plusBtn.addEventListener('click', function () {
+      attachPanel.classList.toggle('open');
+      plusBtn.classList.toggle('active');
+    });
+  }
+
+  function handleFile(f, type) {
+    if (!f) return;
+    activeFile = f;
+    var url = URL.createObjectURL(f);
+    if (type === 'video' || f.type.startsWith('video/')) {
+      previewImg.style.display = 'none';
+      previewVid.style.display = 'block';
+      previewVid.src = url;
+      if (postType) postType.value = 'video';
+      if (mediaInput) {
+        try {
+          var dt = new DataTransfer();
+          dt.items.add(f);
+          mediaInput.files = dt.files;
+        } catch (e) {}
+      }
+    } else {
+      previewVid.style.display = 'none';
+      previewImg.style.display = 'block';
+      previewImg.src = url;
+      if (postType) postType.value = 'image';
+    }
+    mediaPreview.classList.add('show');
+    if (fileMeta) fileMeta.textContent = f.name + ' · ' + formatBytes(f.size);
+    if (fileSizeEl) fileSizeEl.textContent = formatBytes(f.size);
+    if (attachPanel) attachPanel.classList.remove('open');
+    if (plusBtn) plusBtn.classList.remove('active');
+    updateSendState();
+  }
+
+  if (mediaInput) mediaInput.addEventListener('change', function () { handleFile(mediaInput.files[0], 'image'); });
+  if (mediaInputVid) {
+    mediaInputVid.addEventListener('change', function () {
+      var f = mediaInputVid.files[0];
+      if (f && mediaInput) {
+        try {
+          var dt = new DataTransfer();
+          dt.items.add(f);
+          mediaInput.files = dt.files;
+        } catch (e) {}
+      }
+      handleFile(f, 'video');
+    });
+  }
+
+  if (rmMedia) {
+    rmMedia.addEventListener('click', function () {
+      activeFile = null;
+      if (mediaInput) mediaInput.value = '';
+      if (mediaInputVid) mediaInputVid.value = '';
+      previewImg.src = ''; previewVid.src = '';
+      previewImg.style.display = 'none'; previewVid.style.display = 'none';
+      mediaPreview.classList.remove('show');
+      if (fileMeta) fileMeta.textContent = '';
+      if (fileSizeEl) fileSizeEl.textContent = '';
+      if (postType) postType.value = 'text';
+      updateSendState();
+    });
+  }
+
+  if (postContent) {
+    postContent.addEventListener('input', function () {
+      postContent.style.height = 'auto';
+      postContent.style.height = Math.min(postContent.scrollHeight, 120) + 'px';
+      updateCharCount();
+      updateSendState();
+    });
+  }
+
+  updateSendState();
+})();
+</script>
+
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

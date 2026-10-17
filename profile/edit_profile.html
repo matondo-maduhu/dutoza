@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>edit_profile - Kijiji Tanzania</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --tz-green: #1EB53A;
+            --tz-green-dark: #159447;
+            --tz-yellow: #FCD116;
+            --tz-blue: #00A3DD;
+            --tz-black: #000000;
+            --bg: #f0f2f5;
+            --card: #ffffff;
+        }
+
+        body {
+            background: var(--bg);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ========== MAIN HEADER ========== */
+        .header {
+            background: #ffffff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 3px solid var(--tz-yellow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header a {
+            color: var(--tz-green);
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .header h1 {
+            font-size: 19px;
+            color: var(--tz-green);
+            flex: 1;
+            font-weight: 700;
+        }
+
+        /* ========== MAIN MENU (orodha ya batani) ========== */
+        .main-menu {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 12px;
+        }
+
+        /* ===== Batani za menu kuu ===== */
+        .menu-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: #ffffff;
+            border: none;
+            border-radius: 18px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+            cursor: pointer;
+            text-align: left;
+            font-family: inherit;
+            transition: transform 0.15s, box-shadow 0.15s;
+            --c1: #1EB53A; --c2: #159447;
+        }
+        .menu-btn:active { transform: scale(0.98); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+        .menu-btn .mi {
+            width: 48px; height: 48px; flex-shrink: 0;
+            border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 20px;
+            background: linear-gradient(145deg, var(--c1), var(--c2));
+            box-shadow: 0 4px 10px color-mix(in srgb, var(--c1) 38%, transparent);
+        }
+        .menu-btn .mi.avatar {
+            padding: 0; border-radius: 50%; overflow: hidden; background: #e4e6eb;
+            box-shadow: 0 0 0 3px var(--c1);
+        }
+        .menu-btn .mi.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .menu-btn .mt { flex: 1; min-width: 0; }
+        .menu-btn .mt b { display: block; font-size: 15.5px; font-weight: 700; color: #1c1e21; }
+        .menu-btn .mt small {
+            display: block; margin-top: 3px; font-size: 12px; font-weight: 500; color: #65676b;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .menu-btn .chev { color: #b8bbc0; font-size: 14px; flex-shrink: 0; }
+        .menu-btn.m-pic   { --c1: #1EB53A; --c2: #159447; }
+        .menu-btn.m-cover { --c1: #00A3DD; --c2: #0077b6; }
+        .menu-btn.m-info  { --c1: #ff9f1c; --c2: #f57c00; }
+        .menu-btn.m-links { --c1: #e91e8c; --c2: #8A2BE2; }
+        .menu-btn.m-cat   { --c1: #8A2BE2; --c2: #5b21b6; }
+        .menu-btn .pill {
+            display: inline-block; font-size: 11px; font-weight: 700;
+            background: #f3e8ff; color: #8A2BE2; padding: 2px 9px; border-radius: 20px;
+        }
+
+        /* mstari wa icons ndogo za brand (preview) */
+        .brand-mini { display: flex; gap: 5px; margin-top: 7px; flex-wrap: wrap; }
+        .bm {
+            width: 22px; height: 22px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 11px; color: #fff; background: #d9dce1;
+        }
+        .bm.on { background: var(--bgi, var(--bc)); color: var(--ic, #fff); }
+
+        /* ========== FULL SCREEN SECTIONS ========== */
+        .fullscreen-section {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            z-index: 2000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .fullscreen-section.active {
+            display: block;
+        }
+
+        .fs-header {
+            background: #ffffff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 3px solid var(--tz-yellow);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .fs-header button {
+            background: none;
+            border: none;
+            color: var(--tz-green);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .fs-header h1 {
+            font-size: 18px;
+            color: var(--tz-green);
+            flex: 1;
+            font-weight: 700;
+        }
+
+        .fs-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 16px 12px 40px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 7px;
+            color: #444;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+            margin-bottom: 15px;
+            background: #fff;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--tz-green);
+            box-shadow: 0 0 0 3px rgba(30, 181, 58, 0.15);
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .current-photo {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .current-photo img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--tz-green);
+        }
+
+        .cover-preview {
+            width: 100%;
+            height: 160px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: #e4e6eb;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .upload-box {
+            background: #f7f9f8;
+            border: 1px dashed var(--tz-green);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .upload-box input {
+            margin-bottom: 0;
+        }
+
+        .link-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        .hint {
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 16px;
+            line-height: 1.45;
+        }
+
+        /* ===== Batani za categories za links ===== */
+        .category-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: #ffffff;
+            border: none;
+            border-radius: 18px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+            cursor: pointer;
+            text-align: left;
+            font-family: inherit;
+            transition: transform 0.15s;
+            --c1: #1EB53A; --c2: #159447;
+        }
+        .category-btn:active { transform: scale(0.98); }
+        .category-btn .mi {
+            width: 48px; height: 48px; flex-shrink: 0; border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 20px;
+            background: linear-gradient(145deg, var(--c1), var(--c2));
+            box-shadow: 0 4px 10px color-mix(in srgb, var(--c1) 38%, transparent);
+        }
+        .category-btn .mt { flex: 1; min-width: 0; }
+        .category-btn .mt b { display: block; font-size: 15.5px; font-weight: 700; color: #1c1e21; }
+        .category-btn .chev { color: #b8bbc0; font-size: 14px; }
+
+        /* ===== Kila link: alama halisi + rangi ya app ===== */
+        .link-field {
+            margin-bottom: 14px;
+            padding: 12px;
+            border-radius: 14px;
+            background: #fafbfc;
+            border: 1px solid #eceef1;
+            border-left: 5px solid var(--bc);
+        }
+        .link-field:last-child { margin-bottom: 0; }
+        .link-field input { margin-bottom: 0; border-color: #e0e3e7; }
+        .link-field input:focus {
+            border-color: var(--bc);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--bc) 20%, transparent);
+        }
+        .link-title { margin-bottom: 10px; }
+        .brand-ic {
+            width: 32px; height: 32px; border-radius: 10px;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: var(--bgi, var(--bc));
+            box-shadow: 0 3px 8px color-mix(in srgb, var(--bc) 35%, transparent);
+        }
+        .link-title .brand-ic i { color: var(--ic, #fff); width: auto; font-size: 16px; }
+        .set-badge {
+            margin-left: auto; font-size: 11px; font-weight: 700; color: #159447;
+            background: #e6f9ec; padding: 3px 9px; border-radius: 20px;
+            display: inline-flex; align-items: center; gap: 4px;
+        }
+
+        /* Field groups inside Taarifa za Profile */
+        .field-group {
+            margin-bottom: 18px;
+        }
+
+        .field-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .field-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .field-label i {
+            color: var(--tz-green);
+            width: 18px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .field-group.birthday .field-label i { color: var(--tz-blue); }
+        .field-group.join .field-label i { color: #d4a800; }
+        .field-group.sex .field-label i { color: #9c27b0; }
+        .field-group.marital .field-label i { color: #e91e63; }
+
+        /* Hide main when section open */
+        body.section-open .main-menu,
+        body.section-open .header {
+            display: none;
+        }
+
+        /* ========== GROUP LABELS (main menu) ========== */
+        .section-group-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 20px 4px 10px;
+            font-size: 12.5px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            color: var(--tz-green-dark);
+        }
+
+        .section-group-label:first-of-type {
+            margin-top: 2px;
+        }
+
+        .section-group-label i {
+            font-size: 12px;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            color: #ffffff;
+            background: linear-gradient(145deg, var(--tz-green) 0%, var(--tz-green-dark) 100%);
+            box-shadow: 0 2px 5px rgba(30,181,58,0.35);
+        }
+
+        /* ========== PER-SECTION STICKY SAVE BAR ========== */
+        .fs-save-bar {
+            position: sticky;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(180deg, rgba(240,242,245,0) 0%, var(--bg) 35%);
+            padding: 22px 12px 16px;
+            margin-top: 6px;
+        }
+
+        .fs-save-bar .save-btn-main {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .save-btn-main {
+            width: 100%;
+            border: none;
+            background: linear-gradient(135deg, var(--tz-green), var(--tz-green-dark));
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 3px 10px rgba(30, 181, 58, 0.3);
+        }
+
+        .save-btn-main:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========== MAIN HEADER ========== -->
+    <div class="header" id="mainHeader">
+        <a href="#">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h1>edit_profile</h1>
+    </div>
+
+    <!-- ========== MAIN MENU (batani) ========== -->
+    <div class="main-menu" id="mainMenu">
+
+        <div class="section-group-label">
+            <i class="fa-solid fa-images"></i>
+            Picha za Profile
+        </div>
+
+        <button type="button" class="menu-btn m-pic" onclick="openSection('profile-pic')">
+            <span class="mi avatar">
+                <img src="#"
+                     onerror="this.onerror=null; this.src='/static/images/default-avatar.png.jfif';"
+                     alt="">
+            </span>
+            <span class="mt">
+                <b>Profile Picture</b>
+                <small>Badilisha picha yako ya wasifu</small>
+            </span>
+            <i class="fa-solid fa-chevron-right chev"></i>
+        </button>
+
+        <button type="button" class="menu-btn m-cover" onclick="openSection('cover')">
+            <span class="mi"><i class="fa-solid fa-image"></i></span>
+            <span class="mt">
+                <b>Cover Photo</b>
+                <small>Picha kubwa juu ya profile yako</small>
+            </span>
+            <i class="fa-solid fa-chevron-right chev"></i>
+        </button>
+
+
+        <div class="section-group-label">
+            <i class="fa-solid fa-address-card"></i>
+            Taarifa na Uwepo
+        </div>
+
+        <button type="button" class="menu-btn m-info" onclick="openSection('info')">
+            <span class="mi"><i class="fa-solid fa-user-pen"></i></span>
+            <span class="mt">
+                <b>Taarifa za Profile</b>
+                <small>Jina, bio, birthday na zaidi</small>
+            </span>
+            <i class="fa-solid fa-chevron-right chev"></i>
+        </button>
+
+        <button type="button" class="menu-btn m-links" onclick="openSection('links')">
+            <span class="mi"><i class="fa-solid fa-link"></i></span>
+            <span class="mt">
+                <b>Links za Apps na Website</b>
+                <small>Facebook, Instagram, WhatsApp, YouTube...</small>
+            </span>
+            <i class="fa-solid fa-chevron-right chev"></i>
+        </button>
+
+        
+        <button type="button" class="menu-btn m-cat" onclick="openSection('category')">
+            <span class="mi"><i class="fa-solid fa-tags"></i></span>
+            <span class="mt">
+                <b>Category ya Profile</b>
+                <small><span class="pill"></span>Chagua kinachokuelezea vizuri</small>
+            </span>
+            <i class="fa-solid fa-chevron-right chev"></i>
+        </button>
+        
+
+        <form method="POST" enctype="multipart/form-data" id="mainForm">
+            <button type="submit" class="save-btn-main">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Hifadhi Mabadiliko
+            </button>
+        </form>
+    </div>
+
+
+    <!-- ==================================================
+         FULL SCREEN: PROFILE PICTURE
+         ================================================== -->
+    <div class="fullscreen-section" id="section-profile-pic">
+        <div class="fs-header">
+            <button type="button" onclick="closeSection()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1>Profile Picture</h1>
+        </div>
+
+        <div class="fs-content">
+            <div class="card">
+                <div class="current-photo">
+                    <img
+                        src="#"
+                        onerror="this.onerror=null; this.src='/static/images/default-avatar.png.jfif';"
+                        alt="Profile Picture">
+                </div>
+
+                <label for="profile_pic">Badilisha Profile Picture</label>
+                <div class="upload-box">
+                    <input type="file"
+                           id="profile_pic"
+                           name="profile_pic"
+                           form="mainForm"
+                           accept="image/*">
+                </div>
+            </div>
+
+            <div class="fs-save-bar">
+                <button type="submit" form="mainForm" class="save-btn-main">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Hifadhi Mabadiliko
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================================================
+         FULL SCREEN: COVER PHOTO
+         ================================================== -->
+    <div class="fullscreen-section" id="section-cover">
+        <div class="fs-header">
+            <button type="button" onclick="closeSection()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1>Cover Photo</h1>
+        </div>
+
+        <div class="fs-content">
+            <div class="card">
+                
+                    <img
+                        id="coverPreview"
+                        class="cover-preview"
+                        src="#"
+                        alt="Cover Photo">
+                
+                    <div id="coverPlaceholder"
+                         class="cover-preview"
+                         style="display:flex;align-items:center;justify-content:center;color:#777;">
+                        <i class="fa-solid fa-image" style="font-size:35px;margin-right:10px;"></i>
+                        Hakuna cover photo
+                    </div>
+                    <img id="coverPreview"
+                         class="cover-preview"
+                         style="display:none;"
+                         alt="Cover Preview">
+                
+
+                <label for="cover_photo">Badilisha Cover Photo</label>
+                <div class="upload-box">
+                    <input type="file"
+                           id="cover_photo"
+                           name="cover_photo"
+                           form="mainForm"
+                           accept="image/*"
+                           onchange="previewCover(this)">
+                </div>
+            </div>
+
+            <div class="fs-save-bar">
+                <button type="submit" form="mainForm" class="save-btn-main">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Hifadhi Mabadiliko
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================================================
+         FULL SCREEN: TAARIFA ZA PROFILE
+         ================================================== -->
+    <div class="fullscreen-section" id="section-info">
+        <div class="fs-header">
+            <button type="button" onclick="closeSection()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1>Taarifa za Profile</h1>
+        </div>
+
+        <div class="fs-content">
+            <div class="card">
+
+                <div class="field-group">
+                    <div class="field-label">
+                        <i class="fa-solid fa-id-card"></i>
+                        full_name
+                    </div>
+                    <input type="text" id="full_name" name="full_name" form="mainForm"
+                           placeholder="Mfano: Matondo Maduhu"
+                           maxlength="80"
+                           value="">
+                    <p class="hint" style="margin-top:-8px;">Jina hili si unique — linaonyeshwa kwenye profile juu ya @username.</p>
+                </div>
+
+                <div class="field-group">
+                    <div class="field-label">
+                        <i class="fa-solid fa-pen"></i>
+                        bio
+                    </div>
+                    <textarea id="bio" name="bio" form="mainForm"
+                              placeholder="Andika kitu kuhusu wewe..."></textarea>
+                </div>
+
+                <div class="field-group birthday">
+                    <div class="field-label">
+                        <i class="fa-solid fa-cake-candles"></i>
+                        Birthday
+                    </div>
+                    <input type="date" id="birthday" name="birthday" form="mainForm"
+                           value="">
+                </div>
+
+                <div class="field-group join">
+                    <div class="field-label">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        Join Year
+                    </div>
+                    <input type="text" id="join_year" name="join_year" form="mainForm"
+                           value=""
+                           readonly
+                           style="background:#f0f2f5;color:#65676b;cursor:not-allowed;">
+                    <p class="hint" style="margin-top:-8px;">
+                        Hii inajazwa moja kwa moja kutoka tarehe ya kweli uliyojiunga — haiwezi kubadilishwa.
+                    </p>
+                </div>
+
+                <div class="field-group sex">
+                    <div class="field-label">
+                        <i class="fa-solid fa-venus-mars"></i>
+                        Sex
+                    </div>
+                    <select id="sex" name="sex" form="mainForm">
+                        <option value="">Chagua</option>
+                        <option value="Male" selected>Male</option>
+                        <option value="Female" selected>Female</option>
+                    </select>
+                </div>
+
+                <div class="field-group marital">
+                    <div class="field-label">
+                        <i class="fa-solid fa-heart"></i>
+                        Marital Status
+                    </div>
+                    <select id="marital_status" name="marital_status" form="mainForm">
+                        <option value="">Chagua</option>
+                        <option value="Single" selected>Single</option>
+                        <option value="Married" selected>Married</option>
+                        <option value="Other" selected>Other</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="fs-save-bar">
+                <button type="submit" form="mainForm" class="save-btn-main">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Hifadhi Mabadiliko
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================================================
+         FULL SCREEN: KIJIJI MODE - CATEGORY YA PROFILE
+         ================================================== -->
+    <div class="fullscreen-section" id="section-category">
+        <div class="fs-header">
+            <button type="button" onclick="closeSection()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1>Category ya Profile</h1>
+        </div>
+
+        <div class="fs-content">
+            <div class="card" style="padding-bottom:6px;">
+                <p class="hint" style="margin-bottom:12px;">
+                    Chagua category inayokuelezea vizuri zaidi. Itaonekana kwenye profile yako.
+                </p>
+
+                <div style="position:relative;margin-bottom:14px;">
+                    <i class="fa-solid fa-magnifying-glass" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#999;"></i>
+                    <input type="text" id="categorySearchInput"
+                           placeholder="Tafuta category... (mfano: Muziki, Biashara, Creator)"
+                           oninput="filterCategories(this.value)"
+                           style="padding-left:38px;margin-bottom:0;">
+                </div>
+
+                <div id="selectedCategoryPill" style="display:none;margin-bottom:14px;">
+                    <span style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1EB53A,#00A3DD);color:#fff;padding:8px 14px;border-radius:20px;font-size:13.5px;font-weight:700;">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span id="selectedCategoryText"></span>
+                        <i class="fa-solid fa-xmark" style="cursor:pointer;opacity:.85;" onclick="selectCategory('')" title="Ondoa"></i>
+                    </span>
+                </div>
+
+                <div id="categoryChipsGrid" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+                <p id="categoryNoResults" style="display:none;text-align:center;color:#999;padding:20px 0;font-size:13.5px;">Hakuna category iliyopatikana.</p>
+            </div>
+
+            <div class="fs-save-bar">
+                <button type="submit" form="mainForm" class="save-btn-main">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Hifadhi Mabadiliko
+                </button>
+            </div>
+        </div>
+
+        <input type="hidden" id="profile_category" name="profile_category" form="mainForm" value="">
+    </div>
+
+
+    <!-- ==================================================
+         FULL SCREEN: LINKS (orodha ya categories)
+         ================================================== -->
+    <div class="fullscreen-section" id="section-links">
+        <div class="fs-header">
+            <button type="button" onclick="closeSection()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1>Links za Apps na Website</h1>
+        </div>
+
+        <div class="fs-content">
+            <p class="hint" style="margin-bottom:14px;">
+                Chagua category ili uweke au ubadilishe links.
+            </p>
+
+            <button type="button" class="category-btn" style="--c1:#00A3DD;--c2:#0077b6;" onclick="openSection('cat-website')">
+                <span class="mi"><i class="fa-solid fa-globe"></i></span>
+                <span class="mt">
+                    <b>Website</b>
+                    <span class="brand-mini"><span class="bm on" style="--bc:#00A3DD;"><i class="fa-solid fa-globe"></i></span></span>
+                </span>
+                <i class="fa-solid fa-chevron-right chev"></i>
+            </button>
+
+            <button type="button" class="category-btn" style="--c1:#1877F2;--c2:#0b4fc2;" onclick="openSection('cat-social')">
+                <span class="mi"><i class="fa-solid fa-share-nodes"></i></span>
+                <span class="mt">
+                    <b>Social Media</b>
+                    <span class="brand-mini"><span class="bm on" style="--bc:#1877F2;"><i class="fa-brands fa-facebook-f"></i></span><span class="bm on" style="--bc:#E1306C;--bgi:linear-gradient(45deg,#f09433,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888);"><i class="fa-brands fa-instagram"></i></span><span class="bm on" style="--bc:#000000;"><i class="fa-brands fa-tiktok"></i></span><span class="bm on" style="--bc:#000000;"><i class="fa-brands fa-x-twitter"></i></span><span class="bm on" style="--bc:#000000;"><i class="fa-brands fa-threads"></i></span><span class="bm on" style="--bc:#FFFC00;--ic:#000;"><i class="fa-brands fa-snapchat"></i></span><span class="bm on" style="--bc:#E60023;"><i class="fa-brands fa-pinterest"></i></span><span class="bm on" style="--bc:#FF4500;"><i class="fa-brands fa-reddit"></i></span></span>
+                </span>
+                <i class="fa-solid fa-chevron-right chev"></i>
+            </button>
+
+            <button type="button" class="category-btn" style="--c1:#25D366;--c2:#128C7E;" onclick="openSection('cat-messaging')">
+                <span class="mi"><i class="fa-solid fa-comments"></i></span>
+                <span class="mt">
+                    <b>Messaging</b>
+                    <span class="brand-mini"><span class="bm on" style="--bc:#25D366;"><i class="fa-brands fa-whatsapp"></i></span><span class="bm on" style="--bc:#26A5E4;"><i class="fa-brands fa-telegram"></i></span><span class="bm on" style="--bc:#5865F2;"><i class="fa-brands fa-discord"></i></span></span>
+                </span>
+                <i class="fa-solid fa-chevron-right chev"></i>
+            </button>
+
+            <button type="button" class="category-btn" style="--c1:#FF0000;--c2:#b30000;" onclick="openSection('cat-video')">
+                <span class="mi"><i class="fa-solid fa-play"></i></span>
+                <span class="mt">
+                    <b>Video & Music</b>
+                    <span class="brand-mini"><span class="bm on" style="--bc:#FF0000;"><i class="fa-brands fa-youtube"></i></span><span class="bm on" style="--bc:#9146FF;"><i class="fa-brands fa-twitch"></i></span><span class="bm on" style="--bc:#1DB954;"><i class="fa-brands fa-spotify"></i></span><span class="bm on" style="--bc:#1AB7EA;"><i class="fa-brands fa-vimeo-v"></i></span></span>
+                </span>
+                <i class="fa-solid fa-chevron-right chev"></i>
+            </button>
+
+            <button type="button" class="category-btn" style="--c1:#0A66C2;--c2:#064a8f;" onclick="openSection('cat-pro')">
+                <span class="mi"><i class="fa-solid fa-briefcase"></i></span>
+                <span class="mt">
+                    <b>Professional & Dev</b>
+                    <span class="brand-mini"><span class="bm on" style="--bc:#0A66C2;"><i class="fa-brands fa-linkedin-in"></i></span><span class="bm on" style="--bc:#181717;"><i class="fa-brands fa-github"></i></span><span class="bm on" style="--bc:#000000;"><i class="fa-brands fa-medium"></i></span></span>
+                </span>
+                <i class="fa-solid fa-chevron-right chev"></i>
+            </button>
+
+            <button type="button" class="category-btn" style="--c1:#FF5722;--c2:#d84315;" onclick="openSection('cat-blog')">
+                <span class="mi"><i class="fa-solid fa-pen-nib"></i></span>
+                <span class="mt">
+                    <b>Blogging</b>
+                    <span class="brand-mini"><span class="bm on" style="--bc:#21759B;"><i class="fa-brands fa-wordpress"></i></span><span class="bm on" style="--bc:#FF5722;"><i class="fa-brands fa-blogger"></i></span><span class="bm on" style="--bc:#36465D;"><i class="fa-brands fa-tumblr"></i></span></span>
+                </span>
+                <i class="fa-solid fa-chevron-right chev"></i>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- ==================================================
+         FULL SCREEN: CATEGORY - WEBSITE
+         ================================================== -->
+    <div class="fullscreen-section" id="section-cat-website">
+        <div class="fs-header">
+            <button type="button" onclick="openSection('links')">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1>Website</h1>
+        </div>
+        <div class="fs-content">
+            <div class="card">
+                <div class="link-field" style="--bc:#00A3DD;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-solid fa-globe"></i></span> Website<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="website" form="mainForm" placeholder="https://example.com" value="">
+                </div>
+            </div>
+
+            <div class="fs-save-bar">
+                <button type="submit" form="mainForm" class="save-btn-main">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Hifadhi Mabadiliko
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================================================
+         FULL SCREEN: CATEGORY - SOCIAL MEDIA
+         ================================================== -->
+    <div class="fullscreen-section" id="section-cat-social">
+        <div class="fs-header">
+            <button type="button" onclick="openSection('links')">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1>Social Media</h1>
+        </div>
+        <div class="fs-content">
+            <div class="card">
+                <div class="link-field" style="--bc:#1877F2;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-facebook-f"></i></span> Facebook<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="facebook" form="mainForm" placeholder="https://facebook.com/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#E1306C;--bgi:linear-gradient(45deg,#f09433,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888);">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-instagram"></i></span> Instagram<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="instagram" form="mainForm" placeholder="https://instagram.com/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#000000;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-tiktok"></i></span> TikTok<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="tiktok" form="mainForm" placeholder="https://tiktok.com/@..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#000000;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-x-twitter"></i></span> X<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="x" form="mainForm" placeholder="https://x.com/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#000000;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-threads"></i></span> Threads<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="threads" form="mainForm" placeholder="https://threads.net/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#FFFC00;--ic:#000;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-snapchat"></i></span> Snapchat<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="snapchat" form="mainForm" placeholder="https://snapchat.com/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#E60023;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-pinterest"></i></span> Pinterest<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="pinterest" form="mainForm" placeholder="https://pinterest.com/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#FF4500;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-reddit"></i></span> Reddit<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="reddit" form="mainForm" placeholder="https://reddit.com/u/..." value="">
+                </div>
+            </div>
+
+            <div class="fs-save-bar">
+                <button type="submit" form="mainForm" class="save-btn-main">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Hifadhi Mabadiliko
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================================================
+         FULL SCREEN: CATEGORY - MESSAGING
+         ================================================== -->
+    <div class="fullscreen-section" id="section-cat-messaging">
+        <div class="fs-header">
+            <button type="button" onclick="openSection('links')">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1>Messaging</h1>
+        </div>
+        <div class="fs-content">
+            <div class="card">
+                <div class="link-field" style="--bc:#25D366;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-whatsapp"></i></span> WhatsApp<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="whatsapp" form="mainForm" placeholder="https://wa.me/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#26A5E4;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-telegram"></i></span> Telegram<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="telegram" form="mainForm" placeholder="https://t.me/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#5865F2;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-discord"></i></span> Discord<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="discord" form="mainForm" placeholder="Discord link" value="">
+                </div>
+            </div>
+
+            <div class="fs-save-bar">
+                <button type="submit" form="mainForm" class="save-btn-main">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Hifadhi Mabadiliko
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================================================
+         FULL SCREEN: CATEGORY - VIDEO & MUSIC
+         ================================================== -->
+    <div class="fullscreen-section" id="section-cat-video">
+        <div class="fs-header">
+            <button type="button" onclick="openSection('links')">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1>Video & Music</h1>
+        </div>
+        <div class="fs-content">
+            <div class="card">
+                <div class="link-field" style="--bc:#FF0000;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-youtube"></i></span> YouTube<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="youtube" form="mainForm" placeholder="https://youtube.com/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#9146FF;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-twitch"></i></span> Twitch<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="twitch" form="mainForm" placeholder="https://twitch.tv/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#1DB954;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-spotify"></i></span> Spotify<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="spotify" form="mainForm" placeholder="https://open.spotify.com/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#1AB7EA;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-vimeo-v"></i></span> Vimeo<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="vimeo" form="mainForm" placeholder="https://vimeo.com/..." value="">
+                </div>
+            </div>
+
+            <div class="fs-save-bar">
+                <button type="submit" form="mainForm" class="save-btn-main">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Hifadhi Mabadiliko
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================================================
+         FULL SCREEN: CATEGORY - PROFESSIONAL & DEV
+         ================================================== -->
+    <div class="fullscreen-section" id="section-cat-pro">
+        <div class="fs-header">
+            <button type="button" onclick="openSection('links')">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1>Professional & Dev</h1>
+        </div>
+        <div class="fs-content">
+            <div class="card">
+                <div class="link-field" style="--bc:#0A66C2;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-linkedin-in"></i></span> LinkedIn<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="linkedin" form="mainForm" placeholder="https://linkedin.com/in/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#181717;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-github"></i></span> GitHub<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="github" form="mainForm" placeholder="https://github.com/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#000000;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-medium"></i></span> Medium<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="medium" form="mainForm" placeholder="https://medium.com/@..." value="">
+                </div>
+            </div>
+
+            <div class="fs-save-bar">
+                <button type="submit" form="mainForm" class="save-btn-main">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Hifadhi Mabadiliko
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================================================
+         FULL SCREEN: CATEGORY - BLOGGING
+         ================================================== -->
+    <div class="fullscreen-section" id="section-cat-blog">
+        <div class="fs-header">
+            <button type="button" onclick="openSection('links')">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1>Blogging</h1>
+        </div>
+        <div class="fs-content">
+            <div class="card">
+                <div class="link-field" style="--bc:#21759B;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-wordpress"></i></span> WordPress<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="wordpress" form="mainForm" placeholder="https://wordpress.com/..." value="">
+                </div>
+
+                <div class="link-field" style="--bc:#FF5722;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-blogger"></i></span> Blogger<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="blogger" form="mainForm" placeholder="https://....blogspot.com" value="">
+                </div>
+
+                <div class="link-field" style="--bc:#36465D;">
+                    <div class="link-title"><span class="brand-ic"><i class="fa-brands fa-tumblr"></i></span> Tumblr<span class="set-badge"><i class="fa-solid fa-circle-check"></i> Imewekwa</span></div>
+                    <input type="url" name="tumblr" form="mainForm" placeholder="https://tumblr.com/..." value="">
+                </div>
+            </div>
+
+            <div class="fs-save-bar">
+                <button type="submit" form="mainForm" class="save-btn-main">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Hifadhi Mabadiliko
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function openSection(id) {
+            document.querySelectorAll('.fullscreen-section').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            const section = document.getElementById('section-' + id);
+            if (section) {
+                section.classList.add('active');
+                document.body.classList.add('section-open');
+                section.scrollTop = 0;
+            }
+        }
+
+        function closeSection() {
+            document.querySelectorAll('.fullscreen-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.body.classList.remove('section-open');
+        }
+
+        // ==================================================
+        // KIJIJI MODE — CATEGORY YA PROFILE (search + chips)
+        // ==================================================
+        var PROFILE_CATEGORIES = [
+            // Waundaji wa Maudhui (Creators)
+            "Digital Creator", "Content Creator", "Influencer", "Blogger", "Vlogger",
+            "Podcaster", "Public Figure", "Mwandishi (Writer)", "Mshairi (Poet)",
+
+            // Muziki na Burudani
+            "Msanii wa Muziki (Musician)", "Mtunzi wa Nyimbo (Songwriter)",
+            "Mzalishaji wa Muziki (Music Producer)", "DJ", "MC / Mtangazaji wa Matukio",
+            "Studio ya Muziki", "Label ya Muziki", "Meneja wa Wasanii",
+            "Mwigizaji (Actor/Actress)", "Mchekeshaji (Comedian)", "Msanii wa Filamu (Filmmaker)",
+            "Studio ya Filamu",
+
+            // Sanaa na Design
+            "Msanii wa Sanaa (Artist)", "Mpiga Picha (Photographer)", "Videographer",
+            "Mhariri wa Video (Video Editor)", "Graphic Designer", "Animator",
+            "UI/UX Designer", "Msanii wa Ufundi wa Mikono (Handicraft)",
+            "Mhandisi wa Sauti (Sound Engineer)",
+
+            // Michezo
+            "Mwanamichezo (Athlete)", "Kocha wa Michezo (Coach)", "Fitness Trainer",
+            "Yoga Instructor", "Klabu ya Michezo", "Esports Player",
+            "Mchezaji wa Michezo ya Video (Gamer)", "Game Developer",
+
+            // Biashara na Ujasiriamali
+            "Mjasiriamali (Entrepreneur)", "Mmiliki wa Biashara (Business Owner)",
+            "Duka la Mtandaoni (Online Store)", "Msambazaji / Wholesaler",
+            "Real Estate Agent", "Mshauri wa Biashara (Business Consultant)",
+            "Mshauri wa Fedha (Financial Advisor)", "Bank / Huduma za Fedha",
+            "Mfuko wa Uwekezaji (Investment)", "Kampuni ya Usafirishaji (Logistics)",
+            "Life Coach", "Mzungumzaji wa Kuhamasisha (Motivational Speaker)",
+
+            // Kilimo na Mazingira
+            "Mkulima (Farmer)", "Mfugaji (Livestock)", "Agribusiness",
+            "Mvuvi (Fisherman)", "Mwanamazingira (Environmentalist)",
+            "Daktari wa Mifugo (Veterinarian)",
+
+            // Afya
+            "Daktari (Doctor)", "Muuguzi (Nurse)", "Daktari wa Meno (Dentist)",
+            "Mfamasia (Pharmacist)", "Nutritionist", "Mtaalamu wa Afya ya Akili",
+
+            // Elimu
+            "Mwalimu (Teacher)", "Mwanafunzi (Student)", "Chuo / Shule",
+            "Mkufunzi wa Lugha (Language Tutor)", "Book Club / Klabu ya Vitabu",
+
+            // Teknolojia
+            "Mtaalamu wa Teknolojia (Tech Expert)", "Programmer / Developer",
+            "Cyber Security Expert", "Data Analyst", "Digital Marketer", "SEO Specialist",
+
+            // Fashion na Urembo
+            "Fashion Designer", "Model", "Stylist wa Mitindo", "Beauty & Cosmetics",
+            "Hair Stylist / Msusi", "Makeup Artist",
+
+            // Vyombo vya Habari
+            "Mtangazaji wa Redio (Radio Presenter)", "Mtangazaji wa TV (TV Presenter)",
+            "Mwandishi wa Habari (Journalist)", "Ukurasa wa Habari (News Page)",
+
+            // Dini na Jamii
+            "Kanisa (Church)", "Msikiti (Mosque)", "Kiongozi wa Dini",
+            "Nonprofit / NGO", "Asasi ya Kiraia", "Kikundi cha Kijamii",
+            "Mratibu wa Jamii (Community Organizer)",
+
+            // Siasa na Serikali
+            "Mwanasiasa (Politician)", "Afisa wa Serikali", "Chama cha Siasa",
+
+            // Wataalamu Wengine
+            "Wakili (Lawyer)", "Mhasibu (Accountant)", "Mhandisi (Engineer)",
+            "Mbunifu wa Majengo (Architect)", "Mpishi (Chef)", "Hoteli / Mkahawa",
+            "Msafiri / Travel Blogger", "Tour Guide", "Event Planner",
+            "Mratibu wa Harusi (Wedding Planner)", "Photographer wa Harusi",
+            "Fundi (Technician/Artisan)", "Fundi wa Umeme (Electrician)",
+            "Fundi Ujenzi (Construction)", "Mpenzi wa Wanyama (Pet Page)",
+            "Mzazi / Familia (Parenting)",
+
+            // Kijiji Tanzania
+            "Member of Kijiji Tanzania", "Fan of Kijiji Tanzania",
+            "Msaidizi wa Kijiji Tanzania (Volunteer)",
+
+            "Nyingine (Other)"
+        ];
+
+        var POPULAR_CATEGORIES = [
+            "Digital Creator", "Content Creator", "Influencer", "Mjasiriamali (Entrepreneur)",
+            "Msanii wa Muziki (Musician)", "Mchekeshaji (Comedian)", "Mwandishi wa Habari (Journalist)",
+            "Member of Kijiji Tanzania", "Fan of Kijiji Tanzania", "Nyingine (Other)"
+        ];
+
+        function renderCategoryChips(list) {
+            var grid = document.getElementById('categoryChipsGrid');
+            var noResults = document.getElementById('categoryNoResults');
+            var current = document.getElementById('profile_category').value;
+            if (!list.length) {
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+            noResults.style.display = 'none';
+            grid.innerHTML = list.map(function(cat) {
+                var active = (cat === current);
+                return '<button type="button" onclick="selectCategory(\'' + cat.replace(/'/g, "\\'") + '\')" ' +
+                    'style="padding:9px 14px;border-radius:20px;border:1.5px solid ' + (active ? '#1EB53A' : '#ddd') + ';' +
+                    'background:' + (active ? '#e6f9ec' : '#fff') + ';color:' + (active ? '#159447' : '#333') + ';' +
+                    'font-size:13px;font-weight:600;cursor:pointer;">' + cat + '</button>';
+            }).join('');
+        }
+
+        function filterCategories(query) {
+            query = (query || '').trim().toLowerCase();
+            if (!query) {
+                renderCategoryChips(POPULAR_CATEGORIES);
+                return;
+            }
+            var filtered = PROFILE_CATEGORIES.filter(function(c) {
+                return c.toLowerCase().indexOf(query) !== -1;
+            });
+            renderCategoryChips(filtered);
+        }
+
+        function selectCategory(cat) {
+            document.getElementById('profile_category').value = cat;
+            var pill = document.getElementById('selectedCategoryPill');
+            var pillText = document.getElementById('selectedCategoryText');
+            if (cat) {
+                pillText.textContent = cat;
+                pill.style.display = 'block';
+            } else {
+                pill.style.display = 'none';
+            }
+            filterCategories(document.getElementById('categorySearchInput').value);
+        }
+
+        // Onyesha categories maarufu mwanzoni
+        renderCategoryChips(POPULAR_CATEGORIES);
+
+        function previewCover(input) {
+            const preview = document.getElementById('coverPreview');
+            const placeholder = document.getElementById('coverPlaceholder');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    if (placeholder) {
+                        placeholder.style.display = 'none';
+                    }
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

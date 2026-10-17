@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Usalama · Admin Kijiji</title>
+<style>
+:root{--bg:#0f1419;--card:#1e293b;--border:#334155;--text:#f1f5f9;--muted:#94a3b8;--accent:#22c55e;--danger:#ef4444;--warn:#f59e0b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:16px;padding-top:max(16px,env(safe-area-inset-top))}
+.wrap{max-width:900px;margin:0 auto}
+h1{font-size:20px;margin:0 0 4px}
+a{color:var(--accent);text-decoration:none}
+.sub{color:var(--muted);font-size:13px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px}
+.num{font-size:26px;font-weight:700}
+.lbl{font-size:12px;color:var(--muted)}
+h2{font-size:15px;margin:18px 0 8px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+select,input,button{background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:14px}
+button{background:var(--accent);color:#06240f;border:0;font-weight:600;cursor:pointer}
+.row{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:8px;font-size:13px}
+.row b{font-size:14px}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;background:#334155}
+.tag.login_fail{background:#78350f;color:#fde68a}.tag.login_locked{background:#7f1d1d;color:#fecaca}
+.tag.admin_denied{background:#7f1d1d;color:#fecaca}.tag.suspicious_input{background:#78350f;color:#fde68a}.tag.csrf_fail{background:#334155;color:#cbd5e1}
+.tag.bot_probe{background:#1e3a8a;color:#bfdbfe}.tag.upload_blocked{background:#581c87;color:#e9d5ff}
+.muted{color:var(--muted)}
+.mono{font-family:ui-monospace,Menlo,monospace;word-break:break-all}
+.empty{color:var(--muted);text-align:center;padding:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/admin">← Admin</a>
+  <h1>🛡️ Usalama</h1>
+  <div class="sub">Matukio ya kutiliwa shaka (saa 24 zilizopita kwenye hesabu; yanahifadhiwa siku 30).</div>
+
+  <div class="grid">
+    
+    <div class="card"><div class="num"></div><div class="lbl"></div></div>
+    
+  </div>
+
+  <h2>IP zinazorudia sana (saa 24)</h2>
+  
+    
+    <div class="row"><a class="mono" href="?ip="></a> <span class="muted">· matukio </span></div>
+    
+  <div class="empty">Hakuna matukio. 👍</div>
+
+  <h2>Matukio ya hivi karibuni</h2>
+  <form class="filters" method="get">
+    <select name="kind">
+      <option value="">Yote</option>
+      <option value="" ></option>
+    </select>
+    <input name="ip" placeholder="IP" value="">
+    <button type="submit">Chuja</button>
+  </form>
+  
+  <form method="post" action="/admin/security/clear" onsubmit="return confirm('Kufuta matukio yote? Haiwezi kurudishwa.')" style="margin-bottom:10px">
+    <button type="submit" style="background:#7f1d1d;color:#fecaca">🗑 Futa matukio yote</button>
+  </form>
+  
+  
+  <div class="row">
+    <span class="tag "></span>
+    <span class="muted"> </span><br>
+    IP: <a class="mono" href="?ip="></a>
+     · user #
+    <br><span class="muted">Njia:</span> <span class="mono"></span>
+    <br><span class="muted"></span>
+  </div>
+  <div class="empty">Hakuna matukio.</div>
+</div>
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

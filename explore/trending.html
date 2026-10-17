@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070b10">
+<title>trending · Kijiji</title>
+<style>
+:root{
+  --bg:#070b10; --bg2:#0e1520; --bg3:#17212f; --card:#111a27;
+  --border:rgba(148,163,184,.14); --text:#f1f5f9; --muted:#8b9bb0;
+  --accent:#22c55e; --accent2:#16a34a; --hot:#ff5a36; --gold:#fbbf24;
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;line-height:1.45;
+  background-image:
+    radial-gradient(900px 400px at 85% -5%,rgba(34,197,94,.14),transparent 60%),
+    radial-gradient(700px 380px at -10% 8%,rgba(255,90,54,.10),transparent 60%);
+  background-repeat:no-repeat;
+}
+a{color:inherit;text-decoration:none}
+
+/* ---------- Topbar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:12px;
+  padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+  background:rgba(7,11,16,.78);backdrop-filter:blur(16px) saturate(1.4);
+  -webkit-backdrop-filter:blur(16px) saturate(1.4);
+  border-bottom:1px solid var(--border);
+}
+.back{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;
+  background:var(--bg3);font-size:1.1rem;transition:.15s}
+.back:active{transform:scale(.92)}
+.topbar h1{font-size:1.1rem;font-weight:800;letter-spacing:-.01em;flex:1}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;
+  color:var(--accent);background:rgba(34,197,94,.12);padding:5px 10px;border-radius:999px}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+
+.wrap{max-width:900px;margin:0 auto;padding:18px 0 90px}
+.hero{padding:6px 16px 18px}
+.hero h2{font-size:1.7rem;font-weight:900;letter-spacing:-.03em;
+  background:linear-gradient(90deg,#fff,#86efac 60%,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:.9rem;margin-top:4px}
+
+/* ---------- Chips za juu (jump) ---------- */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:0 16px 6px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;padding:8px 14px;border-radius:999px;font-size:.84rem;font-weight:700;
+  background:var(--bg2);border:1px solid var(--border);color:var(--text);transition:.15s}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ---------- Section ya kila hashtag ---------- */
+.tag-section{margin-top:26px;scroll-margin-top:70px;opacity:0;transform:translateY(14px);
+  animation:rise .5s ease forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.tag-head{display:flex;align-items:center;gap:12px;padding:0 16px 12px}
+.rank{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+  font-weight:900;font-size:1.05rem;background:var(--bg3);color:var(--muted);flex:0 0 auto}
+.rank.r1{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#2b1a00}
+.rank.r2{background:linear-gradient(135deg,#e2e8f0,#94a3b8);color:#0f172a}
+.rank.r3{background:linear-gradient(135deg,#fb923c,#c2410c);color:#fff}
+.tag-info{flex:1;min-width:0}
+.tag-name{font-size:1.15rem;font-weight:800;letter-spacing:-.01em;color:var(--accent);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tag-meta{font-size:.78rem;color:var(--muted);margin-top:1px}
+.tag-meta .fire{color:var(--hot);font-weight:700}
+.see-all{font-size:.8rem;font-weight:700;color:var(--text);padding:8px 12px;border-radius:999px;
+  background:var(--bg3);transition:.15s;white-space:nowrap}
+.see-all:hover{background:var(--accent);color:#052e16}
+
+/* ---------- Horizontal scroller ---------- */
+.rail-wrap{position:relative}
+.rail{display:flex;gap:12px;overflow-x:auto;padding:4px 16px 14px;
+  scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.rail::-webkit-scrollbar{display:none}
+.rail-wrap::after{content:"";position:absolute;top:0;right:0;bottom:0;width:36px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,var(--bg))}
+.arrow{position:absolute;top:calc(50% - 22px);z-index:5;width:40px;height:40px;border-radius:50%;
+  border:1px solid var(--border);background:rgba(14,21,32,.9);color:var(--text);cursor:pointer;
+  display:none;place-items:center;font-size:1.1rem;backdrop-filter:blur(8px);transition:.15s}
+.arrow:hover{background:var(--accent);color:#052e16}
+.arrow.l{left:8px}.arrow.r{right:8px}
+@media(hover:hover) and (min-width:700px){.arrow{display:grid}}
+
+/* ---------- video card ---------- */
+.vcard{flex:0 0 auto;width:150px;aspect-ratio:9/16;border-radius:var(--radius);overflow:hidden;
+  position:relative;background:#000;scroll-snap-align:start;border:1px solid var(--border);
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s}
+@media(min-width:700px){.vcard{width:176px}}
+.vcard:hover{transform:translateY(-4px) scale(1.02);border-color:rgba(34,197,94,.5);
+  box-shadow:0 14px 34px rgba(0,0,0,.55),0 0 0 1px rgba(34,197,94,.25)}
+.vcard video{width:100%;height:100%;object-fit:cover;display:block;background:#05080c}
+.vcard::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.35) 0%,transparent 28%,transparent 55%,rgba(0,0,0,.85) 100%)}
+.play{position:absolute;top:8px;right:8px;z-index:2;width:28px;height:28px;border-radius:50%;
+  display:grid;place-items:center;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);font-size:.7rem;transition:.2s}
+.vcard.playing .play{opacity:0}
+.v-bottom{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:10px}
+.v-user{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.v-user img{width:22px;height:22px;border-radius:50%;object-fit:cover;border:1.5px solid var(--accent);background:var(--bg3)}
+.v-user span{font-size:.74rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.v-stats{display:flex;gap:10px;font-size:.72rem;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+
+/* kadi ya "Ona zote" mwishoni mwa rail */
+.more{flex:0 0 auto;width:110px;aspect-ratio:9/16;border-radius:var(--radius);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:8px;text-align:center;font-size:.8rem;font-weight:700;
+  background:var(--bg2);border:1px dashed rgba(34,197,94,.45);color:var(--accent);scroll-snap-align:start;transition:.2s}
+.more b{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(34,197,94,.14);font-size:1.2rem}
+.more:hover{background:rgba(34,197,94,.1)}
+
+.no-video{margin:0 16px;padding:14px 16px;border-radius:14px;background:var(--bg2);
+  border:1px dashed var(--border);color:var(--muted);font-size:.85rem}
+
+.empty{text-align:center;padding:70px 20px;color:var(--muted)}
+.empty .big{font-size:3rem;margin-bottom:10px}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.tag-section{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="back" href="#" aria-label="back">←</a>
+  <h1>🔥 trending</h1>
+  <span class="live"><i></i> LIVE</span>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h2>Kinachovuma sasa</h2>
+    <p>Hashtags moto kwenye Kijiji, na video zake. Telezesha kando kuona zaidi.</p>
+  </section>
+
+  
+  <nav class="chips" aria-label="Hashtags">
+    
+      <a class="chip" href="#tag-">#</a>
+    
+  </nav>
+
+  
+  <section class="tag-section" id="tag-" style="animation-delay: s">
+    <div class="tag-head">
+      <div class="rank r1r2r3"></div>
+      <div class="tag-info">
+        <div class="tag-name">#</div>
+        <div class="tag-meta">
+           posts
+          ·  video
+          · <span class="fire">🔥 Inaongoza</span>
+        </div>
+      </div>
+      <a class="see-all" href="#">Ona zote →</a>
+    </div>
+
+    
+    <div class="rail-wrap">
+      <button class="arrow l" type="button" aria-label="Nyuma">‹</button>
+      <div class="rail">
+        
+        <a class="vcard" href="##post-">
+          <video src="#t=0.5" muted loop playsinline preload="metadata"></video>
+          <span class="play">▶</span>
+          <div class="v-bottom">
+            <div class="v-user">
+              <img src="" alt="" loading="lazy">
+              <span>@</span>
+            </div>
+            <div class="v-stats"><span>❤ </span><span>💬 </span></div>
+          </div>
+        </a>
+        
+        
+        <a class="more" href="#">
+          <b>→</b>video  zaidi
+        </a>
+        
+      </div>
+      <button class="arrow r" type="button" aria-label="Mbele">›</button>
+    </div>
+    
+    <a class="no-video" href="#" style="display:block">
+      Bado hakuna video kwenye # · bonyeza kuona posts 
+    </a>
+    
+  </section>
+  
+
+  
+  <div class="empty">
+    <div class="big">🌱</div>
+    Bado hakuna hashtags zinazovuma.<br>post video na #neno uwe wa kwanza!
+  </div>
+  
+</main>
+
+<script>
+(function(){
+  // Mishale ya desktop kwa kila rail
+  document.querySelectorAll('.rail-wrap').forEach(function(w){
+    var rail = w.querySelector('.rail');
+    var l = w.querySelector('.arrow.l'), r = w.querySelector('.arrow.r');
+    if(!rail) return;
+    function step(d){ rail.scrollBy({left: d * rail.clientWidth * 0.8, behavior:'smooth'}); }
+    if(l) l.addEventListener('click', function(){ step(-1); });
+    if(r) r.addEventListener('click', function(){ step(1); });
+  });
+
+  // Preview: video inacheza kimya kwa hover (desktop) au kushikilia (simu)
+  function play(card){
+    var v = card.querySelector('video'); if(!v) return;
+    card.classList.add('playing');
+    var p = v.play(); if(p && p.catch) p.catch(function(){});
+  }
+  function stop(card){
+    var v = card.querySelector('video'); if(!v) return;
+    card.classList.remove('playing'); v.pause(); v.currentTime = 0.5;
+  }
+  document.querySelectorAll('.vcard').forEach(function(c){
+    c.addEventListener('mouseenter', function(){ play(c); });
+    c.addEventListener('mouseleave', function(){ stop(c); });
+    c.addEventListener('touchstart', function(){ play(c); }, {passive:true});
+    c.addEventListener('touchend', function(){ stop(c); }, {passive:true});
+    c.addEventListener('touchcancel', function(){ stop(c); }, {passive:true});
+  });
+
+  // upload_video za rail pale tu zinapokaribia skrini (kuokoa data)
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          var v = e.target;
+          if(v.dataset.src){ v.src = v.dataset.src; delete v.dataset.src; }
+          io.unobserve(v);
+        }
+      });
+    }, {rootMargin:'300px'});
+    document.querySelectorAll('.vcard video').forEach(function(v){
+      v.dataset.src = v.getAttribute('src'); v.removeAttribute('src'); io.observe(v);
+    });
+  }
+})();
+</script>
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

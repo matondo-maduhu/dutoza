@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <title> · linkup - DUTOZA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+/* =====================================================================
+   LINKUP PROFILE — mfumo wa muundo (tokens) + vipengele vyenye prefix lp-
+   Rangi za app: kijani, bluu, njano. Mandhari nyepesi + giza.
+   ===================================================================== */
+:root {
+    --lp-green: #1EB53A;
+    --lp-green-d: #0f8a2a;
+    --lp-green-soft: #e8f7ec;
+    --lp-blue: #0284c7;
+    --lp-blue-soft: #e0f2fe;
+    --lp-amber: #b45309;
+    --lp-amber-soft: #fff4d6;
+    --lp-yellow: #FCD116;
+    --lp-purple: #7c3aed;
+    --lp-purple-soft: #efe8fd;
+    --lp-red: #dc2626;
+
+    --lp-bg: #f0f4f1;
+    --lp-card: #ffffff;
+    --lp-text: #0f1a12;
+    --lp-muted: #65727a;
+    --lp-line: #e3eae5;
+    --lp-chip: #eaf0ec;
+    --lp-field: #f5f8f6;
+    --lp-glass: rgba(255, 255, 255, .92);
+
+    --lp-s1: 4px; --lp-s2: 8px; --lp-s3: 12px; --lp-s4: 16px; --lp-s5: 24px;
+    --lp-r-sm: 10px; --lp-r-md: 14px; --lp-r-lg: 20px; --lp-r-xl: 26px;
+    --lp-shadow: 0 2px 10px rgba(16, 60, 30, .07);
+    --lp-shadow-2: 0 14px 36px rgba(16, 60, 30, .18);
+    --lp-fs-xs: .72rem; --lp-fs-sm: .82rem; --lp-fs-md: .94rem;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --lp-green-soft: #15351f; --lp-blue: #38bdf8; --lp-blue-soft: #10344a;
+        --lp-amber: #fbbf24; --lp-amber-soft: #3a2c0c; --lp-purple: #a78bfa; --lp-purple-soft: #2a2145; --lp-red: #f87171;
+        --lp-bg: #0f1419; --lp-card: #1a2332; --lp-text: #f1f5f9; --lp-muted: #94a3b8; --lp-line: #2b3a4f;
+        --lp-chip: #243044; --lp-field: #121a27; --lp-glass: rgba(15, 20, 25, .92);
+        --lp-shadow: 0 2px 10px rgba(0, 0, 0, .35); --lp-shadow-2: 0 14px 36px rgba(0, 0, 0, .55);
+    }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { width: 100%; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+body.lp {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--lp-bg); color: var(--lp-text); line-height: 1.45; min-height: 100vh;
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+}
+.lp a { color: inherit; text-decoration: none; }
+.lp button, .lp input, .lp textarea { font-family: inherit; color: inherit; }
+.lp button { cursor: pointer; }
+.lp :focus-visible { outline: 3px solid color-mix(in srgb, var(--lp-green) 55%, transparent); outline-offset: 2px; }
+
+/* ---------- layout ---------- */
+.lp .container { width: 100%; max-width: 640px; margin: 0 auto; }
+.lp-layout { display: block; }
+.lp-aside { background: var(--lp-card); }
+.lp-main { min-width: 0; }
+
+/* ---------- cover ---------- */
+.lp-cover {
+    position: relative; overflow: hidden; height: 168px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: max(12px, env(safe-area-inset-top)) 12px 0;
+    background: linear-gradient(135deg, #0c8f2c 0%, #1EB53A 45%, #00A3DD 100%);
+    background-size: cover; background-position: center;
+}
+.lp-cover:not(.photo)::before, .lp-cover:not(.photo)::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; }
+.lp-cover:not(.photo)::before { width: 240px; height: 240px; top: -110px; right: -60px; background: rgba(255, 255, 255, .12); }
+.lp-cover:not(.photo)::after { width: 160px; height: 160px; bottom: -80px; left: -40px; background: rgba(252, 209, 22, .18); }
+.lp-cover.photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, .5), transparent 48%); }
+.lp-top-r { display: flex; gap: var(--lp-s2); }
+.lp-ico {
+    position: relative; z-index: 2; width: 40px; height: 40px; border: 0; border-radius: 50%;
+    background: rgba(0, 0, 0, .38); color: #fff; font-size: 15px;
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center; text-decoration: none;
+}
+
+/* ---------- identity ---------- */
+.lp-id {
+    position: relative; background: var(--lp-card); padding: 0 var(--lp-s4) var(--lp-s4);
+    margin-top: -24px; border-radius: var(--lp-r-xl) var(--lp-r-xl) 0 0;
+}
+.lp-av {
+    width: 96px; height: 96px; margin-top: -48px; border-radius: 50%; overflow: hidden;
+    border: 4px solid var(--lp-card); box-shadow: 0 0 0 3px var(--lp-green), var(--lp-shadow);
+    background: linear-gradient(135deg, var(--lp-green), #00A3DD); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 38px; font-weight: 800;
+}
+.lp-av img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lp-name { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: var(--lp-s3); font-size: 1.45rem; font-weight: 800; line-height: 1.2; letter-spacing: -.3px; overflow-wrap: anywhere; }
+.lp-name svg { flex-shrink: 0; }
+.lp-handle { display: flex; align-items: center; flex-wrap: wrap; gap: var(--lp-s2); margin-top: 4px; font-size: var(--lp-fs-md); color: var(--lp-muted); }
+.lp-handle em { font-style: normal; font-weight: 800; font-size: var(--lp-fs-xs); padding: 3px 10px; border-radius: 999px; background: var(--lp-green-soft); color: var(--lp-green-d); }
+@media (prefers-color-scheme: dark) { .lp-handle em { color: #4ade80; } }
+.lp .bio { margin-top: var(--lp-s3); font-size: var(--lp-fs-md); line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.lp .bio.clamped, .lp .about-text.clamped { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.lp .see-more-btn { margin-top: 2px; padding: 4px 0; border: 0; background: none; color: var(--lp-green-d); font-size: var(--lp-fs-sm); font-weight: 800; }
+@media (prefers-color-scheme: dark) { .lp .see-more-btn { color: #4ade80; } }
+.lp-by { margin-top: var(--lp-s2); font-size: var(--lp-fs-sm); color: var(--lp-muted); }
+.lp-by a { color: var(--lp-text); font-weight: 800; }
+
+.lp-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--lp-s2); margin-top: var(--lp-s4); }
+.lp-stats div { padding: var(--lp-s3) var(--lp-s2); border-radius: var(--lp-r-md); background: var(--lp-field); border: 1px solid var(--lp-line); text-align: center; min-width: 0; }
+.lp-stats b { display: block; font-size: 1.3rem; font-weight: 800; letter-spacing: -.4px; line-height: 1.15; }
+.lp-stats span { display: block; margin-top: 2px; font-size: var(--lp-fs-xs); font-weight: 700; color: var(--lp-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- vitufe ---------- */
+.lp-actions { display: flex; flex-wrap: wrap; gap: var(--lp-s2); margin-top: var(--lp-s4); }
+.lp .btn {
+    flex: 1 1 auto; min-height: 46px; padding: 0 var(--lp-s4); border: 0; border-radius: var(--lp-r-md);
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--lp-s2);
+    font-size: var(--lp-fs-md); font-weight: 800; text-decoration: none; width: auto; transition: transform .12s;
+}
+.lp .btn:active { transform: scale(.97); }
+.lp .btn:disabled { opacity: .65; cursor: default; }
+.lp .btn-green { background: linear-gradient(135deg, var(--lp-green), #12a04c); color: #fff; box-shadow: 0 6px 14px rgba(30, 181, 58, .28); }
+.lp .btn-gray { background: var(--lp-chip); color: var(--lp-text); }
+.lp .btn-gold { background: var(--lp-yellow); color: #3a2c00; }
+
+.lp-contact { display: flex; gap: var(--lp-s2); margin-top: var(--lp-s3); }
+.lp-contact a { flex: 1; min-width: 0; height: 46px; border-radius: var(--lp-r-md); display: flex; align-items: center; justify-content: center; font-size: 18px; background: var(--lp-chip); transition: transform .12s; }
+.lp-contact a:active { transform: scale(.96); }
+.lp-contact a[href^="tel:"] { background: var(--lp-blue-soft); color: var(--lp-blue); }
+.lp-contact a.wa { background: var(--lp-green-soft); color: #16a34a; }
+.lp-contact a[href^="mailto:"] { background: var(--lp-amber-soft); color: var(--lp-amber); }
+.lp-contact a[aria-label="Website"] { background: var(--lp-purple-soft); color: var(--lp-purple); }
+
+/* ---------- tabs ---------- */
+.lp .lu-tabs {
+    position: sticky; top: 0; z-index: 60; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none;
+    padding: 0 var(--lp-s2); background: var(--lp-glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--lp-line);
+}
+.lp .lu-tabs::-webkit-scrollbar { display: none; }
+.lp .lu-tab {
+    flex: 1 0 auto; min-height: 52px; padding: 0 var(--lp-s4); border: 0; background: none; border-bottom: 3px solid transparent;
+    color: var(--lp-muted); font-size: var(--lp-fs-sm); font-weight: 800; white-space: nowrap;
+}
+.lp .lu-tab i { margin-right: 6px; }
+.lp .lu-tab.on { color: var(--lp-green-d); border-bottom-color: var(--lp-green); }
+@media (prefers-color-scheme: dark) { .lp .lu-tab.on { color: #4ade80; } }
+.lp .lu-pane { display: none; padding-top: var(--lp-s1); }
+.lp .lu-pane.on { display: block; }
+.lp .lu-welcome { margin: var(--lp-s3); padding: var(--lp-s4); border-radius: var(--lp-r-md); background: linear-gradient(135deg, #0c8f2c, #00A3DD); color: #fff; font-size: var(--lp-fs-md); line-height: 1.55; }
+.lp .lu-welcome b { color: var(--lp-yellow); }
+.lp .section-title { margin: var(--lp-s4) var(--lp-s4) var(--lp-s2); font-size: var(--lp-fs-xs); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--lp-muted); }
+
+/* ---------- cards ---------- */
+.lp-card { margin: var(--lp-s3); padding: var(--lp-s2) var(--lp-s4); background: var(--lp-card); border: 1px solid var(--lp-line); border-radius: var(--lp-r-lg); box-shadow: var(--lp-shadow); }
+.lp-about { padding: var(--lp-s3) 0; font-size: var(--lp-fs-md); line-height: 1.65; border-bottom: 1px solid var(--lp-line); overflow-wrap: anywhere; }
+.lp-rows { list-style: none; }
+.lp-rows li { display: flex; align-items: flex-start; gap: var(--lp-s3); padding: var(--lp-s3) 0; border-bottom: 1px solid var(--lp-line); }
+.lp-rows li:last-child { border-bottom: 0; }
+.lp-rows i { width: 38px; height: 38px; flex-shrink: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 14px; background: var(--lp-green-soft); color: var(--lp-green-d); }
+.lp-rows li:nth-child(3n+2) i { background: var(--lp-blue-soft); color: var(--lp-blue); }
+.lp-rows li:nth-child(3n) i { background: var(--lp-amber-soft); color: var(--lp-amber); }
+.lp-rows div { min-width: 0; }
+.lp-rows small { display: block; font-size: var(--lp-fs-xs); font-weight: 700; color: var(--lp-muted); }
+.lp-rows b { font-size: var(--lp-fs-md); font-weight: 700; overflow-wrap: anywhere; }
+.lp-rows em { display: block; font-style: normal; font-size: var(--lp-fs-sm); color: var(--lp-muted); }
+
+.lp .empty { margin: var(--lp-s3); padding: 40px var(--lp-s5); text-align: center; color: var(--lp-muted); line-height: 1.65; background: var(--lp-card); border: 1px dashed var(--lp-line); border-radius: var(--lp-r-lg); font-size: var(--lp-fs-md); }
+.lp .empty a { color: var(--lp-green-d); font-weight: 800; }
+.lp .empty i { opacity: .45; }
+
+/* ---------- active banner + composer ---------- */
+.lp .active-banner { display: flex; align-items: center; gap: var(--lp-s3); margin: var(--lp-s3); padding: var(--lp-s3) var(--lp-s4); background: var(--lp-green-soft); border: 1px solid color-mix(in srgb, var(--lp-green) 35%, transparent); border-radius: var(--lp-r-md); }
+.lp .active-banner strong { display: block; font-size: var(--lp-fs-md); color: var(--lp-green-d); }
+.lp .active-banner span { font-size: var(--lp-fs-sm); color: var(--lp-muted); }
+@media (prefers-color-scheme: dark) { .lp .active-banner strong { color: #4ade80; } }
+
+.lp .composer-card { margin: var(--lp-s3); padding: var(--lp-s3); background: var(--lp-card); border: 1px solid var(--lp-line); border-radius: var(--lp-r-lg); box-shadow: var(--lp-shadow); }
+.lp .composer { padding: var(--lp-s3) var(--lp-s3) var(--lp-s2); background: var(--lp-field); border: 1.5px solid var(--lp-line); border-radius: var(--lp-r-lg); transition: border-color .15s, box-shadow .15s; }
+.lp .composer:focus-within { border-color: var(--lp-green); box-shadow: 0 0 0 4px color-mix(in srgb, var(--lp-green) 15%, transparent); }
+.lp .cx-top { display: flex; align-items: flex-start; gap: var(--lp-s3); }
+.lp .cx-avatar { flex-shrink: 0; display: block; width: 44px; height: 44px; padding: 2px; border-radius: 50%; background: linear-gradient(135deg, var(--lp-green), #00A3DD); }
+.lp .cx-avatar img, .lp .cx-avatar .cx-letter { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--lp-card); background: linear-gradient(135deg, var(--lp-green), #00A3DD); }
+.lp .cx-avatar img { display: block; object-fit: cover; }
+.lp .cx-avatar .cx-letter { display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; font-weight: 800; }
+.lp .composer textarea { flex: 1; min-width: 0; min-height: 64px; max-height: 200px; padding: 10px 0 6px; border: 0; outline: none; background: transparent; resize: none; font-size: 16px; line-height: 1.5; }
+.lp .composer textarea::placeholder { color: var(--lp-muted); }
+.lp .cx-switch { flex-shrink: 0; width: 40px; height: 40px; margin-top: 2px; border: 1px solid var(--lp-line); border-radius: 50%; background: var(--lp-card); color: var(--lp-muted); font-size: 14px; display: inline-flex; align-items: center; justify-content: center; }
+.lp .cx-preview { position: relative; margin-top: var(--lp-s2); border-radius: var(--lp-r-md); overflow: hidden; background: #000; }
+.lp .cx-preview[hidden] { display: none; }
+.lp .cx-preview img, .lp .cx-preview video { display: block; width: 100%; max-height: 240px; object-fit: cover; }
+.lp .cx-remove { position: absolute; top: 8px; right: 8px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(0, 0, 0, .7); color: #fff; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; }
+.lp .cx-bar { display: flex; align-items: center; gap: var(--lp-s3); margin-top: var(--lp-s2); padding-top: var(--lp-s3); border-top: 1px solid var(--lp-line); }
+.lp .cx-add { flex-shrink: 0; width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--lp-green-soft); color: var(--lp-green-d); font-size: 16px; display: inline-flex; align-items: center; justify-content: center; }
+.lp .cx-hint { flex: 1; min-width: 0; font-size: var(--lp-fs-sm); color: var(--lp-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lp .cx-send { flex-shrink: 0; min-height: 44px; padding: 0 var(--lp-s4); border: 0; border-radius: 999px; background: linear-gradient(135deg, var(--lp-green), #12a04c); color: #fff; font-size: var(--lp-fs-sm); font-weight: 800; display: inline-flex; align-items: center; gap: 7px; box-shadow: 0 6px 14px rgba(30, 181, 58, .25); }
+.lp .cx-send:disabled { background: var(--lp-chip); color: var(--lp-muted); box-shadow: none; cursor: default; }
+
+/* ---------- posts ---------- */
+.lp-post { margin: var(--lp-s3); background: var(--lp-card); border: 1px solid var(--lp-line); border-radius: var(--lp-r-lg); box-shadow: var(--lp-shadow); overflow: hidden; }
+.lp-post header { position: static; display: flex; align-items: center; gap: var(--lp-s3); padding: var(--lp-s3) var(--lp-s4) var(--lp-s2); background: none; color: var(--lp-text); width: auto; }
+.lp-post .pa { width: 42px; height: 42px; flex-shrink: 0; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, var(--lp-green), #00A3DD); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; }
+.lp-post .pa img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lp-post header b { display: flex; align-items: center; gap: 5px; font-size: var(--lp-fs-md); }
+.lp-post header small { display: block; font-size: var(--lp-fs-xs); color: var(--lp-muted); }
+.lp-post img.pm-media, .lp-post video { display: block; width: 100%; max-height: 520px; object-fit: cover; background: #000; }
+.lp-post footer { display: flex; align-items: center; gap: var(--lp-s2); padding: var(--lp-s3) var(--lp-s4); border-top: 1px solid var(--lp-line); }
+.lp-post footer span { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 var(--lp-s3); border-radius: 999px; background: var(--lp-chip); font-size: var(--lp-fs-sm); font-weight: 700; color: var(--lp-muted); }
+.lp-post footer a { margin-left: auto; min-height: 34px; padding: 0 var(--lp-s4); border-radius: 999px; display: inline-flex; align-items: center; background: var(--lp-green-soft); color: var(--lp-green-d); font-size: var(--lp-fs-sm); font-weight: 800; }
+@media (prefers-color-scheme: dark) { .lp-post footer a { color: #4ade80; } }
+.lu-pc { padding: 2px var(--lp-s4) var(--lp-s3); font-size: var(--lp-fs-md); line-height: 1.6; }
+.lu-pc.bgt { margin: 6px var(--lp-s4) var(--lp-s3); width: auto; box-sizing: border-box; }
+.lu-doc { display: flex; align-items: center; gap: var(--lp-s2); margin: 0 var(--lp-s4) var(--lp-s3); padding: var(--lp-s3); background: var(--lp-field); border: 1px solid var(--lp-line); border-radius: var(--lp-r-md); color: inherit; text-decoration: none; overflow-wrap: anywhere; }
+
+/* ---------- followers ---------- */
+.lp .fol-list { margin: var(--lp-s3); display: grid; grid-template-columns: 1fr; gap: var(--lp-s2); }
+.lp .fol-item { display: flex; align-items: center; gap: var(--lp-s3); padding: var(--lp-s3) var(--lp-s4); background: var(--lp-card); border: 1px solid var(--lp-line); border-radius: var(--lp-r-md); box-shadow: var(--lp-shadow); min-width: 0; }
+.lp .fol-item img, .lp .fol-item .fl { width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; object-fit: cover; background: linear-gradient(135deg, var(--lp-green), #00A3DD); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; }
+.lp .fol-item div { min-width: 0; }
+.lp .fol-item b { display: block; font-size: var(--lp-fs-md); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lp .fol-item small { color: var(--lp-muted); font-size: var(--lp-fs-sm); }
+
+/* ---------- dashboard ---------- */
+.lp .dash-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--lp-s2); margin: var(--lp-s3); }
+.lp .dash-box { position: relative; padding: var(--lp-s4); padding-top: 54px; background: var(--lp-card); border: 1px solid var(--lp-line); border-radius: var(--lp-r-lg); box-shadow: var(--lp-shadow); min-width: 0; }
+.lp .dash-box::before { content: "\f080"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; top: var(--lp-s3); left: var(--lp-s4); width: 34px; height: 34px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 14px; background: var(--lp-green-soft); color: var(--lp-green-d); }
+.lp .dash-box:nth-child(1)::before { content: "\f0c0"; }
+.lp .dash-box:nth-child(2)::before { content: "\f1d8"; background: var(--lp-blue-soft); color: var(--lp-blue); }
+.lp .dash-box:nth-child(3)::before { content: "\f004"; background: #fde7f1; color: #db2777; }
+.lp .dash-box:nth-child(4)::before { content: "\f06e"; background: var(--lp-purple-soft); color: var(--lp-purple); }
+.lp .dash-box:nth-child(5)::before { content: "\f075"; background: var(--lp-blue-soft); color: var(--lp-blue); }
+.lp .dash-box:nth-child(6)::before { content: "\f1e0"; background: var(--lp-amber-soft); color: var(--lp-amber); }
+.lp .dash-box strong { display: block; font-size: 1.7rem; font-weight: 800; letter-spacing: -.5px; line-height: 1.1; }
+.lp .dash-box span { display: block; margin-top: 4px; font-size: var(--lp-fs-sm); font-weight: 600; color: var(--lp-muted); }
+.lp .dash-top { margin: 0 var(--lp-s3) var(--lp-s3); padding: var(--lp-s4); background: var(--lp-amber-soft); color: var(--lp-text); border-radius: var(--lp-r-lg); font-size: var(--lp-fs-md); line-height: 1.55; overflow-wrap: anywhere; }
+.lp .dash-actions { margin: 0 var(--lp-s3) var(--lp-s3); display: flex; flex-wrap: wrap; gap: var(--lp-s2); }
+
+/* ---------- bottom nav ---------- */
+.lp .bottom-nav {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 640px; z-index: 90;
+    display: flex; justify-content: space-around; padding: var(--lp-s2) var(--lp-s3) calc(var(--lp-s2) + env(safe-area-inset-bottom, 0px));
+    background: var(--lp-glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--lp-line);
+}
+.lp .bottom-nav a { flex: 1; max-width: 88px; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; border-radius: var(--lp-r-md); color: var(--lp-muted); font-size: 20px; }
+.lp .bottom-nav a span { font-size: 10px; font-weight: 700; }
+.lp .bottom-nav a.active { color: var(--lp-green-d); background: var(--lp-green-soft); }
+@media (prefers-color-scheme: dark) { .lp .bottom-nav a.active { color: #4ade80; } }
+
+/* ---------- sheets (badge + media) ---------- */
+.lp .badge-overlay { display: none; position: fixed; inset: 0; z-index: 200; align-items: flex-end; justify-content: center; background: rgba(8, 18, 12, .55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.lp .badge-overlay.open { display: flex; }
+.lp .badge-sheet { width: 100%; max-width: 560px; max-height: 92vh; max-height: 92dvh; overflow-y: auto; padding: 0 0 var(--lp-s5); background: var(--lp-card); border-radius: var(--lp-r-xl) var(--lp-r-xl) 0 0; box-shadow: var(--lp-shadow-2); animation: lpSheet .28s ease-out; -webkit-overflow-scrolling: touch; }
+@keyframes lpSheet { from { transform: translateY(100%); opacity: .6; } to { transform: none; opacity: 1; } }
+.lp .badge-sheet-header { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: var(--lp-s3); padding: var(--lp-s4) var(--lp-s4) var(--lp-s3); background: var(--lp-card); border-bottom: 1px solid var(--lp-line); }
+.lp .badge-sheet-header h3 { flex: 1; display: flex; align-items: center; gap: var(--lp-s2); font-size: 1rem; font-weight: 800; }
+.lp .badge-close { width: 40px; height: 40px; flex-shrink: 0; border: 0; border-radius: 50%; background: var(--lp-chip); color: var(--lp-text); font-size: 16px; display: inline-flex; align-items: center; justify-content: center; }
+.lp .badge-sheet-body { padding: var(--lp-s4) var(--lp-s4) var(--lp-s2); }
+.lp .badge-sheet-body p { margin-bottom: var(--lp-s4); font-size: var(--lp-fs-md); line-height: 1.55; color: var(--lp-muted); }
+.lp .badge-sheet label { display: block; margin-bottom: 6px; font-size: var(--lp-fs-sm); font-weight: 800; color: var(--lp-muted); }
+.lp .badge-sheet textarea, .lp .badge-sheet input[type=tel], .lp .badge-sheet input[type=file] { width: 100%; margin: 0 0 var(--lp-s3); padding: var(--lp-s3) var(--lp-s4); border: 1.5px solid var(--lp-line); border-radius: var(--lp-r-md); background: var(--lp-field); font-size: 16px; }
+.lp .badge-sheet textarea:focus, .lp .badge-sheet input[type=tel]:focus { outline: none; border-color: var(--lp-green); }
+.lp .badge-sheet-actions { display: flex; gap: var(--lp-s3); padding: var(--lp-s2) 0 0; }
+.lp .badge-sheet-actions .btn { flex: 1; }
+.lp .media-options { display: flex; flex-direction: column; gap: var(--lp-s3); padding: var(--lp-s4) var(--lp-s4) var(--lp-s2); }
+.lp .media-opt { display: flex; align-items: center; gap: var(--lp-s4); width: 100%; padding: var(--lp-s3) var(--lp-s4); border: 1.5px solid var(--lp-line); border-radius: var(--lp-r-md); background: var(--lp-card); text-align: left; min-height: 64px; }
+.lp .media-opt:active { background: var(--lp-field); }
+.lp .mo-ico { flex-shrink: 0; width: 46px; height: 46px; border-radius: 14px; font-size: 19px; display: inline-flex; align-items: center; justify-content: center; }
+.lp .mo-cam { background: var(--lp-blue-soft); color: var(--lp-blue); }
+.lp .mo-gal { background: var(--lp-green-soft); color: var(--lp-green-d); }
+.lp .mo-text strong { display: block; font-size: var(--lp-fs-md); font-weight: 800; }
+.lp .mo-text small { display: block; margin-top: 2px; font-size: var(--lp-fs-sm); color: var(--lp-muted); }
+
+/* ---------- kompyuta: safu mbili ---------- */
+@media (min-width: 560px) {
+    .lp .fol-list { grid-template-columns: 1fr 1fr; }
+    .lp .dash-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 960px) {
+    .lp .container { max-width: 1040px; padding: var(--lp-s4) var(--lp-s4) 0; }
+    .lp-layout { display: grid; grid-template-columns: 350px minmax(0, 1fr); gap: var(--lp-s5); align-items: start; }
+    .lp-aside { position: sticky; top: var(--lp-s4); border-radius: var(--lp-r-xl); overflow: hidden; border: 1px solid var(--lp-line); box-shadow: var(--lp-shadow-2); }
+    .lp-id { margin-top: -24px; }
+    .lp-main { background: var(--lp-bg); }
+    .lp .lu-tabs { top: var(--lp-s2); border: 1px solid var(--lp-line); border-radius: var(--lp-r-lg); box-shadow: var(--lp-shadow); }
+    .lp .lu-pane { padding-top: var(--lp-s2); }
+    .lp .fol-list { grid-template-columns: 1fr 1fr; }
+    .lp .bottom-nav { bottom: var(--lp-s3); border: 1px solid var(--lp-line); border-radius: var(--lp-r-lg); max-width: 520px; box-shadow: var(--lp-shadow-2); }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+    </style>
+</head>
+<body class="lp">
+    <div class="container">
+        
+        
+        
+        <div class="lp-layout">
+        <aside class="lp-aside">
+        <section>
+        <div class="lp-cover photo" style="background-image:url('#')">
+            <a class="lp-ico" href="#" aria-label="back"><i class="fa-solid fa-arrow-left"></i></a>
+            <span class="lp-top-r">
+                <button type="button" class="lp-ico" onclick="luShare()" aria-label="share"><i class="fa-solid fa-share-nodes"></i></button>
+                <a class="lp-ico" href="#" aria-label="Simamia"><i class="fa-solid fa-gear"></i></a>
+            </span>
+        </div>
+        <div class="lp-id">
+            <div class="lp-av"><img src="#" alt=""></div>
+            <h1 class="lp-name"><svg viewBox="0 0 24 24" width="22" height="22" class="pm-vb" aria-label="Verified"><path d="M12 0L15.3 3.5L20.1 2.3L20.5 7.3L24 10.4L21.7 14.8L22.9 19.6L18 20.8L15.7 25.2L12 23L8.3 25.2L6 20.8L1.1 19.6L2.3 14.8L0 10.4L3.5 7.3L3.9 2.3L8.7 3.5L12 0Z" fill="#E9A800"/><path d="M9.8 15.6L6.2 12L4.8 13.4L9.8 18.4L20 8.2L18.6 6.8L9.8 15.6Z" fill="#fff"/></svg></h1>
+            <div class="lp-handle">@<em></em></div>
+            
+            <p class="bio clamped" id="bioText"></p>
+            <button type="button" class="see-more-btn" id="bioSeeMore" style="display:none;" onclick="toggleClamp('bioText','bioSeeMore')">See more</button>
+            
+            <p class="lp-by">Imeundwa na <a href="#"></a></p>
+
+            <div class="lp-stats">
+                <div><b></b><span>Posts</span></div>
+                <div><b id="followersCount"></b><span>followers</span></div>
+                <div><b></b><span>Tangu</span></div>
+            </div>
+
+            <div class="lp-actions">
+            
+                
+                <button type="button" class="btn btn-green" onclick="switchToThis()"><i class="fa-solid fa-right-left"></i> Tumia linkup hii</button>
+                
+                <button type="button" class="btn btn-gray" onclick="switchToProfile()"><i class="fa-solid fa-user"></i> Rudi Profile yako</button>
+                
+                <a class="btn btn-gray" href="#"><i class="fa-solid fa-pen"></i> edit</a>
+                
+                    
+                    <button type="button" class="btn btn-gray" disabled><i class="fa-solid fa-hourglass-half"></i> Badge inasubiri</button>
+                    
+                    <button type="button" class="btn btn-gold" onclick="openBadgeSheet()"><i class="fa-solid fa-certificate"></i> request_badge_short</button>
+                    
+                
+            
+                <button type="button" id="followBtn" class="btn btn-graybtn-green" onclick="toggleFollowLinkup()">
+                    <i class="fa-solid fa-user-check"></i> following<i class="fa-solid fa-user-plus"></i> Follow
+                </button>
+            
+                <a class="btn btn-green" href="#"><i class="fa-solid fa-right-to-bracket"></i> login kufollow</a>
+            
+            </div>
+
+            
+            <div class="lp-contact">
+                
+                <a href="tel:" aria-label="Piga simu"><i class="fa-solid fa-phone"></i></a>
+                <a class="wa" target="_blank" rel="noopener" aria-label="WhatsApp" href="https://wa.me/"><i class="fa-brands fa-whatsapp"></i></a>
+                
+                <a href="" target="_blank" rel="noopener" aria-label="Website"><i class="fa-solid fa-globe"></i></a>
+                <a href="mailto:" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+            
+        </div>
+        </section>
+        </aside>
+
+        <div class="lp-main">
+        
+        <div class="lu-welcome">
+            <b>Hongera!</b> linkup yako <b></b> is_ready_tap <b>dashboard</b> kuiendesha,
+            kisha <b>Switch</b> ili uanze kuchapisha kama linkup. Posts zako zitaonekana pia kwenye Kijiji.
+        </div>
+        
+
+        <div class="lu-tabs" id="luTabs" role="tablist">
+            <button type="button" class="lu-tab on" data-pane="posts" role="tab" aria-selected="true" aria-controls="pane-posts"><i class="fa-regular fa-newspaper"></i>Posts</button>
+            <button type="button" class="lu-tab" data-pane="about" role="tab" aria-selected="false" aria-controls="pane-about"><i class="fa-solid fa-circle-info"></i>About</button>
+            <button type="button" class="lu-tab" data-pane="followers" role="tab" aria-selected="false" aria-controls="pane-followers"><i class="fa-solid fa-user-group"></i>followers</button>
+            <button type="button" class="lu-tab" data-pane="dash" role="tab" aria-selected="false" aria-controls="pane-dash"><i class="fa-solid fa-gauge-high"></i>dashboard</button>
+        </div>
+
+        <!-- About -->
+        {# About text: max herufi 120. Haionyeshwi kama ni sawa na bio (bio tayari ipo juu kwenye header). #}
+        {# Call/WhatsApp/Website/Email hazipo hapa – tayari zipo kwenye vitufe vya juu (cta-row). #}
+        
+        
+        
+        
+        
+        <div class="lu-pane" id="pane-about" role="tabpanel">
+        <div class="lp-card">
+            
+            <p class="lp-about about-text clamped" id="aboutText">…</p>
+            <button type="button" class="see-more-btn" id="aboutSeeMore" style="display:none;" onclick="toggleClamp('aboutText','aboutSeeMore')">See more</button>
+            
+            <ul class="lp-rows">
+                <li><i class="fa-solid fa-briefcase"></i><div><small>Kazi</small><b></b><em></em></div></li>
+                <li><i class="fa-solid fa-graduation-cap"></i><div><small>Chuo</small><b></b><em></em></div></li>
+                <li><i class="fa-solid fa-school"></i><div><small>Sekondari</small><b></b><em></em></div></li>
+                <li><i class="fa-solid fa-book-open"></i><div><small>Msingi</small><b></b><em></em></div></li>
+                <li><i class="fa-solid fa-location-dot"></i><div><small>location</small><b></b><em></em></div></li>
+                <li><i class="fa-solid fa-house"></i><div><small>original</small><b></b></div></li>
+                <li><i class="fa-solid fa-phone"></i><div><small>call</small><b><a href="tel:"></a></b></div></li>
+                <li><i class="fa-solid fa-envelope"></i><div><small>Email</small><b><a href="mailto:"></a></b></div></li>
+                <li><i class="fa-solid fa-globe"></i><div><small>Website</small><b><a href="" target="_blank" rel="noopener"></a></b></div></li>
+                <li><i class="fa-regular fa-calendar"></i><div><small>Ilianzishwa</small><b></b></div></li>
+            </ul>
+        </div>
+        </div>
+
+        <div class="lu-pane on" id="pane-posts" role="tabpanel">
+        
+        <div class="active-banner">
+            <i class="fa-solid fa-circle-check" style="color:#1EB53A;font-size:22px;"></i>
+            <div>
+                <strong>Unatumia linkup hii sasa</strong>
+                <span>Hii ni <b>linkup</b>. Karibu <b></b>. Furahia sasa</span>
+            </div>
+        </div>
+
+        <div class="composer-card">
+            <form id="linkupPostForm" class="composer" action="#" method="POST" enctype="multipart/form-data" onsubmit="return luComposerSubmit()">
+                <div class="cx-top">
+                    <a class="cx-avatar" href="" onclick="luAvatarClick(this, event)" aria-label="Profile ya ">
+                        
+                        <img src="#" alt="">
+                        
+                        <span class="cx-letter"></span>
+                        
+                    </a>
+                    <textarea id="luText" name="content" rows="2" placeholder="post kitu..." aria-label="Andika post yako" oninput="luComposerSync()"></textarea>
+                    <button type="button" class="cx-switch" onclick="switchToProfile()" title="Rudi Profile yako" aria-label="Rudi Profile yako">
+                        <i class="fa-solid fa-right-left"></i>
+                    </button>
+                </div>
+
+                <div class="cx-preview" id="luPreview" hidden></div>
+
+                <div class="cx-bar">
+                    <button type="button" class="cx-add" onclick="openMediaSheet()" title="add picha au video" aria-label="add picha au video">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <span class="cx-hint" id="luHint">Picha au video</span>
+                    <button type="submit" class="cx-send" id="luSend" disabled>
+                        <i class="fa-solid fa-paper-plane"></i> post
+                    </button>
+                </div>
+
+                <input type="file" name="file" id="luFile" accept="image/*,video/*" hidden onchange="luFileChosen()">
+            </form>
+        </div>
+
+        <!-- Sheet: chagua kupiga picha au kutoka Gallery -->
+        <div class="badge-overlay" id="luMediaSheet" onclick="if(event.target===this)closeMediaSheet()">
+            <div class="badge-sheet" role="dialog" aria-modal="true" aria-label="add media">
+                <div class="badge-sheet-header">
+                    <h3><i class="fa-solid fa-circle-plus" style="color:#1EB53A;"></i> add media</h3>
+                    <button type="button" class="badge-close" onclick="closeMediaSheet()" aria-label="close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="media-options">
+                    <button type="button" class="media-opt" onclick="luPickMedia('camera')">
+                        <span class="mo-ico mo-cam"><i class="fa-solid fa-camera"></i></span>
+                        <span class="mo-text"><strong>take_photo</strong><small>open_camera_now</small></span>
+                    </button>
+                    <button type="button" class="media-opt" onclick="luPickMedia('gallery')">
+                        <span class="mo-ico mo-gal"><i class="fa-solid fa-images"></i></span>
+                        <span class="mo-text"><strong>choose_from_gallery</strong><small>Picha au video kwenye simu yako</small></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+
+        
+            
+            <article class="lp-post">
+                <header>
+                    <div class="pa"><img src="#" alt=""></div>
+                    <div><b><svg viewBox="0 0 24 24" width="15" height="15" class="pm-vb" aria-label="Verified"><path d="M12 0L15.3 3.5L20.1 2.3L20.5 7.3L24 10.4L21.7 14.8L22.9 19.6L18 20.8L15.7 25.2L12 23L8.3 25.2L6 20.8L1.1 19.6L2.3 14.8L0 10.4L3.5 7.3L3.9 2.3L8.7 3.5L12 0Z" fill="#E9A800"/><path d="M9.8 15.6L6.2 12L4.8 13.4L9.8 18.4L20 8.2L18.6 6.8L9.8 15.6Z" fill="#fff"/></svg></b><small></small></div>
+                </header>
+                
+                
+                
+                
+                    <video controls playsinline src="#"></video>
+                    <a class="lu-doc" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-file"></i> </a>
+                    <img class="pm-media" src="#" alt="">
+                
+                
+                <footer>
+                    <span><i class="fa-regular fa-thumbs-up"></i> </span>
+                    <span><i class="fa-regular fa-comment"></i> </span>
+                    <a href="/post/">open</a>
+                </footer>
+            </article>
+            
+        
+            <div class="empty"><i class="fa-regular fa-newspaper" style="font-size:30px;display:block;margin-bottom:10px"></i>
+                Hakuna posts bado.
+                <br><a href="#">post ya kwanza</a>
+            </div>
+        
+        </div>
+
+        <!-- Full-screen request_badge_short -->
+        
+        <div class="badge-overlay" id="linkupBadgeForm" onclick="if(event.target===this)closeBadgeSheet()">
+            <div class="badge-sheet" role="dialog" aria-modal="true">
+                <div class="badge-sheet-header">
+                    <h3><i class="fa-solid fa-certificate" style="color:#F5B800;"></i> request_verified_badge</h3>
+                    <button type="button" class="badge-close" onclick="closeBadgeSheet()" aria-label="close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="badge-sheet-body">
+                    <p>
+                        Ombi linatumwa <strong>kwa jina la profile yako</strong>. Eleza kuwa unataka
+                        <strong>linkup ""</strong> iwe na verified badge.
+                    </p>
+                    <form onsubmit="sendLinkupBadge(event)">
+                        <label>Sababu *</label>
+                        <textarea name="reason" required rows="4" placeholder="Kwa nini linkup hii inastahili verified badge..."></textarea>
+                        <label>Simu (hiari)</label>
+                        <input type="tel" name="phone" placeholder="+255...">
+                        <label>Kitambulisho (hiari)</label>
+                        <input type="file" name="id_document" accept="image/*,.pdf">
+                        <div class="badge-sheet-actions">
+                            <button type="button" class="btn btn-gray" onclick="closeBadgeSheet()">cancel</button>
+                            <button type="submit" class="btn btn-gold">send_request_badge</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+
+
+        <div class="lu-pane" id="pane-followers" role="tabpanel">
+            <div class="section-title">followers ()</div>
+            
+            <div class="fol-list">
+                
+                <a class="fol-item" href="#">
+                    <img src="#" alt="">
+                    <div class="fl"></div>
+                    <div><b></b><small>@</small></div>
+                </a>
+                
+            </div>
+            
+            <div class="empty">Hakuna followers bado. Shiriki link ya linkup hii ili wakufuate.</div>
+            
+        </div>
+
+        
+        <div class="lu-pane" id="pane-dash" role="tabpanel">
+            <div class="section-title">dashboard</div>
+            <div class="dash-grid">
+                <div class="dash-box"><strong></strong><span>followers</span></div>
+                <div class="dash-box"><strong></strong><span>Posts</span></div>
+                <div class="dash-box"><strong></strong><span>likes zote</span></div>
+                <div class="dash-box"><strong></strong><span>Views</span></div>
+                <div class="dash-box"><strong></strong><span>Comments</span></div>
+                <div class="dash-box"><strong></strong><span>Unachapisha kama linkup</span></div>
+            </div>
+            
+            <div class="dash-top"><b>Post bora:</b>  ( likes)</div>
+            
+            <div class="dash-actions">
+                <a class="btn btn-green" href="#"><i class="fa-solid fa-pen"></i> edit Linkup</a>
+                <a class="btn btn-gray" href="#"><i class="fa-solid fa-gear"></i> Pumzisha / delete</a>
+                <button type="button" class="btn btn-gray" onclick="luShare()"><i class="fa-solid fa-share-nodes"></i> Shiriki link</button>
+            </div>
+        </div>
+        
+        </div><!-- /lp-main -->
+        </div><!-- /lp-layout -->
+    </div>
+
+    <div class="bottom-nav">
+        <a href="#"><i class="fa-solid fa-house"></i><span>Home</span></a>
+        <a href="#"><i class="fa-solid fa-magnifying-glass"></i><span>search</span></a>
+        <a href="#"><i class="fa-solid fa-bell"></i><span>Notif</span></a>
+        
+        <a href="" class="active"><i class="fa-solid fa-link"></i><span>linkup</span></a>
+        
+        <a href="#"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+        
+    </div>
+
+    <script>
+    function switchToThis() {
+        fetch('#', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ linkup_id:  })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (data.success) {
+                window.location.href = data.redirect_url || window.location.pathname;
+            } else {
+                alert(data.message || 'Imeshindikana');
+            }
+        })
+        .catch(function() { alert('Imeshindikana'); });
+    }
+
+    function switchToProfile() {
+        fetch('#', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ linkup_id: null })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (data.success) {
+                window.location.href = data.redirect_url || '#';
+            } else {
+                alert(data.message || 'Imeshindikana');
+            }
+        })
+        .catch(function() { alert('Imeshindikana'); });
+    }
+
+    function toggleFollowLinkup(linkupId) {
+        var btn = document.getElementById('followBtn');
+        if (btn) btn.disabled = true;
+        fetch('/linkup/' + linkupId + '/follow', {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (!data.success) {
+                alert(data.message || 'Imeshindikana');
+                return;
+            }
+            var countEl = document.getElementById('followersCount');
+            if (countEl && typeof data.followers_count !== 'undefined') {
+                countEl.textContent = data.followers_count;
+            }
+            if (btn) {
+                if (data.following) {
+                    btn.className = 'btn btn-gray';
+                    btn.innerHTML = '<i class="fa-solid fa-user-check"></i> following';
+                } else {
+                    btn.className = 'btn btn-green';
+                    btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Follow';
+                }
+            }
+        })
+        .catch(function() { alert('Imeshindikana'); })
+        .finally(function() { if (btn) btn.disabled = false; });
+    }
+
+    function openBadgeSheet() {
+        var el = document.getElementById('linkupBadgeForm');
+        if (el) {
+            el.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+    function closeBadgeSheet() {
+        var el = document.getElementById('linkupBadgeForm');
+        if (el) {
+            el.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    }
+
+    function sendLinkupBadge(event) {
+        event.preventDefault();
+        var form = event.target;
+        var fd = new FormData(form);
+        fetch('/linkup//request_badge', {
+            method: 'POST',
+            body: fd,
+            credentials: 'same-origin'
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            alert(data.message || 'OK');
+            if (data.success) window.location.reload();
+        })
+        .catch(function() { alert('Imeshindikana'); });
+    }
+
+    function toggleClamp(textId, btnId) {
+        var text = document.getElementById(textId);
+        var btn = document.getElementById(btnId);
+        if (!text || !btn) return;
+        if (text.classList.contains('clamped')) {
+            text.classList.remove('clamped');
+            btn.textContent = 'See less';
+        } else {
+            text.classList.add('clamped');
+            btn.textContent = 'See more';
+        }
+    }
+
+    function initSeeMore() {
+        var bio = document.getElementById('bioText');
+        var bioBtn = document.getElementById('bioSeeMore');
+        if (bio && bioBtn && bio.scrollHeight > bio.clientHeight + 4) {
+            bioBtn.style.display = 'inline';
+        }
+        var about = document.getElementById('aboutText');
+        var aboutBtn = document.getElementById('aboutSeeMore');
+        if (about && aboutBtn && about.scrollHeight > about.clientHeight + 4) {
+            aboutBtn.style.display = 'inline';
+        }
+        document.querySelectorAll('.post p.clamped').forEach(function(p) {
+            var btn = p.nextElementSibling;
+            if (btn && btn.classList.contains('post-see-more') && p.scrollHeight > p.clientHeight + 4) {
+                btn.style.display = 'inline';
+                btn.onclick = function() {
+                    if (p.classList.contains('clamped')) {
+                        p.classList.remove('clamped');
+                        btn.textContent = 'See less';
+                    } else {
+                        p.classList.add('clamped');
+                        btn.textContent = 'See more';
+                    }
+                };
+            }
+        });
+    }
+    /* ===== Post composer ===== */
+    var luPreviewUrl = null;
+
+    // Avatar: ukiwa tayari kwenye ukurasa huu, rudi juu kwenye profile ya linkup
+    function luAvatarClick(a, e) {
+        if (a.getAttribute('href') === '#' || a.pathname === window.location.pathname) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+
+    function openMediaSheet() {
+        var el = document.getElementById('luMediaSheet');
+        if (el) {
+            el.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+    function closeMediaSheet() {
+        var el = document.getElementById('luMediaSheet');
+        if (el) {
+            el.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Input moja tu ya "file" ili server ipokee faili moja kwa uhakika
+    function luPickMedia(mode) {
+        var inp = document.getElementById('luFile');
+        if (!inp) return;
+        if (mode === 'camera') {
+            inp.setAttribute('accept', 'image/*');
+            inp.setAttribute('capture', 'environment');
+        } else {
+            inp.setAttribute('accept', 'image/*,video/*');
+            inp.removeAttribute('capture');
+        }
+        closeMediaSheet();
+        inp.click();
+    }
+
+    function luClearPreviewUrl() {
+        if (luPreviewUrl) {
+            URL.revokeObjectURL(luPreviewUrl);
+            luPreviewUrl = null;
+        }
+    }
+
+    function luRemoveMedia() {
+        var inp = document.getElementById('luFile');
+        if (inp) inp.value = '';
+        luFileChosen();
+    }
+
+    function luFileChosen() {
+        var inp = document.getElementById('luFile');
+        var box = document.getElementById('luPreview');
+        var hint = document.getElementById('luHint');
+        if (!inp || !box) return;
+        luClearPreviewUrl();
+        box.innerHTML = '';
+        var f = inp.files && inp.files[0];
+        if (!f) {
+            box.hidden = true;
+            if (hint) hint.textContent = 'Picha au video';
+            luComposerSync();
+            return;
+        }
+        luPreviewUrl = URL.createObjectURL(f);
+        var isVideo = f.type.indexOf('video/') === 0;
+        var media = document.createElement(isVideo ? 'video' : 'img');
+        media.src = luPreviewUrl;
+        if (isVideo) {
+            media.controls = true;
+            media.muted = true;
+            media.playsInline = true;
+            media.preload = 'metadata';
+        } else {
+            media.alt = '';
+        }
+        var rm = document.createElement('button');
+        rm.type = 'button';
+        rm.className = 'cx-remove';
+        rm.setAttribute('aria-label', 'Ondoa media');
+        rm.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+        rm.onclick = luRemoveMedia;
+        box.appendChild(media);
+        box.appendChild(rm);
+        box.hidden = false;
+        if (hint) hint.textContent = f.name;
+        luComposerSync();
+    }
+
+    // Kuongeza urefu wa sehemu ya kuandika + kuwasha kitufe cha post
+    function luComposerSync() {
+        var t = document.getElementById('luText');
+        var s = document.getElementById('luSend');
+        var f = document.getElementById('luFile');
+        if (!t || !s) return;
+        t.style.height = 'auto';
+        t.style.height = Math.min(t.scrollHeight, 200) + 'px';
+        s.disabled = !(t.value.trim().length || (f && f.files && f.files.length));
+    }
+
+    function luComposerSubmit() {
+        var s = document.getElementById('luSend');
+        if (s && s.disabled) return false;
+        if (s) {
+            s.disabled = true;
+            s.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Inatuma...';
+        }
+        return true;
+    }
+
+    document.addEventListener('DOMContentLoaded', luComposerSync);
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeMediaSheet();
+    });
+    // Ukirudi nyuma kwenye ukurasa (bfcache), rudisha kitufe kwenye hali ya kawaida
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            var s = document.getElementById('luSend');
+            if (s) s.innerHTML = '<i class="fa-solid fa-paper-plane"></i> post';
+            luComposerSync();
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', initSeeMore);
+    </script>
+    <script>
+    (function () {
+        var tabs = document.querySelectorAll('.lu-tab');
+        function show(name) {
+            tabs.forEach(function (t) {
+                var on = t.dataset.pane === name;
+                t.classList.toggle('on', on);
+                t.setAttribute('aria-selected', on ? 'true' : 'false');
+            });
+            document.querySelectorAll('.lu-pane').forEach(function (p) { p.classList.toggle('on', p.id === 'pane-' + name); });
+            try { history.replaceState(null, '', '#' + name); } catch (e) {}
+        }
+        tabs.forEach(function (t) { t.addEventListener('click', function () { show(t.dataset.pane); }); });
+        var h = (location.hash || '').slice(1);
+        if (h && document.getElementById('pane-' + h)) show(h);
+    })();
+    function luShare() {
+        var url = location.origin + location.pathname;
+        if (navigator.share) { navigator.share({ title: , url: url }); }
+        else if (navigator.clipboard) { navigator.clipboard.writeText(url); alert('Link imenakiliwa'); }
+    }
+    </script>
+
+<script src="/static/app_nav.js"></script>
+<script>wireOverlayBack('openBadgeSheet','closeBadgeSheet');wireOverlayBack('openMediaSheet','closeMediaSheet');</script>
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

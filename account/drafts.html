@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>drafts_label · DUTOZA</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* =====================================================================
+   DRAFTS — mfumo wa muundo (design tokens) + vipengele vyenye prefix dr-
+   ===================================================================== */
+:root {
+  --dr-green: #1EB53A;
+  --dr-green-d: #0f8a2a;
+  --dr-green-soft: #e8f7ec;
+  --dr-blue: #00A3DD;
+  --dr-blue-soft: #e1f4fc;
+  --dr-yellow: #FCD116;
+  --dr-warn: #b45309;
+  --dr-warn-soft: #fff4d6;
+  --dr-danger: #dc2626;
+  --dr-danger-soft: #fdecec;
+
+  --dr-bg: #f0f4f1;
+  --dr-card: #ffffff;
+  --dr-field: #f5f8f6;
+  --dr-text: #0f1a12;
+  --dr-muted: #65727a;
+  --dr-line: #e3eae5;
+  --dr-chip: #eaf0ec;
+  --dr-glass: rgba(255, 255, 255, 0.92);
+
+  --dr-s1: 4px; --dr-s2: 8px; --dr-s3: 12px; --dr-s4: 16px; --dr-s5: 24px;
+  --dr-r-sm: 10px; --dr-r-md: 14px; --dr-r-lg: 20px;
+  --dr-shadow-1: 0 2px 10px rgba(16, 60, 30, .07);
+  --dr-shadow-2: 0 14px 36px rgba(16, 60, 30, .18);
+
+  --dr-fs-xs: .72rem; --dr-fs-sm: .82rem; --dr-fs-md: .94rem; --dr-fs-lg: 1.1rem;
+  --dr-col: 1040px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dr-green-soft: #15351f;
+    --dr-blue-soft: #10344a;
+    --dr-warn: #fbbf24;
+    --dr-warn-soft: #3a2c0c;
+    --dr-danger: #f87171;
+    --dr-danger-soft: #3b1618;
+    --dr-bg: #0f1419;
+    --dr-card: #1a2332;
+    --dr-field: #121a27;
+    --dr-text: #f1f5f9;
+    --dr-muted: #94a3b8;
+    --dr-line: #2b3a4f;
+    --dr-chip: #243044;
+    --dr-glass: rgba(15, 20, 25, 0.92);
+    --dr-shadow-1: 0 2px 10px rgba(0, 0, 0, .35);
+    --dr-shadow-2: 0 14px 36px rgba(0, 0, 0, .55);
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--dr-bg); color: var(--dr-text);
+  min-height: 100vh; line-height: 1.45;
+  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+}
+a { color: var(--dr-green-d); text-decoration: none; }
+button, input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid color-mix(in srgb, var(--dr-green) 55%, transparent); outline-offset: 2px; }
+
+/* ---------- header ---------- */
+.dr-top {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: var(--dr-s3);
+  padding: var(--dr-s3) max(var(--dr-s4), calc((100% - var(--dr-col)) / 2 + var(--dr-s3)));
+  padding-top: calc(var(--dr-s3) + env(safe-area-inset-top, 0px));
+  background: var(--dr-glass);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--dr-line);
+}
+.dr-back {
+  width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--dr-chip); color: var(--dr-text); font-size: 16px;
+}
+.dr-top h1 {
+  flex: 1; min-width: 0; font-size: var(--dr-fs-lg); font-weight: 800; letter-spacing: -.2px;
+  display: flex; align-items: center; gap: var(--dr-s2);
+}
+.dr-top h1 i { color: var(--dr-green); font-size: 16px; }
+.dr-autosave {
+  font-size: var(--dr-fs-xs); font-weight: 700; color: var(--dr-muted);
+  display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0 10px;
+  border-radius: 999px;
+}
+.dr-autosave:empty { display: none; }
+.dr-autosave.saved { color: var(--dr-green-d); background: var(--dr-green-soft); }
+.dr-autosave.saving { color: var(--dr-warn); background: var(--dr-warn-soft); }
+
+/* ---------- layout ---------- */
+.dr-wrap {
+  max-width: var(--dr-col); margin: 0 auto; padding: var(--dr-s4) 14px;
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--dr-s4);
+}
+.dr-main { min-width: 0; }
+
+/* ---------- stats ---------- */
+.dr-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--dr-s2); margin-bottom: var(--dr-s4); }
+.dr-stat {
+  background: var(--dr-card); border: 1px solid var(--dr-line); border-radius: var(--dr-r-md);
+  padding: var(--dr-s3) var(--dr-s2); text-align: center; box-shadow: var(--dr-shadow-1);
+}
+.dr-stat b { display: block; font-size: 1.35rem; font-weight: 800; letter-spacing: -.5px; color: var(--dr-green-d); line-height: 1.1; }
+.dr-stat span { display: block; margin-top: 2px; font-size: var(--dr-fs-xs); font-weight: 600; color: var(--dr-muted); }
+
+/* ---------- composer ---------- */
+.dr-composer {
+  background: var(--dr-card); border: 1px solid var(--dr-line); border-radius: var(--dr-r-lg);
+  box-shadow: var(--dr-shadow-1); display: flex; flex-direction: column; min-height: 0;
+}
+.dr-composer-head {
+  display: flex; align-items: center; gap: var(--dr-s2);
+  padding: var(--dr-s3) var(--dr-s4); border-bottom: 1px solid var(--dr-line);
+  font-weight: 800; font-size: var(--dr-fs-md);
+}
+.dr-composer-head i { color: var(--dr-green); }
+.dr-composer-head .dr-title { flex: 1; min-width: 0; }
+.dr-sheet-close {
+  display: none; width: 36px; height: 36px; border: none; border-radius: 50%;
+  background: var(--dr-chip); color: var(--dr-text); align-items: center; justify-content: center;
+}
+#draftForm { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+.dr-body { padding: var(--dr-s4); display: flex; flex-direction: column; gap: var(--dr-s4); min-height: 0; }
+.dr-foot {
+  padding: var(--dr-s3) var(--dr-s4); padding-bottom: calc(var(--dr-s3) + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--dr-line); background: var(--dr-card);
+  border-radius: 0 0 var(--dr-r-lg) var(--dr-r-lg);
+}
+.dr-foot-row { display: flex; gap: var(--dr-s2); }
+.dr-foot-row .dr-btn { flex: 1; }
+.dr-msg { margin-top: var(--dr-s2); font-size: var(--dr-fs-sm); color: var(--dr-muted); }
+.dr-msg:empty { display: none; }
+
+.dr-editing {
+  display: none; align-items: center; justify-content: space-between; gap: var(--dr-s2);
+  background: var(--dr-blue-soft); color: var(--dr-blue);
+  padding: var(--dr-s2) var(--dr-s3); border-radius: var(--dr-r-sm); font-size: var(--dr-fs-sm); font-weight: 600;
+}
+.dr-editing.show { display: flex; }
+
+.dr-field > label, .dr-label {
+  display: block; margin-bottom: 6px; font-size: var(--dr-fs-sm); font-weight: 700; color: var(--dr-muted);
+}
+.dr-input, .dr-field textarea, .dr-field select {
+  width: 100%; background: var(--dr-field); border: 1px solid var(--dr-line); color: var(--dr-text);
+  border-radius: var(--dr-r-sm); padding: 11px 12px; min-height: 44px;
+}
+.dr-field textarea { min-height: 128px; resize: vertical; line-height: 1.55; }
+.dr-input:focus, .dr-field textarea:focus, .dr-field select:focus {
+  outline: none; border-color: var(--dr-green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--dr-green) 20%, transparent);
+}
+.dr-count { display: block; text-align: right; margin-top: 4px; font-size: var(--dr-fs-xs); font-weight: 700; color: var(--dr-muted); }
+.dr-count.warn { color: var(--dr-warn); }
+.dr-count.over { color: var(--dr-danger); }
+
+/* chips row (templates / best times) — hupitika kando */
+.dr-chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+.dr-chips::-webkit-scrollbar { display: none; }
+.dr-chips button {
+  flex-shrink: 0; min-height: 36px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--dr-line); background: var(--dr-chip); font-size: var(--dr-fs-sm); font-weight: 600;
+}
+.dr-chips button:hover, .dr-chips button:active { border-color: var(--dr-green); color: var(--dr-green-d); }
+.dr-chips.time button { background: var(--dr-blue-soft); border-color: transparent; color: var(--dr-blue); }
+.dr-hint { margin-top: 4px; font-size: var(--dr-fs-xs); color: var(--dr-muted); }
+
+.dr-two { display: grid; grid-template-columns: 1fr; gap: var(--dr-s4); }
+
+.dr-tools { display: flex; flex-wrap: wrap; gap: var(--dr-s2); }
+.dr-file {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px;
+  border-radius: var(--dr-r-sm); background: var(--dr-chip); font-size: var(--dr-fs-sm); font-weight: 700; cursor: pointer;
+}
+.dr-file input { display: none; }
+.dr-file:focus-within { outline: 3px solid color-mix(in srgb, var(--dr-green) 55%, transparent); }
+
+.dr-media { display: none; position: relative; border-radius: var(--dr-r-md); overflow: hidden; background: #000; }
+.dr-media.show { display: block; }
+.dr-media img, .dr-media video { width: 100%; max-height: 260px; object-fit: contain; display: block; }
+.dr-media .doc { padding: var(--dr-s5); display: flex; align-items: center; gap: var(--dr-s3); color: #fff; word-break: break-all; }
+.dr-media-x {
+  position: absolute; top: 8px; right: 8px; width: 36px; height: 36px; border: none; border-radius: 50%;
+  background: rgba(0, 0, 0, .7); color: #fff; z-index: 1;
+}
+
+/* preview ya post */
+.dr-preview { border: 1px dashed var(--dr-line); border-radius: var(--dr-r-md); padding: 0 var(--dr-s3); }
+.dr-preview summary {
+  list-style: none; min-height: 44px; display: flex; align-items: center; gap: 8px;
+  font-size: var(--dr-fs-sm); font-weight: 700; color: var(--dr-muted); cursor: pointer;
+}
+.dr-preview summary::-webkit-details-marker { display: none; }
+.dr-preview summary::after { content: "\f078"; font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 11px; margin-left: auto; transition: transform .2s; }
+.dr-preview[open] summary::after { transform: rotate(180deg); }
+.dr-pv { padding: 4px 0 var(--dr-s3); }
+.dr-pv-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.dr-pv-av {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 800; background: linear-gradient(135deg, var(--dr-green), var(--dr-blue));
+}
+.dr-pv-name { font-weight: 800; font-size: var(--dr-fs-sm); overflow-wrap: anywhere; }
+.dr-pv-text { white-space: pre-wrap; word-break: break-word; font-size: var(--dr-fs-md); }
+.dr-pv-media { margin-top: 8px; border-radius: var(--dr-r-sm); overflow: hidden; background: #000; }
+.dr-pv-media img, .dr-pv-media video { width: 100%; max-height: 220px; object-fit: cover; display: block; }
+.dr-tag { color: var(--dr-blue); font-weight: 700; }
+
+/* ---------- buttons ---------- */
+.dr-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px;
+  padding: 0 16px; border: none; border-radius: var(--dr-r-sm); font-weight: 700; font-size: var(--dr-fs-sm);
+  transition: transform .12s, filter .12s; white-space: nowrap;
+}
+.dr-btn:active { transform: scale(.97); }
+.dr-btn:disabled { opacity: .55; cursor: not-allowed; }
+.dr-btn-primary { background: linear-gradient(135deg, var(--dr-green), #12a04c); color: #fff; box-shadow: 0 6px 14px rgba(30, 181, 58, .28); }
+.dr-btn-blue { background: var(--dr-blue); color: #fff; }
+.dr-btn-ghost { background: var(--dr-chip); color: var(--dr-text); }
+.dr-btn-danger { background: var(--dr-danger); color: #fff; }
+.dr-btn-sm { min-height: 40px; padding: 0 14px; }
+
+/* ---------- toolbar ya orodha ---------- */
+.dr-seg { display: flex; gap: 4px; padding: 4px; background: var(--dr-chip); border-radius: var(--dr-r-md); margin-bottom: var(--dr-s3); }
+.dr-seg button {
+  flex: 1; min-height: 40px; border: none; background: transparent; color: var(--dr-muted);
+  border-radius: var(--dr-r-sm); font-weight: 700; font-size: var(--dr-fs-sm);
+}
+.dr-seg button.active { background: var(--dr-card); color: var(--dr-green-d); box-shadow: var(--dr-shadow-1); }
+
+.dr-searchrow { display: flex; align-items: center; gap: var(--dr-s2); margin-bottom: var(--dr-s2); }
+.dr-search { position: relative; flex: 1; min-width: 0; }
+.dr-search i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--dr-muted); font-size: 14px; pointer-events: none; }
+.dr-search input { padding-left: 38px; background: var(--dr-card); }
+
+.dr-filterbar { display: flex; align-items: center; gap: var(--dr-s2); margin-bottom: var(--dr-s3); }
+.dr-fchips { display: flex; gap: 6px; overflow-x: auto; flex: 1; min-width: 0; scrollbar-width: none; }
+.dr-fchips::-webkit-scrollbar { display: none; }
+.dr-fchips button {
+  flex-shrink: 0; min-height: 36px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--dr-line); background: var(--dr-card); font-size: var(--dr-fs-sm); font-weight: 700; color: var(--dr-muted);
+}
+.dr-fchips button.active { background: var(--dr-green); border-color: var(--dr-green); color: #fff; }
+.dr-sort { position: relative; flex-shrink: 0; }
+.dr-sort select {
+  appearance: none; -webkit-appearance: none; width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--dr-line); background: var(--dr-card); color: transparent; padding: 0; cursor: pointer;
+}
+.dr-sort select option { color: var(--dr-text); }
+.dr-sort i { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; color: var(--dr-muted); font-size: 14px; }
+.dr-selbtn {
+  flex-shrink: 0; min-height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--dr-line);
+  background: var(--dr-card); font-size: var(--dr-fs-sm); font-weight: 700; color: var(--dr-muted);
+}
+.dr-selbtn.active { background: var(--dr-blue-soft); border-color: var(--dr-blue); color: var(--dr-blue); }
+
+.dr-section-title {
+  margin: var(--dr-s4) 0 var(--dr-s2); font-size: var(--dr-fs-xs); text-transform: uppercase; letter-spacing: .08em;
+  font-weight: 800; color: var(--dr-muted);
+}
+
+/* ---------- kadi ya draft ---------- */
+.dr-card {
+  position: relative; background: var(--dr-card); border: 1px solid var(--dr-line);
+  border-left: 5px solid var(--dr-line); border-radius: var(--dr-r-md);
+  padding: var(--dr-s3) var(--dr-s4); margin-bottom: var(--dr-s3); box-shadow: var(--dr-shadow-1);
+  animation: dr-rise .3s ease both;
+}
+.dr-card[data-status="draft"] { border-left-color: #94a3b8; }
+.dr-card[data-status="scheduled"] { border-left-color: var(--dr-blue); }
+.dr-card[data-status="due"] { border-left-color: var(--dr-yellow); }
+.dr-card.selected { outline: 2px solid var(--dr-green); }
+@keyframes dr-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.dr-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; font-size: var(--dr-fs-xs); color: var(--dr-muted); }
+.dr-badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; font-size: var(--dr-fs-xs); font-weight: 800; background: var(--dr-chip); color: var(--dr-muted); }
+.dr-badge.scheduled { background: var(--dr-blue-soft); color: var(--dr-blue); }
+.dr-badge.due { background: var(--dr-warn-soft); color: var(--dr-warn); }
+.dr-badge.cat { background: var(--dr-green-soft); color: var(--dr-green-d); }
+
+.dr-row { display: flex; gap: var(--dr-s3); margin-top: var(--dr-s2); align-items: flex-start; }
+.dr-text {
+  flex: 1; min-width: 0; white-space: pre-wrap; word-break: break-word; font-size: var(--dr-fs-md);
+  display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
+}
+.dr-thumb { width: 84px; height: 84px; flex-shrink: 0; border-radius: var(--dr-r-sm); object-fit: cover; background: #000; }
+.dr-filechip { display: inline-flex; align-items: center; gap: 6px; margin-top: var(--dr-s2); font-size: var(--dr-fs-sm); color: var(--dr-muted); word-break: break-all; }
+.dr-countdown { margin-top: var(--dr-s2); display: flex; align-items: center; gap: 6px; font-size: var(--dr-fs-sm); font-weight: 600; color: var(--dr-blue); }
+
+.dr-actions { position: relative; display: flex; gap: var(--dr-s2); margin-top: var(--dr-s3); align-items: center; }
+.dr-actions .dr-btn { flex: 1; }
+.dr-actions .dr-more { flex: 0 0 44px; padding: 0; }
+.dr-menu {
+  position: absolute; right: 0; bottom: calc(100% + 6px); z-index: 20; min-width: 200px; display: none;
+  background: var(--dr-card); border: 1px solid var(--dr-line); border-radius: var(--dr-r-md); box-shadow: var(--dr-shadow-2); padding: 6px;
+}
+.dr-menu.open { display: block; }
+.dr-menu button {
+  width: 100%; display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 12px;
+  border: none; background: transparent; border-radius: var(--dr-r-sm); font-size: var(--dr-fs-sm); font-weight: 600; text-align: left;
+}
+.dr-menu button:hover { background: var(--dr-chip); }
+.dr-menu button.danger { color: var(--dr-danger); }
+.dr-menu hr { border: none; border-top: 1px solid var(--dr-line); margin: 4px 0; }
+
+.dr-check { display: none; position: absolute; top: 12px; right: 12px; width: 26px; height: 26px; accent-color: var(--dr-green); }
+.dr-selecting .dr-check { display: block; }
+.dr-selecting .dr-actions { display: none; }
+.dr-selecting .dr-card { cursor: pointer; padding-right: 48px; }
+
+/* ---------- empty ---------- */
+.dr-empty { text-align: center; padding: 44px var(--dr-s4); color: var(--dr-muted); }
+.dr-empty i { display: block; font-size: 44px; margin-bottom: var(--dr-s3); opacity: .45; }
+.dr-empty .dr-btn { margin-top: var(--dr-s4); }
+
+/* ---------- kalenda ya wiki ---------- */
+.dr-week { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px var(--dr-s3); scrollbar-width: none; }
+.dr-week::-webkit-scrollbar { display: none; }
+.dr-day {
+  flex: 0 0 56px; min-height: 72px; border: 1px solid var(--dr-line); background: var(--dr-card); border-radius: var(--dr-r-md);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; position: relative;
+}
+.dr-day small { font-size: var(--dr-fs-xs); font-weight: 700; color: var(--dr-muted); text-transform: capitalize; }
+.dr-day b { font-size: 1.15rem; font-weight: 800; }
+.dr-day .dot { position: absolute; bottom: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--dr-blue); }
+.dr-day.today small { color: var(--dr-green-d); }
+.dr-day.active { background: var(--dr-green); border-color: var(--dr-green); }
+.dr-day.active small, .dr-day.active b { color: #fff; }
+.dr-day.active .dot { background: #fff; }
+.dr-day.wide { flex-basis: 84px; }
+.dr-day.wide b { font-size: var(--dr-fs-sm); }
+.dr-cal-title { margin: 0 0 var(--dr-s2); font-size: var(--dr-fs-sm); font-weight: 800; color: var(--dr-muted); display: flex; align-items: center; gap: 6px; }
+
+/* ---------- FAB, selection bar ---------- */
+.dr-fab {
+  position: fixed; right: max(18px, env(safe-area-inset-right, 0px)); bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  width: 58px; height: 58px; border: none; border-radius: 50%; z-index: 40; font-size: 22px; color: #fff;
+  background: linear-gradient(135deg, var(--dr-green), var(--dr-blue)); box-shadow: 0 10px 24px rgba(0, 140, 90, .4);
+  display: flex; align-items: center; justify-content: center; transition: transform .15s;
+}
+.dr-fab:active { transform: scale(.93); }
+.dr-selbar {
+  position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 140%);
+  width: min(560px, calc(100% - 24px)); z-index: 45; display: flex; align-items: center; gap: var(--dr-s2);
+  padding: var(--dr-s2) var(--dr-s3); background: var(--dr-card); border: 1px solid var(--dr-line);
+  border-radius: var(--dr-r-lg); box-shadow: var(--dr-shadow-2); transition: transform .25s;
+}
+.dr-selbar.show { transform: translate(-50%, 0); }
+.dr-selbar .n { flex: 1; font-weight: 800; font-size: var(--dr-fs-sm); }
+
+/* ---------- backdrop, confirm, toast ---------- */
+.dr-backdrop { position: fixed; inset: 0; background: rgba(8, 18, 12, .5); z-index: 1100; opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s; }
+.dr-backdrop.show { opacity: 1; visibility: visible; }
+.dr-modal {
+  position: fixed; inset: 0; z-index: 1400; display: none; align-items: flex-end; justify-content: center; padding: var(--dr-s4);
+  background: rgba(8, 18, 12, .55);
+}
+.dr-modal.show { display: flex; }
+.dr-dialog {
+  width: 100%; max-width: 420px; background: var(--dr-card); border-radius: var(--dr-r-lg); padding: var(--dr-s5);
+  box-shadow: var(--dr-shadow-2); animation: dr-rise .22s ease both;
+}
+.dr-dialog h2 { font-size: var(--dr-fs-lg); font-weight: 800; }
+.dr-dialog p { margin-top: 6px; color: var(--dr-muted); font-size: var(--dr-fs-md); }
+.dr-dialog .row { display: flex; gap: var(--dr-s2); margin-top: var(--dr-s5); }
+.dr-dialog .row .dr-btn { flex: 1; }
+.dr-toast {
+  position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+  z-index: 1500; max-width: 90%; padding: 11px 18px; border-radius: var(--dr-r-md); font-size: var(--dr-fs-sm); font-weight: 600;
+  background: #1e293b; color: #fff; opacity: 0; transition: opacity .25s; pointer-events: none;
+}
+.dr-toast.show { opacity: 1; }
+.dr-toast.ok { background: #14532d; }
+.dr-toast.err { background: #7f1d1d; }
+
+/* ---------- DESKTOP: safu mbili ---------- */
+@media (min-width: 560px) {
+  .dr-two { grid-template-columns: 1fr 1fr; }
+  .dr-modal { align-items: center; }
+}
+@media (min-width: 960px) {
+  .dr-wrap { grid-template-columns: 410px minmax(0, 1fr); align-items: start; gap: var(--dr-s5); }
+  .dr-composer { position: sticky; top: 76px; max-height: calc(100vh - 92px); }
+  .dr-body { overflow-y: auto; }
+  .dr-two { grid-template-columns: 1fr; }
+  .dr-fab { display: none; }
+  .dr-order-list { order: 2; }
+  .dr-order-composer { order: 1; }
+}
+
+/* ---------- SIMU: composer kama karatasi ya chini ---------- */
+@media (max-width: 959.98px) {
+  .dr-composer {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 1200; margin: 0 auto; max-width: 640px;
+    max-height: 92vh; max-height: 92dvh; border-radius: 22px 22px 0 0; border-bottom: none;
+    transform: translateY(108%); visibility: hidden; box-shadow: var(--dr-shadow-2);
+    transition: transform .3s cubic-bezier(.2, .8, .2, 1), visibility .3s;
+  }
+  .dr-composer.open { transform: none; visibility: visible; }
+  .dr-body { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .dr-foot { border-radius: 0; }
+  .dr-sheet-close { display: inline-flex; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<header class="dr-top">
+  <a class="dr-back" href="#" aria-label="Back"><i class="fa-solid fa-arrow-left"></i></a>
+  <h1><i class="fa-solid fa-file-lines"></i> drafts_label</h1>
+  <span class="dr-autosave" id="autosaveStatus" role="status" aria-live="polite"></span>
+</header>
+
+<main class="dr-wrap" id="drWrap">
+
+  <!-- ====== COMPOSER (kompyuta: kushoto · simu: karatasi ya chini) ====== -->
+  <section class="dr-composer dr-order-composer" id="composerCard" aria-label="write_draft">
+    <div class="dr-composer-head">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <span class="dr-title">write_draft</span>
+      <button type="button" class="dr-sheet-close" id="sheetClose" aria-label="cancel"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <form id="draftForm">
+      <input type="hidden" name="draft_id" id="draftId" value="">
+      <input type="hidden" name="remove_media" id="removeMedia" value="0">
+
+      <div class="dr-body">
+        <div class="dr-editing" id="editingBanner">
+          <span><i class="fa-solid fa-pen"></i> Unahariri draft #<span id="editingId"></span></span>
+          <button type="button" class="dr-btn dr-btn-ghost dr-btn-sm" id="cancelEditBtn">cancel</button>
+        </div>
+
+        <div>
+          <span class="dr-label">Templates</span>
+          <div class="dr-chips" id="templates">
+            <button type="button" data-tpl="Habari za asubuhi ☀️ #kijiji">Asubuhi</button>
+            <button type="button" data-tpl="Tangazo: 📢 &#10;&#10;#biashara #tanzania">Tangazo</button>
+            <button type="button" data-tpl="Swali kwa jamii: 🤔 &#10;&#10;Je, ...?">Swali</button>
+            <button type="button" data-tpl="Shukrani 🙏 &#10;&#10;#asante">Shukrani</button>
+            <button type="button" data-tpl="Leo nimejifunza... 💡 #elimu">Elimu</button>
+          </div>
+        </div>
+
+        <div class="dr-field">
+          <label for="content">write_draft</label>
+          <div class="cpx-hashtag-wrap">
+            <textarea name="content" id="content" placeholder="Andika hapa... unaweza kuweka #hashtag" maxlength="5000"></textarea>
+            <span class="cpx-bg-count" id="cpxBgCount">0/150</span>
+          </div>
+          <span class="dr-count" id="charCount">0 / 5000</span>
+        </div>
+
+        <div class="dr-two">
+          <div class="dr-field">
+            <label for="scheduledAt">Panga muda (EAT · Tanzania)</label>
+            <input class="dr-input" type="datetime-local" name="scheduled_at" id="scheduledAt">
+            <div class="dr-chips time" id="bestTimes" style="margin-top:8px">
+              <button type="button" data-hours="9">Leo 09:00</button>
+              <button type="button" data-hours="12">12:00</button>
+              <button type="button" data-hours="18">18:00</button>
+              <button type="button" data-hours="20">20:00</button>
+            </div>
+            <p class="dr-hint">Best times: asubuhi 9, mchana 12, jioni 18–20</p>
+          </div>
+          <div class="dr-field">
+            <label for="category">Category</label>
+            <div style="position:relative">
+              <input type="text" name="category" id="category" class="dr-input" maxlength="30" placeholder="Andika au chagua (hiari)" autocomplete="off">
+            </div>
+            <p class="dr-hint" id="categoryNote" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="dr-tools">
+          <label class="dr-file">
+            <i class="fa-solid fa-image"></i> Media
+            <input type="file" name="file" id="fileInput" accept="image/*,video/*,.pdf,.doc,.docx,.txt">
+          </label>
+          <button type="button" class="dr-btn dr-btn-ghost dr-btn-sm" id="extrasBtn" onclick="cpxSheetOpen()" title="Link, wimbo, quote, rangi au font">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Ongeza<span class="cpx-dot" id="cpxMoreDot" hidden></span>
+          </button>
+          <button type="button" class="dr-btn dr-btn-ghost dr-btn-sm" id="proBtn" onclick="drOpenPro()" title="Kihariri PRO cha picha/video">
+            <i class="fa-solid fa-sliders"></i> PRO
+          </button>
+          <button type="button" class="dr-btn dr-btn-ghost dr-btn-sm" id="clearScheduleBtn">delete muda</button>
+        </div>
+
+        <div class="dr-media" id="mediaPreview">
+          <button type="button" class="dr-media-x" id="mediaRemoveBtn" aria-label="remove"><i class="fa-solid fa-xmark"></i></button>
+          <div id="mediaPreviewInner"></div>
+        </div>
+
+        
+
+        <details class="dr-preview" id="pvDetails">
+          <summary><i class="fa-regular fa-eye"></i> Angalia itakavyoonekana</summary>
+          <div class="dr-pv" id="pvBox"></div>
+        </details>
+      </div>
+
+      <div class="dr-foot">
+        <div class="dr-foot-row">
+          <button type="submit" class="dr-btn dr-btn-primary" id="saveBtn">
+            <i class="fa-solid fa-floppy-disk"></i> save Draft
+          </button>
+          <button type="button" class="dr-btn dr-btn-blue" id="publishNowBtn">
+            <i class="fa-solid fa-paper-plane"></i> publish_now
+          </button>
+        </div>
+        <div class="dr-msg" id="draftMsg" role="status"></div>
+      </div>
+    </form>
+  </section>
+
+  <!-- ====== ORODHA (kompyuta: kulia) ====== -->
+  <section class="dr-main dr-order-list" id="drMain">
+    <div class="dr-stats">
+      <div class="dr-stat"><b id="statTotal">0</b><span>Jumla</span></div>
+      <div class="dr-stat"><b id="statScheduled">0</b><span>Zimepangwa</span></div>
+      <div class="dr-stat"><b id="statDrafts">0</b><span>drafts_label</span></div>
+    </div>
+
+    <div class="dr-seg" role="tablist">
+      <button type="button" class="active" data-view="list" role="tab">Orodha</button>
+      <button type="button" data-view="calendar" role="tab">Kalenda</button>
+    </div>
+
+    <div id="listTools">
+      <div class="dr-searchrow">
+        <div class="dr-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input class="dr-input" type="search" id="filterQ" placeholder="search drafts..." aria-label="search">
+        </div>
+        <div class="dr-sort">
+          <select id="filterSort" aria-label="Mpangilio">
+            <option value="newest">Mpya kwanza</option>
+            <option value="oldest">Zamani kwanza</option>
+            <option value="scheduled">Zilizopangwa kwanza</option>
+          </select>
+          <i class="fa-solid fa-arrow-down-wide-short"></i>
+        </div>
+      </div>
+      <div class="dr-filterbar">
+        <div class="dr-fchips" id="statusChips">
+          <button type="button" class="active" data-st="all">all</button>
+          <button type="button" data-st="draft">drafts_label tu</button>
+          <button type="button" data-st="scheduled">Zimepangwa</button>
+        </div>
+        <button type="button" class="dr-selbtn" id="selectToggle">Chagua</button>
+      </div>
+    </div>
+
+    <div class="dr-section-title">drafts_label zako</div>
+    <div id="listView"></div>
+    <div id="calendarView" style="display:none"></div>
+  </section>
+</main>
+
+<!-- FAB (simu tu) -->
+<button type="button" class="dr-fab" id="fab" aria-label="write_draft"><i class="fa-solid fa-plus"></i></button>
+
+<!-- bar ya kuchagua nyingi -->
+<div class="dr-selbar" id="selBar" role="region" aria-label="Zilizochaguliwa">
+  <span class="n"><span id="selCount">0</span> zimechaguliwa</span>
+  <button type="button" class="dr-btn dr-btn-ghost dr-btn-sm" id="selCancel">cancel</button>
+  <button type="button" class="dr-btn dr-btn-danger dr-btn-sm" id="selDelete"><i class="fa-solid fa-trash"></i> delete</button>
+</div>
+
+<div class="dr-backdrop" id="sheetBackdrop"></div>
+
+<!-- confirm -->
+<div class="dr-modal" id="cfModal" role="dialog" aria-modal="true" aria-labelledby="cfTitle">
+  <div class="dr-dialog">
+    <h2 id="cfTitle"></h2>
+    <p id="cfText"></p>
+    <div class="row">
+      <button type="button" class="dr-btn dr-btn-ghost" id="cfCancel">cancel</button>
+      <button type="button" class="dr-btn dr-btn-primary" id="cfOk"></button>
+    </div>
+  </div>
+</div>
+
+<script src="/static/category_picker.js"></script>
+<script>
+const DRAFTS = ;
+const STATIC = ;
+const ME_NAME = ;
+const TXT = {
+  post: ,
+  del: ,
+  edit: ,
+  copy: ,
+  save: ,
+  write: 
+};
+const MAX_CHARS = 5000;
+const AUTO_MS = 3000;
+const DESKTOP = window.matchMedia('(min-width: 960px)');
+
+let currentDraftId = null;
+let autosaveTimer = null;
+let dirty = false;
+let existingMedia = null;   // {file_path, media_type}
+let fStatus = 'all';
+let view = 'list';
+let selectMode = false;
+const selected = new Set();
+let calDay = null;
+let pvObjectUrl = null;
+
+const $ = (id) => document.getElementById(id);
+
+/* ---------- usalama: kusafisha maandishi kabla ya kuingiza kwenye HTML ---------- */
+function escText(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+function escAttr(s) {
+  return escText(s).replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+}
+function mediaUrl(path) {
+  return STATIC + encodeURI(String(path || ''));
+}
+function safeNum(n) {
+  const v = parseInt(n, 10);
+  return isNaN(v) ? 0 : v;
+}
+function linkify(text) {
+  return escText(text).replace(/#([A-Za-z0-9_]{1,60})/g, '<span class="dr-tag">#$1</span>');
+}
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+/* ---------- muda wa EAT (UTC+3), unaolingana na seva ---------- */
+function eatNow() {
+  const d = new Date(Date.now() + 3 * 3600 * 1000);
+  return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + ' ' +
+         pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds());
+}
+function eatToday() { return eatNow().slice(0, 10); }
+
+function toast(msg, type) {
+  const t = document.createElement('div');
+  t.className = 'dr-toast ' + (type || '');
+  t.textContent = msg;
+  t.setAttribute('role', 'status');
+  document.body.appendChild(t);
+  requestAnimationFrame(() => t.classList.add('show'));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 250); }, 2600);
+}
+
+/* ---------- confirm ya ndani ya app (badala ya confirm() ya kivinjari) ---------- */
+function askConfirm(opts) {
+  return new Promise((resolve) => {
+    const modal = $('cfModal'), ok = $('cfOk'), cancel = $('cfCancel');
+    $('cfTitle').textContent = opts.title || '';
+    $('cfText').textContent = opts.text || '';
+    ok.textContent = opts.ok || 'OK';
+    ok.className = 'dr-btn ' + (opts.danger ? 'dr-btn-danger' : 'dr-btn-primary');
+    modal.classList.add('show');
+    cancel.focus();
+    function done(v) {
+      modal.classList.remove('show');
+      ok.removeEventListener('click', onOk);
+      cancel.removeEventListener('click', onNo);
+      modal.removeEventListener('click', onBg);
+      document.removeEventListener('keydown', onKey, true);
+      resolve(v);
+    }
+    function onOk() { done(true); }
+    function onNo() { done(false); }
+    function onBg(e) { if (e.target === modal) done(false); }
+    function onKey(e) { if (e.key === 'Escape') { e.stopPropagation(); done(false); } }
+    ok.addEventListener('click', onOk);
+    cancel.addEventListener('click', onNo);
+    modal.addEventListener('click', onBg);
+    document.addEventListener('keydown', onKey, true);
+  });
+}
+
+/* ---------- karatasi ya composer (simu) ---------- */
+function openComposer() {
+  if (DESKTOP.matches) { $('content').focus(); return; }
+  $('composerCard').classList.add('open');
+  $('sheetBackdrop').classList.add('show');
+  $('fab').style.display = 'none';
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => $('content').focus(), 320);
+}
+function closeComposer() {
+  $('composerCard').classList.remove('open');
+  $('sheetBackdrop').classList.remove('show');
+  $('fab').style.display = '';
+  document.body.style.overflow = '';
+}
+function newDraft() {
+  cancelEdit();
+  openComposer();
+}
+
+/* ---------- vitendaji vya fomu ---------- */
+function toLocalInputValue(s) {
+  if (!s) return '';
+  const m = String(s).replace('T', ' ').slice(0, 16);
+  return m.replace(' ', 'T');
+}
+function fromLocalInputValue(v) {
+  if (!v) return '';
+  return v.replace('T', ' ') + (v.length === 16 ? ':00' : '');
+}
+function setBestTime(hours) {
+  const d = new Date();
+  d.setHours(hours, 0, 0, 0);
+  if (d.getTime() < Date.now()) d.setDate(d.getDate() + 1);
+  $('scheduledAt').value = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  dirty = true;
+  scheduleAutosave();
+}
+function clearScheduleField() {
+  $('scheduledAt').value = '';
+  dirty = true;
+  scheduleAutosave();
+}
+function updateCharCount() {
+  const n = ($('content').value || '').length;
+  const el = $('charCount');
+  el.textContent = n + ' / ' + MAX_CHARS;
+  el.classList.toggle('warn', n > MAX_CHARS * 0.9);
+  el.classList.toggle('over', n > MAX_CHARS);
+}
+function setAutosave(state, html) {
+  const el = $('autosaveStatus');
+  el.className = 'dr-autosave ' + (state || '');
+  el.innerHTML = html || '';
+}
+function scheduleAutosave() {
+  dirty = true;
+  updatePreview();
+  clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(() => {
+    if (!dirty) return;
+    const content = $('content').value.trim();
+    const hasMedia = existingMedia || $('fileInput').files[0];
+    if (!content && !hasMedia && !currentDraftId) return;
+    saveDraft({ silent: true });
+  }, AUTO_MS);
+}
+
+/* ---------- media preview ya fomu ---------- */
+function removeMediaPreview() {
+  $('fileInput').value = '';
+  $('mediaPreview').classList.remove('show');
+  $('mediaPreviewInner').innerHTML = '';
+  if (existingMedia) {
+    $('removeMedia').value = '1';
+    existingMedia = null;
+  }
+  dirty = true;
+  scheduleAutosave();
+}
+function showMediaPreview(file, url, mediaType) {
+  const box = $('mediaPreview');
+  const inner = $('mediaPreviewInner');
+  box.classList.add('show');
+  const isVideo = mediaType === 'video' || (file && file.type && file.type.startsWith('video/'));
+  const isImage = mediaType === 'image' || (file && file.type && file.type.startsWith('image/'));
+  if (isVideo || isImage) {
+    const src = url || URL.createObjectURL(file);
+    inner.innerHTML = isVideo
+      ? '<video src="' + escAttr(src) + '" controls playsinline></video>'
+      : '<img src="' + escAttr(src) + '" alt="preview">';
+  } else {
+    const name = file ? file.name : (url || 'Document');
+    inner.innerHTML = '<div class="doc"><i class="fa-solid fa-file" style="font-size:28px;color:var(--dr-green)"></i><span>' + escText(name) + '</span></div>';
+  }
+}
+
+/* ---------- preview ya post (itakavyoonekana) ---------- */
+function updatePreview() {
+  const box = $('pvBox');
+  if (!box) return;
+  const text = $('content').value;
+  const f = $('fileInput').files && $('fileInput').files[0];
+  let media = '';
+  if (pvObjectUrl) { URL.revokeObjectURL(pvObjectUrl); pvObjectUrl = null; }
+  if (f && f.type && f.type.startsWith('image/')) {
+    pvObjectUrl = URL.createObjectURL(f);
+    media = '<div class="dr-pv-media"><img src="' + escAttr(pvObjectUrl) + '" alt=""></div>';
+  } else if (f && f.type && f.type.startsWith('video/')) {
+    pvObjectUrl = URL.createObjectURL(f);
+    media = '<div class="dr-pv-media"><video src="' + escAttr(pvObjectUrl) + '" muted playsinline></video></div>';
+  } else if (!f && existingMedia && existingMedia.media_type === 'image') {
+    media = '<div class="dr-pv-media"><img src="' + escAttr(mediaUrl(existingMedia.file_path)) + '" alt=""></div>';
+  } else if (!f && existingMedia && existingMedia.media_type === 'video') {
+    media = '<div class="dr-pv-media"><video src="' + escAttr(mediaUrl(existingMedia.file_path)) + '" muted playsinline></video></div>';
+  }
+  const letter = (ME_NAME || 'K').charAt(0).toUpperCase();
+  box.innerHTML =
+    '<div class="dr-pv-head"><div class="dr-pv-av">' + escText(letter) + '</div><div class="dr-pv-name">@' + escText(ME_NAME) + '</div></div>' +
+    '<div class="dr-pv-text">' + linkify(text) + '</div>' + media;
+}
+
+/* ---------- muda / countdown ---------- */
+function countdownText(sched) {
+  if (!sched) return '';
+  const t = new Date(String(sched).replace(' ', 'T') + '+03:00').getTime();
+  if (isNaN(t)) return '';
+  const diff = t - Date.now();
+  if (diff <= 0) return 'Inastahili kuchapishwa sasa';
+  const s = Math.floor(diff / 1000);
+  const d = Math.floor(s / 86400);
+  const h = Math.floor((s % 86400) / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  if (d > 0) return 'Itachapishwa baada ya siku ' + d + ', saa ' + h + ':' + pad(m);
+  if (h > 0) return 'Itachapishwa baada ya saa ' + h + ':' + pad(m);
+  return 'Itachapishwa baada ya dakika ' + m;
+}
+function isDue(d) {
+  return d.status === 'due' || (d.scheduled_at && String(d.scheduled_at).slice(0, 19) <= eatNow());
+}
+
+function updateStats() {
+  const total = DRAFTS.length;
+  const scheduled = DRAFTS.filter(d => d.scheduled_at).length;
+  $('statTotal').textContent = total;
+  $('statScheduled').textContent = scheduled;
+  $('statDrafts').textContent = total - scheduled;
+}
+
+function filteredDrafts() {
+  const q = ($('filterQ').value || '').toLowerCase().trim();
+  const sort = $('filterSort').value;
+  let list = DRAFTS.slice();
+  if (q) list = list.filter(d => (d.content || '').toLowerCase().indexOf(q) >= 0 || String(d.id).indexOf(q) >= 0);
+  if (fStatus === 'draft') list = list.filter(d => !d.scheduled_at);
+  if (fStatus === 'scheduled') list = list.filter(d => !!d.scheduled_at);
+  if (sort === 'newest') list.sort((a, b) => b.id - a.id);
+  if (sort === 'oldest') list.sort((a, b) => a.id - b.id);
+  if (sort === 'scheduled') list.sort((a, b) => {
+    if (!a.scheduled_at && !b.scheduled_at) return b.id - a.id;
+    if (!a.scheduled_at) return 1;
+    if (!b.scheduled_at) return -1;
+    return String(a.scheduled_at).localeCompare(String(b.scheduled_at));
+  });
+  return list;
+}
+
+/* ---------- kadi ya draft ---------- */
+function draftCardHtml(d) {
+  const id = safeNum(d.id);
+  let status = 'draft';
+  let badge = '<span class="dr-badge">Draft</span>';
+  if (d.scheduled_at) {
+    if (isDue(d)) { status = 'due'; badge = '<span class="dr-badge due">Inastahili sasa</span>'; }
+    else { status = 'scheduled'; badge = '<span class="dr-badge scheduled">Imepangwa</span>'; }
+  }
+  let thumb = '';
+  let fileChip = '';
+  if (d.file_path) {
+    if (d.media_type === 'video') {
+      thumb = '<video class="dr-thumb" src="' + escAttr(mediaUrl(d.file_path)) + '" muted playsinline preload="metadata"></video>';
+    } else if (d.media_type === 'image') {
+      thumb = '<img class="dr-thumb" src="' + escAttr(mediaUrl(d.file_path)) + '" alt="" loading="lazy">';
+    } else {
+      fileChip = '<div class="dr-filechip"><i class="fa-solid fa-file"></i> ' + escText(d.file_path) + '</div>';
+    }
+  }
+  const cd = d.scheduled_at
+    ? '<div class="dr-countdown"><i class="fa-regular fa-clock"></i> <span>' + escText(countdownText(d.scheduled_at)) + '</span></div>'
+    : '';
+  const isSel = selected.has(id);
+  return (
+    '<article class="dr-card' + (isSel ? ' selected' : '') + '" id="draft-' + id + '" data-id="' + id + '" data-status="' + status + '">' +
+      '<input type="checkbox" class="dr-check" data-act="check" aria-label="#' + id + '"' + (isSel ? ' checked' : '') + '>' +
+      '<div class="dr-meta">' + badge + '<span>#' + id + '</span><span>· ' + escText(d.created_at || '') + '</span>' +
+        (d.scheduled_at ? '<span>· ⏰ ' + escText(d.scheduled_at) + '</span>' : '') +
+        (d.category ? '<span class="dr-badge cat">' + escText(d.category) + '</span>' : '') +
+      '</div>' +
+      '<div class="dr-row"><div class="dr-text">' + linkify(d.content || '(media only)') + '</div>' + thumb + '</div>' +
+      fileChip + cd +
+      '<div class="dr-actions">' +
+        '<button type="button" class="dr-btn dr-btn-primary dr-btn-sm" data-act="publish"><i class="fa-solid fa-paper-plane"></i> ' + escText(TXT.post) + '</button>' +
+        '<button type="button" class="dr-btn dr-btn-ghost dr-btn-sm" data-act="edit"><i class="fa-solid fa-pen"></i> ' + escText(TXT.edit) + '</button>' +
+        '<button type="button" class="dr-btn dr-btn-ghost dr-btn-sm dr-more" data-act="more" aria-label="⋯" aria-haspopup="true"><i class="fa-solid fa-ellipsis"></i></button>' +
+        '<div class="dr-menu" role="menu">' +
+          '<button type="button" role="menuitem" data-act="copy"><i class="fa-solid fa-copy"></i> ' + escText(TXT.copy) + '</button>' +
+          (d.scheduled_at ? '<button type="button" role="menuitem" data-act="unsched"><i class="fa-solid fa-calendar-xmark"></i> ' + escText(TXT.del) + ' muda</button>' : '') +
+          '<hr>' +
+          '<button type="button" role="menuitem" class="danger" data-act="del"><i class="fa-solid fa-trash"></i> ' + escText(TXT.del) + '</button>' +
+        '</div>' +
+      '</div>' +
+    '</article>'
+  );
+}
+
+function renderList() {
+  const list = filteredDrafts();
+  const el = $('listView');
+  el.classList.toggle('dr-selecting', selectMode);
+  if (!DRAFTS.length) {
+    el.innerHTML = '<div class="dr-empty"><i class="fa-regular fa-folder-open"></i>Hakuna draft<br><span>' + escText(TXT.write) + ' yako ya kwanza</span><br>' +
+      '<button type="button" class="dr-btn dr-btn-primary" data-act="new"><i class="fa-solid fa-plus"></i> ' + escText(TXT.write) + '</button></div>';
+  } else if (!list.length) {
+    el.innerHTML = '<div class="dr-empty"><i class="fa-solid fa-magnifying-glass"></i>Hakuna draft</div>';
+  } else {
+    el.innerHTML = list.map(draftCardHtml).join('');
+  }
+  renderCalendar();
+  updateStats();
+  updateSelBar();
+}
+
+/* ---------- kalenda ya wiki ---------- */
+function addDays(ymd, n) {
+  const p = ymd.split('-').map(Number);
+  const d = new Date(Date.UTC(p[0], p[1] - 1, p[2] + n));
+  return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate());
+}
+function renderCalendar() {
+  const el = $('calendarView');
+  const scheduled = DRAFTS.filter(d => d.scheduled_at).slice();
+  scheduled.sort((a, b) => String(a.scheduled_at).localeCompare(String(b.scheduled_at)));
+  if (!scheduled.length) {
+    el.innerHTML = '<div class="dr-empty"><i class="fa-regular fa-calendar"></i>Hakuna post zilizopangwa</div>';
+    return;
+  }
+  const today = eatToday();
+  const lastDay = addDays(today, 13);
+  const byDay = {};
+  let past = 0, later = 0;
+  scheduled.forEach(d => {
+    const day = String(d.scheduled_at).slice(0, 10);
+    if (day < today) past++;
+    else if (day > lastDay) later++;
+    else byDay[day] = (byDay[day] || 0) + 1;
+  });
+  if (!calDay) {
+    calDay = Object.keys(byDay).sort()[0] || (past ? 'past' : (later ? 'later' : today));
+  }
+  let chips = '';
+  if (past) chips += '<button type="button" class="dr-day wide' + (calDay === 'past' ? ' active' : '') + '" data-day="past"><small>Zilizopita</small><b>' + past + '</b></button>';
+  for (let i = 0; i < 14; i++) {
+    const day = addDays(today, i);
+    const dt = new Date(day + 'T12:00:00Z');
+    const wd = dt.toLocaleDateString('sw-TZ', { weekday: 'short', timeZone: 'UTC' });
+    chips += '<button type="button" class="dr-day' + (i === 0 ? ' today' : '') + (calDay === day ? ' active' : '') + '" data-day="' + day + '">' +
+      '<small>' + escText(wd.slice(0, 3)) + '</small><b>' + safeNum(day.slice(8, 10)) + '</b>' + (byDay[day] ? '<span class="dot"></span>' : '') + '</button>';
+  }
+  if (later) chips += '<button type="button" class="dr-day wide' + (calDay === 'later' ? ' active' : '') + '" data-day="later"><small>Baadaye</small><b>' + later + '</b></button>';
+
+  let shown;
+  if (calDay === 'past') shown = scheduled.filter(d => String(d.scheduled_at).slice(0, 10) < today);
+  else if (calDay === 'later') shown = scheduled.filter(d => String(d.scheduled_at).slice(0, 10) > lastDay);
+  else shown = scheduled.filter(d => String(d.scheduled_at).slice(0, 10) === calDay);
+
+  const title = (calDay === 'past' || calDay === 'later') ? '' : '<h3 class="dr-cal-title"><i class="fa-regular fa-calendar"></i> ' + escText(calDay) + '</h3>';
+  el.innerHTML = '<div class="dr-week" id="weekStrip">' + chips + '</div>' + title +
+    (shown.length ? shown.map(draftCardHtml).join('') : '<div class="dr-empty" style="padding:28px 0"><i class="fa-regular fa-calendar"></i>Hakuna post zilizopangwa</div>');
+  const act = el.querySelector('.dr-day.active');
+  if (act && act.scrollIntoView) act.scrollIntoView({ block: 'nearest', inline: 'center' });
+}
+
+function setView(name) {
+  view = name;
+  document.querySelectorAll('.dr-seg button').forEach(b => {
+    const on = b.dataset.view === name;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  $('listView').style.display = name === 'list' ? '' : 'none';
+  $('calendarView').style.display = name === 'calendar' ? '' : 'none';
+  $('listTools').style.display = name === 'list' ? '' : 'none';
+  if (name !== 'list' && selectMode) toggleSelectMode(false);
+}
+
+/* ---------- kuchagua nyingi ---------- */
+function toggleSelectMode(on) {
+  selectMode = on === undefined ? !selectMode : on;
+  if (!selectMode) selected.clear();
+  $('selectToggle').classList.toggle('active', selectMode);
+  $('fab').style.visibility = selectMode ? 'hidden' : '';
+  renderList();
+}
+function updateSelBar() {
+  $('selCount').textContent = selected.size;
+  $('selBar').classList.toggle('show', selectMode);
+}
+function toggleSelected(id, on) {
+  if (on === undefined) on = !selected.has(id);
+  if (on) selected.add(id); else selected.delete(id);
+  const card = $('listView').querySelector('#draft-' + id);
+  if (card) {
+    card.classList.toggle('selected', on);
+    const cb = card.querySelector('.dr-check');
+    if (cb) cb.checked = on;
+  }
+  updateSelBar();
+}
+async function deleteSelected() {
+  const ids = Array.from(selected);
+  if (!ids.length) return;
+  const ok = await askConfirm({
+    title: TXT.del + ' (' + ids.length + ')',
+    text: TXT.del + ' draft hizi kabisa?',
+    ok: TXT.del, danger: true
+  });
+  if (!ok) return;
+  let okCount = 0;
+  for (const id of ids) {
+    try {
+      const r = await fetch('/drafts/delete/' + id, { method: 'POST' });
+      const d = await r.json();
+      if (d.success) {
+        okCount++;
+        const i = DRAFTS.findIndex(x => x.id === id);
+        if (i >= 0) DRAFTS.splice(i, 1);
+        if (currentDraftId === id) cancelEdit();
+      }
+    } catch (e) { /* endelea na zinazofuata */ }
+  }
+  toast(okCount === ids.length ? 'Imefutwa' : 'Imeshindikana kwa baadhi', okCount === ids.length ? 'ok' : 'err');
+  toggleSelectMode(false);
+}
+
+/* ---------- hariri / ghairi ---------- */
+function editDraft(id) {
+  const d = DRAFTS.find(x => x.id === id);
+  if (!d) return;
+  currentDraftId = id;
+  $('draftId').value = id;
+  $('content').value = d.content || '';
+  $('scheduledAt').value = toLocalInputValue(d.scheduled_at);
+  $('category').value = (d.category && d.category !== 'general') ? d.category : '';
+  if (typeof drExtrasLoad === 'function') drExtrasLoad(d);
+  $('removeMedia').value = '0';
+  $('fileInput').value = '';
+  $('editingId').textContent = id;
+  $('editingBanner').classList.add('show');
+  $('saveBtn').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Sasisha Draft';
+  existingMedia = d.file_path ? { file_path: d.file_path, media_type: d.media_type } : null;
+  if (existingMedia) showMediaPreview(null, mediaUrl(existingMedia.file_path), existingMedia.media_type);
+  else { $('mediaPreview').classList.remove('show'); $('mediaPreviewInner').innerHTML = ''; }
+  updateCharCount();
+  updatePreview();
+  dirty = false;
+  openComposer();
+  if (DESKTOP.matches) window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function cancelEdit() {
+  currentDraftId = null;
+  $('draftId').value = '';
+  $('content').value = '';
+  $('scheduledAt').value = '';
+  if (typeof drExtrasReset === 'function') drExtrasReset();
+  $('removeMedia').value = '0';
+  $('fileInput').value = '';
+  $('mediaPreview').classList.remove('show');
+  $('mediaPreviewInner').innerHTML = '';
+  $('editingBanner').classList.remove('show');
+  $('saveBtn').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> ' + escText(TXT.save) + ' Draft';
+  $('draftMsg').textContent = '';
+  existingMedia = null;
+  dirty = false;
+  clearTimeout(autosaveTimer);
+  updateCharCount();
+  updatePreview();
+}
+
+/* ---------- kuhifadhi / kuchapisha (njia za seva hazijabadilika) ---------- */
+async function saveDraft(opts) {
+  opts = opts || {};
+  const form = $('draftForm');
+  const fd = new FormData(form);
+  const raw = $('scheduledAt').value;
+  if (raw) fd.set('scheduled_at', fromLocalInputValue(raw));
+  else fd.set('scheduled_at', '');
+
+  if (!opts.silent) setAutosave('saving', '<i class="fa-solid fa-spinner fa-spin"></i>');
+  const msg = $('draftMsg');
+  if (!opts.silent) msg.textContent = 'Inahifadhi...';
+
+  try {
+    const r = await fetch('/drafts/save', { method: 'POST', body: fd });
+    const d = await r.json();
+    if (!d.success) {
+      if (!opts.silent) { msg.textContent = d.message || 'Imeshindikana'; toast(d.message || 'Imeshindikana', 'err'); }
+      setAutosave('', '');
+      return null;
+    }
+    dirty = false;
+    currentDraftId = d.draft_id;
+    $('draftId').value = d.draft_id;
+    $('fileInput').value = '';
+    $('removeMedia').value = '0';
+    if (d.file_path) {
+      existingMedia = { file_path: d.file_path, media_type: d.media_type };
+      showMediaPreview(null, mediaUrl(d.file_path), d.media_type);
+    }
+    const idx = DRAFTS.findIndex(x => x.id === d.draft_id);
+    const item = {
+      id: d.draft_id,
+      content: $('content').value,
+      file_path: d.file_path || (existingMedia && existingMedia.file_path) || null,
+      media_type: d.media_type || (existingMedia && existingMedia.media_type) || null,
+      scheduled_at: d.scheduled_at || null,
+      created_at: idx >= 0 ? DRAFTS[idx].created_at : eatNow(),
+      category: d.category || $('category').value,
+      status: d.scheduled_at ? 'scheduled' : 'draft',
+      bg_style: $('cpxBgStyle').value, font_style: $('cpxFontStyle').value,
+      link_label: $('cpxLinkLabel').value, link_url: $('cpxLinkUrl').value,
+      music_title: $('cpxMusicTitle').value, music_artist: $('cpxMusicArtist').value,
+      music_url: $('cpxMusicUrl').value, music_cover: $('cpxMusicCover').value
+    };
+    if (d.extras) Object.assign(item, d.extras);
+    if (idx >= 0) DRAFTS[idx] = item; else DRAFTS.unshift(item);
+    renderList();
+    $('editingId').textContent = d.draft_id;
+    $('editingBanner').classList.add('show');
+    $('saveBtn').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Sasisha Draft';
+    const nowStr = new Date().toLocaleTimeString('sw-TZ', { hour: '2-digit', minute: '2-digit' });
+    setAutosave('saved', '<i class="fa-solid fa-check"></i> ' + escText(nowStr));
+    if (!opts.silent) {
+      msg.textContent = d.message || 'OK';
+      toast(d.message || 'Imehifadhiwa', 'ok');
+      if (!DESKTOP.matches && !opts.keepOpen) closeComposer();
+    }
+    return d;
+  } catch (e) {
+    if (!opts.silent) { msg.textContent = 'Hitilafu'; toast('Hitilafu', 'err'); }
+    setAutosave('', '');
+    return null;
+  }
+}
+
+async function saveAndPublish() {
+  const saved = await saveDraft({ silent: false, keepOpen: true });
+  if (!saved || !saved.draft_id) return;
+  await publishDraft(saved.draft_id);
+}
+
+async function publishDraft(id) {
+  const ok = await askConfirm({ title: TXT.post, text: TXT.post + ' draft hii sasa?', ok: TXT.post });
+  if (!ok) return;
+  try {
+    const r = await fetch('/drafts/publish/' + id, { method: 'POST' });
+    const d = await r.json();
+    if (d.success) {
+      toast('Imechapishwa!', 'ok');
+      setTimeout(() => { location.href = '/home'; }, 500);
+    } else toast(d.message || 'Imeshindikana', 'err');
+  } catch (e) { toast('Hitilafu', 'err'); }
+}
+
+async function deleteDraft(id) {
+  const ok = await askConfirm({ title: TXT.del, text: TXT.del + ' draft hii kabisa?', ok: TXT.del, danger: true });
+  if (!ok) return;
+  try {
+    const r = await fetch('/drafts/delete/' + id, { method: 'POST' });
+    const d = await r.json();
+    if (d.success) {
+      const i = DRAFTS.findIndex(x => x.id === id);
+      if (i >= 0) DRAFTS.splice(i, 1);
+      if (currentDraftId === id) cancelEdit();
+      renderList();
+      toast('Imefutwa', 'ok');
+    } else toast('Imeshindikana', 'err');
+  } catch (e) { toast('Hitilafu', 'err'); }
+}
+
+async function duplicateDraft(id) {
+  try {
+    const r = await fetch('/drafts/duplicate/' + id, { method: 'POST' });
+    const d = await r.json();
+    if (d.success) {
+      toast('Imenakiliwa', 'ok');
+      setTimeout(() => location.reload(), 400);
+    } else toast(d.message || 'Imeshindikana', 'err');
+  } catch (e) { toast('Hitilafu', 'err'); }
+}
+
+async function unscheduleDraft(id) {
+  try {
+    const r = await fetch('/drafts/unschedule/' + id, { method: 'POST' });
+    const d = await r.json();
+    if (d.success) {
+      const item = DRAFTS.find(x => x.id === id);
+      if (item) { item.scheduled_at = null; item.status = 'draft'; }
+      renderList();
+      toast('Muda umefutwa', 'ok');
+    }
+  } catch (e) { toast('Hitilafu', 'err'); }
+}
+
+/* ---------- matukio ---------- */
+function closeMenus() {
+  document.querySelectorAll('.dr-menu.open').forEach(m => m.classList.remove('open'));
+}
+document.addEventListener('click', function (e) {
+  const dayBtn = e.target.closest('[data-day]');
+  if (dayBtn) { calDay = dayBtn.getAttribute('data-day'); renderCalendar(); return; }
+
+  const actEl = e.target.closest('[data-act]');
+  const card = e.target.closest('.dr-card');
+
+  if (!e.target.closest('.dr-menu') && !(actEl && actEl.getAttribute('data-act') === 'more')) closeMenus();
+
+  if (card && selectMode && !(actEl && actEl.getAttribute('data-act') === 'check')) {
+    toggleSelected(safeNum(card.getAttribute('data-id')));
+    return;
+  }
+  if (!actEl) return;
+  const act = actEl.getAttribute('data-act');
+  if (act === 'new') { newDraft(); return; }
+  if (!card) return;
+  const id = safeNum(card.getAttribute('data-id'));
+  if (act === 'more') {
+    const menu = card.querySelector('.dr-menu');
+    const willOpen = !menu.classList.contains('open');
+    closeMenus();
+    menu.classList.toggle('open', willOpen);
+    return;
+  }
+  closeMenus();
+  if (act === 'publish') publishDraft(id);
+  else if (act === 'edit') editDraft(id);
+  else if (act === 'copy') duplicateDraft(id);
+  else if (act === 'unsched') unscheduleDraft(id);
+  else if (act === 'del') deleteDraft(id);
+  else if (act === 'check') toggleSelected(id, actEl.checked);
+});
+
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Escape') return;
+  if ($('cfModal').classList.contains('show')) return;
+  closeMenus();
+  if ($('composerCard').classList.contains('open')) closeComposer();
+});
+
+$('draftForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  saveDraft({ silent: false });
+});
+$('publishNowBtn').addEventListener('click', saveAndPublish);
+$('cancelEditBtn').addEventListener('click', cancelEdit);
+$('clearScheduleBtn').addEventListener('click', clearScheduleField);
+$('mediaRemoveBtn').addEventListener('click', removeMediaPreview);
+$('fab').addEventListener('click', newDraft);
+$('sheetClose').addEventListener('click', closeComposer);
+$('sheetBackdrop').addEventListener('click', closeComposer);
+$('selectToggle').addEventListener('click', () => toggleSelectMode());
+$('selCancel').addEventListener('click', () => toggleSelectMode(false));
+$('selDelete').addEventListener('click', deleteSelected);
+
+$('content').addEventListener('input', function () { updateCharCount(); scheduleAutosave(); });
+$('scheduledAt').addEventListener('change', () => { dirty = true; scheduleAutosave(); });
+$('category').addEventListener('input', () => { dirty = true; scheduleAutosave(); });
+if (window.KijijiCategory) KijijiCategory.attach($('category'), { note: $('categoryNote') });
+$('fileInput').addEventListener('change', function () {
+  const f = this.files && this.files[0];
+  if (!f) return;
+  if (f.size > 500 * 1024 * 1024) {
+    toast('File isizidi 500MB', 'err');
+    this.value = '';
+    return;
+  }
+  $('removeMedia').value = '0';
+  showMediaPreview(f);
+  dirty = true;
+  scheduleAutosave();
+});
+document.querySelectorAll('#templates button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const ta = $('content');
+    ta.value = (ta.value ? ta.value + '\n\n' : '') + btn.getAttribute('data-tpl');
+    updateCharCount();
+    scheduleAutosave();
+  });
+});
+document.querySelectorAll('#bestTimes button').forEach(btn => {
+  btn.addEventListener('click', () => setBestTime(parseInt(btn.getAttribute('data-hours'), 10)));
+});
+document.querySelectorAll('.dr-seg button').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
+document.querySelectorAll('#statusChips button').forEach(b => b.addEventListener('click', () => {
+  fStatus = b.getAttribute('data-st');
+  document.querySelectorAll('#statusChips button').forEach(x => x.classList.toggle('active', x === b));
+  renderList();
+}));
+$('filterQ').addEventListener('input', renderList);
+$('filterSort').addEventListener('change', renderList);
+
+DESKTOP.addEventListener && DESKTOP.addEventListener('change', function () {
+  if (DESKTOP.matches) closeComposer();
+});
+
+// countdown refresh
+setInterval(() => {
+  document.querySelectorAll('.dr-card').forEach(card => {
+    const id = safeNum(card.getAttribute('data-id'));
+    const d = DRAFTS.find(x => x.id === id);
+    if (!d || !d.scheduled_at) return;
+    const cd = card.querySelector('.dr-countdown span');
+    if (cd) cd.textContent = countdownText(d.scheduled_at);
+  });
+}, 30000);
+
+/* ---------- ✨ Ongeza: mabadiliko yakitokea, draft ihifadhiwe yenyewe ---------- */
+window.drOnExtrasChange = function () { dirty = true; scheduleAutosave(); };
+
+/* ---------- PRO: kihariri cha picha/video ndani ya Drafts ---------- */
+let drProWrap = null, drProFrame = null, drProFile = null;
+async function drOpenPro() {
+  if (drProWrap) return;
+  let file = $('fileInput').files && $('fileInput').files[0];
+  if (!file && existingMedia && (existingMedia.media_type === 'image' || existingMedia.media_type === 'video')) {
+    try {
+      const r = await fetch(mediaUrl(existingMedia.file_path));
+      const b = await r.blob();
+      const name = String(existingMedia.file_path).split('/').pop() || 'media';
+      file = new File([b], name, { type: b.type || (existingMedia.media_type === 'video' ? 'video/mp4' : 'image/jpeg') });
+    } catch (e) { toast('Imeshindikana kupakia media', 'err'); return; }
+  }
+  if (!file || !/^(image|video)\//.test(file.type || '')) {
+    toast('Weka picha au video kwanza (kitufe cha Media)', 'err');
+    return;
+  }
+  drProFile = file;
+  drProWrap = document.createElement('div');
+  drProWrap.style.cssText = 'position:fixed;top:0;right:0;bottom:0;left:0;z-index:100100;background:#0b0e14';
+  drProFrame = document.createElement('iframe');
+  drProFrame.src =  + '?embed=1';
+  drProFrame.allow = 'autoplay';
+  drProFrame.style.cssText = 'width:100%;height:100%;border:0;display:block';
+  drProWrap.appendChild(drProFrame);
+  document.body.appendChild(drProWrap);
+}
+function drProClose() {
+  if (drProWrap && drProWrap.parentNode) drProWrap.parentNode.removeChild(drProWrap);
+  drProWrap = drProFrame = drProFile = null;
+}
+window.addEventListener('message', function (e) {
+  if (!drProFrame || e.origin !== location.origin || e.source !== drProFrame.contentWindow) return;
+  const m = e.data || {};
+  if (m.type === 'kj-pro-ready') {
+    drProFrame.contentWindow.postMessage({ type: 'kj-pro-open', file: drProFile }, location.origin);
+  } else if (m.type === 'kj-pro-cancel') {
+    drProClose();
+  } else if (m.type === 'kj-pro-done' && m.file) {
+    const nf = m.file;
+    drProClose();
+    try {
+      const dt = new DataTransfer();
+      dt.items.add(nf);
+      $('fileInput').files = dt.files;
+      $('removeMedia').value = '0';
+      $('fileInput').dispatchEvent(new Event('change', { bubbles: true }));
+      toast('Media imehaririwa. Bonyeza Hifadhi.', 'ok');
+    } catch (err) { toast('Imeshindikana kuweka media mpya', 'err'); }
+  }
+});
+
+updateCharCount();
+updatePreview();
+renderList();
+</script>
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

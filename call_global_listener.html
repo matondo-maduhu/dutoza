@@ -1,0 +1,80 @@
+<!-- Kijiji global incoming-call listener: weka kabla ya 
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/auth.js"></script>
+
+</body> kwenye base.html -->
+<script>
+(function () {
+  // Usiduplicate kwenye ukurasa wa chat (chat.html ina poll yake)
+  if (window.__kijijiCallPoll) return;
+  if (location.pathname.indexOf("/chat/") === 0) return;
+  window.__kijijiCallPoll = true;
+
+  var afterId = 0;
+  var ringing = false;
+  var busy = false;
+  var timer = null;
+  var abortCtrl = null;
+
+  function poll() {
+    if (ringing || busy) return;
+    if (document.hidden) return;  // tab haipo active — usipoll
+
+    busy = true;
+    if (abortCtrl) {
+      try { abortCtrl.abort(); } catch (e) {}
+    }
+    abortCtrl = new AbortController();
+
+    fetch("/call/signals?after_id=" + afterId, {
+      credentials: "same-origin",
+      headers: { "X-Requested-With": "XMLHttpRequest" },
+      signal: abortCtrl.signal
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || !data.signals) return;
+        data.signals.forEach(function (sig) {
+          if (sig.id) afterId = Math.max(afterId, sig.id);
+          if ((sig.type || "").toLowerCase() !== "offer") return;
+          var payload = {};
+          try {
+            payload = typeof sig.payload === "string" ? JSON.parse(sig.payload || "{}") : (sig.payload || {});
+          } catch (e) {}
+          ringing = true;
+          var name = payload.from_full_name || payload.from_username || "Mtu";
+          var uname = payload.from_username || "";
+          var video = payload.video ? "video" : "Voice";
+          if (uname && confirm(video + " call kutoka " + name + " (@" + uname + "). open chat?")) {
+            location.href = "/chat/" + encodeURIComponent(uname);
+          } else {
+            ringing = false;
+          }
+        });
+      })
+      .catch(function () {})
+      .finally(function () {
+        busy = false;
+      });
+  }
+
+  // Kila sekunde 3 (si 2) + hakuna request sambamba
+  timer = setInterval(poll, 3000);
+  poll();
+
+  // Tab ikifichwa — simamisha; ikirudi — endelea
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      if (abortCtrl) {
+        try { abortCtrl.abort(); } catch (e) {}
+      }
+      busy = false;
+    }
+  });
+})();
+</script>

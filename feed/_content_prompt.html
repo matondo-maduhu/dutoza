@@ -1,0 +1,144 @@
+{# Kadi ya mara ya kwanza: mtu achague category anazopenda. Inaonekana mara moja tu (server inaamua kupitia cat_prompt). #}
+<style>
+    .cpm-card {
+        margin: 0 0 16px; padding: 16px; border-radius: 18px;
+        background: #ffffff; border: 1px solid #e3eae5; box-shadow: 0 1px 4px rgba(16, 60, 30, .08);
+        color: #0f1a12; position: relative;
+    }
+    .cpm-card[hidden] { display: none; }
+    .cpm-head { display: flex; align-items: flex-start; gap: 12px; }
+    .cpm-ic { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; background: #e8f7ec; }
+    .cpm-ic svg { width: 22px; height: 22px; fill: none; stroke: #0f8a2a; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .cpm-head h3 { font-size: 16px; font-weight: 800; line-height: 1.25; }
+    .cpm-head p { margin-top: 3px; font-size: 13px; color: #65727a; line-height: 1.45; }
+    .cpm-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .cpm-chip {
+        display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px;
+        border: 1.5px solid #dfe7e1; border-radius: 999px; background: #f5f8f6; color: inherit;
+        font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; transition: transform .12s, background-color .15s;
+    }
+    .cpm-chip:active { transform: scale(.96); }
+    .cpm-chip svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; display: none; }
+    .cpm-chip[aria-pressed="true"] { background: #1EB53A; border-color: #1EB53A; color: #fff; }
+    .cpm-chip[aria-pressed="true"] svg { display: inline-block; }
+    .cpm-actions { display: flex; align-items: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+    .cpm-save {
+        min-height: 46px; padding: 0 24px; border: 0; border-radius: 14px; color: #fff; font: inherit; font-size: 14px; font-weight: 800;
+        background: linear-gradient(135deg, #1EB53A, #12a04c); box-shadow: 0 6px 14px rgba(30, 181, 58, .25); cursor: pointer;
+    }
+    .cpm-save:disabled { background: #e3eae5; color: #8a969c; box-shadow: none; cursor: default; }
+    .cpm-later {
+        min-height: 46px; padding: 0 16px; border: 0; border-radius: 14px; background: transparent; color: #65727a;
+        font: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
+    }
+    .cpm-all { margin-left: auto; font-size: 13px; font-weight: 700; color: #0f8a2a; text-decoration: none; }
+    .cpm-msg { margin-top: 10px; font-size: 13px; color: #65727a; min-height: 0; }
+    .cpm-msg:empty { display: none; }
+    .cpm-msg.err { color: #dc2626; }
+    .cpm-done { display: none; align-items: center; gap: 10px; font-weight: 800; font-size: 15px; color: #0f8a2a; }
+    .cpm-card.is-done .cpm-body { display: none; }
+    .cpm-card.is-done .cpm-done { display: flex; }
+    .cpm-done svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) {
+        .cpm-card { background: #1a2332; border-color: #2b3a4f; color: #f1f5f9; box-shadow: none; }
+        .cpm-ic { background: #15351f; } .cpm-ic svg { stroke: #4ade80; }
+        .cpm-head p, .cpm-msg, .cpm-later { color: #94a3b8; }
+        .cpm-chip { background: #243044; border-color: #2b3a4f; }
+        .cpm-save:disabled { background: #243044; color: #6b7a8f; }
+        .cpm-all, .cpm-done { color: #4ade80; }
+    }
+    @media (prefers-reduced-motion: reduce) { .cpm-chip { transition: none; } }
+</style>
+
+<section class="cpm-card" id="cpmCard" aria-labelledby="cpmTitle">
+    <div class="cpm-body">
+        <div class="cpm-head">
+            <span class="cpm-ic" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            </span>
+            <div>
+                <h3 id="cpmTitle">Chagua unachopenda</h3>
+                <p>Gusa category unazopenda, tutakuonyesha posts nyingi zaidi za hizo. Unaweza kubadilisha wakati wowote kwenye Settings.</p>
+            </div>
+        </div>
+
+        <div class="cpm-chips" role="group" aria-label="Category za kuchagua">
+            
+            <button type="button" class="cpm-chip" data-slug="" aria-pressed="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            </button>
+            
+        </div>
+
+        <div class="cpm-actions">
+            <button type="button" class="cpm-save" id="cpmSave" disabled>Hifadhi</button>
+            <button type="button" class="cpm-later" id="cpmLater">Baadaye</button>
+            <a class="cpm-all" href="/settings/content">Ona zote</a>
+        </div>
+        <div class="cpm-msg" id="cpmMsg" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="cpm-done" role="status">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        Imehifadhiwa. Feed yako itaanza kubadilika.
+    </div>
+</section>
+
+<script>
+(function () {
+    var card = document.getElementById('cpmCard');
+    if (!card) return;
+    var save = document.getElementById('cpmSave'), later = document.getElementById('cpmLater'), msg = document.getElementById('cpmMsg');
+    var chips = card.querySelectorAll('.cpm-chip');
+
+    function say(t, err) { msg.textContent = t || ''; msg.className = 'cpm-msg' + (err ? ' err' : ''); }
+    function chosen() {
+        var out = [];
+        chips.forEach(function (c) { if (c.getAttribute('aria-pressed') === 'true') out.push(c.dataset.slug); });
+        return out;
+    }
+    chips.forEach(function (c) {
+        c.addEventListener('click', function () {
+            c.setAttribute('aria-pressed', c.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+            save.disabled = chosen().length === 0;
+            say('');
+        });
+    });
+
+    function post(url, body) {
+        return fetch(url, {
+            method: 'POST', credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+            body: JSON.stringify(body || {})
+        }).then(function (r) { return r.json(); });
+    }
+
+    save.addEventListener('click', function () {
+        var liked = chosen();
+        if (!liked.length) return;
+        save.disabled = true; later.disabled = true; say('Inahifadhi…');
+        post('/api/content-prefs', { liked: liked, hidden: [] })
+            .then(function (d) {
+                if (d && d.success) {
+                    card.classList.add('is-done');
+                    setTimeout(function () { card.hidden = true; }, 2200);
+                } else { say((d && d.message) || 'Imeshindikana kuhifadhi. Jaribu tena.', true); save.disabled = false; later.disabled = false; }
+            })
+            .catch(function () { say('Hitilafu ya mtandao. Jaribu tena.', true); save.disabled = false; later.disabled = false; });
+    });
+
+    later.addEventListener('click', function () {
+        card.hidden = true;                       // ficha mara moja; server inakumbuka
+        post('/api/content-prompt/dismiss').catch(function () {});
+    });
+})();
+</script>
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

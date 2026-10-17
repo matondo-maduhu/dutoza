@@ -1,0 +1,153 @@
+<style>
+    /* ===== Background za maandishi (post ya text tu) ===== */
+    .bgt {
+        color: #fff; font-weight: 800; text-align: center;
+        display: flex; align-items: center; justify-content: center;
+        min-height: 200px; padding: 24px; border-radius: 14px;
+        font-size: 22px; line-height: 1.35;
+        word-break: break-word; white-space: pre-wrap;
+    }
+    .bgt-g1 { background: linear-gradient(135deg, #1EB53A, #00A3DD); }
+    .bgt-g2 { background: linear-gradient(135deg, #7F00FF, #E100FF); }
+    .bgt-g3 { background: linear-gradient(135deg, #f12711, #f5af19); }
+    .bgt-g4 { background: linear-gradient(135deg, #232526, #414345); }
+    .bgt-g5 { background: linear-gradient(135deg, #ff0844, #ff7a59); }
+    .bgt-g6 { background: linear-gradient(135deg, #0f2027, #2c5364); }
+    .bgt-g7 { background: #111111; }
+    .bgt-g8 { background: linear-gradient(135deg, #11998e, #2bc66b); }
+    /* ===== Background za maua (g9–g16): maua laini nyuma ya gradient ===== */
+    .bgt-g9 { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='translate(30 32) scale(1.0)'%3E%3Cg fill='%23ffffff' fill-opacity='0.5'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffd166' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(86 82) scale(1.2)'%3E%3Cg fill='%23ffffff' fill-opacity='0.5'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffd166' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(92 22) scale(0.6)'%3E%3Cg fill='%23ffffff' fill-opacity='0.5'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffd166' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(28 96) scale(0.7)'%3E%3Cg fill='%23ffffff' fill-opacity='0.5'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffd166' fill-opacity='.95'/%3E%3C/g%3E%3Ccircle cx='62' cy='60' r='2.4' fill='%23ffffff' fill-opacity='0.5'/%3E%3Ccircle cx='60' cy='12' r='1.8' fill='%23ffffff' fill-opacity='0.5'/%3E%3Ccircle cx='8' cy='62' r='2' fill='%23ffffff' fill-opacity='0.5'/%3E%3Ccircle cx='112' cy='52' r='2' fill='%23ffffff' fill-opacity='0.5'/%3E%3Ccircle cx='60' cy='110' r='2.2' fill='%23ffffff' fill-opacity='0.5'/%3E%3C/svg%3E") 0 0 / 104px 104px repeat, linear-gradient(135deg,#ff9a9e,#fecfef); }
+    .bgt-g10 { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='translate(30 32) scale(1.0)'%3E%3Cg fill='%23ffe0ec' fill-opacity='0.38'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffd54a' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(86 82) scale(1.2)'%3E%3Cg fill='%23ffe0ec' fill-opacity='0.38'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffd54a' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(92 22) scale(0.6)'%3E%3Cg fill='%23ffe0ec' fill-opacity='0.38'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffd54a' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(28 96) scale(0.7)'%3E%3Cg fill='%23ffe0ec' fill-opacity='0.38'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffd54a' fill-opacity='.95'/%3E%3C/g%3E%3Ccircle cx='62' cy='60' r='2.4' fill='%23ffe0ec' fill-opacity='0.38'/%3E%3Ccircle cx='60' cy='12' r='1.8' fill='%23ffe0ec' fill-opacity='0.38'/%3E%3Ccircle cx='8' cy='62' r='2' fill='%23ffe0ec' fill-opacity='0.38'/%3E%3Ccircle cx='112' cy='52' r='2' fill='%23ffe0ec' fill-opacity='0.38'/%3E%3Ccircle cx='60' cy='110' r='2.2' fill='%23ffe0ec' fill-opacity='0.38'/%3E%3C/svg%3E") 0 0 / 104px 104px repeat, linear-gradient(135deg,#ff512f,#dd2476); }
+    .bgt-g11 { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='translate(30 32) scale(1.0)'%3E%3Cg fill='%23e9d8ff' fill-opacity='0.32'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffe082' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(86 82) scale(1.2)'%3E%3Cg fill='%23e9d8ff' fill-opacity='0.32'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffe082' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(92 22) scale(0.6)'%3E%3Cg fill='%23e9d8ff' fill-opacity='0.32'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffe082' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(28 96) scale(0.7)'%3E%3Cg fill='%23e9d8ff' fill-opacity='0.32'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffe082' fill-opacity='.95'/%3E%3C/g%3E%3Ccircle cx='62' cy='60' r='2.4' fill='%23e9d8ff' fill-opacity='0.32'/%3E%3Ccircle cx='60' cy='12' r='1.8' fill='%23e9d8ff' fill-opacity='0.32'/%3E%3Ccircle cx='8' cy='62' r='2' fill='%23e9d8ff' fill-opacity='0.32'/%3E%3Ccircle cx='112' cy='52' r='2' fill='%23e9d8ff' fill-opacity='0.32'/%3E%3Ccircle cx='60' cy='110' r='2.2' fill='%23e9d8ff' fill-opacity='0.32'/%3E%3C/svg%3E") 0 0 / 104px 104px repeat, linear-gradient(135deg,#8e2de2,#4a00e0); }
+    .bgt-g12 { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='translate(30 32) scale(1.0)'%3E%3Cg fill='%23fff6c9' fill-opacity='0.6'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%237a4a0a' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(86 82) scale(1.2)'%3E%3Cg fill='%23fff6c9' fill-opacity='0.6'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%237a4a0a' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(92 22) scale(0.6)'%3E%3Cg fill='%23fff6c9' fill-opacity='0.6'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%237a4a0a' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(28 96) scale(0.7)'%3E%3Cg fill='%23fff6c9' fill-opacity='0.6'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%237a4a0a' fill-opacity='.95'/%3E%3C/g%3E%3Ccircle cx='62' cy='60' r='2.4' fill='%23fff6c9' fill-opacity='0.6'/%3E%3Ccircle cx='60' cy='12' r='1.8' fill='%23fff6c9' fill-opacity='0.6'/%3E%3Ccircle cx='8' cy='62' r='2' fill='%23fff6c9' fill-opacity='0.6'/%3E%3Ccircle cx='112' cy='52' r='2' fill='%23fff6c9' fill-opacity='0.6'/%3E%3Ccircle cx='60' cy='110' r='2.2' fill='%23fff6c9' fill-opacity='0.6'/%3E%3C/svg%3E") 0 0 / 104px 104px repeat, linear-gradient(135deg,#f7971e,#ffd200); }
+    .bgt-g13 { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='translate(30 32) scale(1.0)'%3E%3Cg fill='%23ffffff' fill-opacity='0.42'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffe27a' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(86 82) scale(1.2)'%3E%3Cg fill='%23ffffff' fill-opacity='0.42'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffe27a' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(92 22) scale(0.6)'%3E%3Cg fill='%23ffffff' fill-opacity='0.42'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffe27a' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(28 96) scale(0.7)'%3E%3Cg fill='%23ffffff' fill-opacity='0.42'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffe27a' fill-opacity='.95'/%3E%3C/g%3E%3Ccircle cx='62' cy='60' r='2.4' fill='%23ffffff' fill-opacity='0.42'/%3E%3Ccircle cx='60' cy='12' r='1.8' fill='%23ffffff' fill-opacity='0.42'/%3E%3Ccircle cx='8' cy='62' r='2' fill='%23ffffff' fill-opacity='0.42'/%3E%3Ccircle cx='112' cy='52' r='2' fill='%23ffffff' fill-opacity='0.42'/%3E%3Ccircle cx='60' cy='110' r='2.2' fill='%23ffffff' fill-opacity='0.42'/%3E%3C/svg%3E") 0 0 / 104px 104px repeat, linear-gradient(135deg,#134e5e,#71b280); }
+    .bgt-g14 { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='translate(30 32) scale(1.0)'%3E%3Cg fill='%23ff7eb3' fill-opacity='0.34'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffd166' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(86 82) scale(1.2)'%3E%3Cg fill='%23ff7eb3' fill-opacity='0.34'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffd166' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(92 22) scale(0.6)'%3E%3Cg fill='%23ff7eb3' fill-opacity='0.34'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffd166' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(28 96) scale(0.7)'%3E%3Cg fill='%23ff7eb3' fill-opacity='0.34'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23ffd166' fill-opacity='.95'/%3E%3C/g%3E%3Ccircle cx='62' cy='60' r='2.4' fill='%23ff7eb3' fill-opacity='0.34'/%3E%3Ccircle cx='60' cy='12' r='1.8' fill='%23ff7eb3' fill-opacity='0.34'/%3E%3Ccircle cx='8' cy='62' r='2' fill='%23ff7eb3' fill-opacity='0.34'/%3E%3Ccircle cx='112' cy='52' r='2' fill='%23ff7eb3' fill-opacity='0.34'/%3E%3Ccircle cx='60' cy='110' r='2.2' fill='%23ff7eb3' fill-opacity='0.34'/%3E%3C/svg%3E") 0 0 / 104px 104px repeat, linear-gradient(135deg,#1b0a2e,#4a0e4e); }
+    .bgt-g15 { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='translate(30 32) scale(1.0)'%3E%3Cg fill='%23ffffff' fill-opacity='0.45'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23fff3b0' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(86 82) scale(1.2)'%3E%3Cg fill='%23ffffff' fill-opacity='0.45'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23fff3b0' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(92 22) scale(0.6)'%3E%3Cg fill='%23ffffff' fill-opacity='0.45'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23fff3b0' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(28 96) scale(0.7)'%3E%3Cg fill='%23ffffff' fill-opacity='0.45'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%23fff3b0' fill-opacity='.95'/%3E%3C/g%3E%3Ccircle cx='62' cy='60' r='2.4' fill='%23ffffff' fill-opacity='0.45'/%3E%3Ccircle cx='60' cy='12' r='1.8' fill='%23ffffff' fill-opacity='0.45'/%3E%3Ccircle cx='8' cy='62' r='2' fill='%23ffffff' fill-opacity='0.45'/%3E%3Ccircle cx='112' cy='52' r='2' fill='%23ffffff' fill-opacity='0.45'/%3E%3Ccircle cx='60' cy='110' r='2.2' fill='%23ffffff' fill-opacity='0.45'/%3E%3C/svg%3E") 0 0 / 104px 104px repeat, linear-gradient(135deg,#2193b0,#6dd5ed); }
+    .bgt-g16 { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='translate(30 32) scale(1.0)'%3E%3Cg fill='%23ff8a7a' fill-opacity='0.38'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%238a4b2a' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(86 82) scale(1.2)'%3E%3Cg fill='%23ff8a7a' fill-opacity='0.38'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%238a4b2a' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(92 22) scale(0.6)'%3E%3Cg fill='%23ff8a7a' fill-opacity='0.38'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%238a4b2a' fill-opacity='.95'/%3E%3C/g%3E%3Cg transform='translate(28 96) scale(0.7)'%3E%3Cg fill='%23ff8a7a' fill-opacity='0.38'%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-11' rx='6.5' ry='11.5' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='4.6' fill='%238a4b2a' fill-opacity='.95'/%3E%3C/g%3E%3Ccircle cx='62' cy='60' r='2.4' fill='%23ff8a7a' fill-opacity='0.38'/%3E%3Ccircle cx='60' cy='12' r='1.8' fill='%23ff8a7a' fill-opacity='0.38'/%3E%3Ccircle cx='8' cy='62' r='2' fill='%23ff8a7a' fill-opacity='0.38'/%3E%3Ccircle cx='112' cy='52' r='2' fill='%23ff8a7a' fill-opacity='0.38'/%3E%3Ccircle cx='60' cy='110' r='2.2' fill='%23ff8a7a' fill-opacity='0.38'/%3E%3C/svg%3E") 0 0 / 104px 104px repeat, linear-gradient(135deg,#ffecd2,#fcb69f); }
+    .cpx-sw.fl { background-size: 44px 44px, cover !important; }
+
+    /* ===== music wa post: kadiski ndogo + jina linalozunguka, unaplay wenyewe ===== */
+    .post-music {
+        display: inline-flex; align-items: center; gap: 8px;
+        margin: 6px 0 4px; padding: 3px 12px 3px 3px; max-width: 78%;
+        background: rgba(127,127,127,.16); border-radius: 999px; cursor: pointer;
+        -webkit-tap-highlight-color: transparent; user-select: none;
+    }
+    .post-music .pm-disc {
+        width: 30px; height: 30px; border-radius: 50%; flex: 0 0 30px; position: relative;
+        background: conic-gradient(#111, #333, #111, #333, #111); border: 2px solid #111;
+        box-shadow: 0 1px 4px rgba(0,0,0,.35); overflow: hidden;
+    }
+    .post-music .pm-disc img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
+    .post-music .pm-disc::after {
+        content: ''; position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px;
+        border-radius: 50%; background: #fff; border: 1.5px solid #111;
+    }
+    .post-music.playing .pm-disc { animation: pmSpin 3.5s linear infinite; }
+    @keyframes pmSpin { to { transform: rotate(360deg); } }
+    .post-music .pm-marq {
+        overflow: hidden; width: 140px; white-space: nowrap; font-size: 12px; font-weight: 600; color: inherit; opacity: .85;
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+                mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    }
+    .post-music .pm-marq span { display: inline-block; padding-left: 0; animation: pmMarq 9s linear infinite; }
+    .post-music:not(.playing) .pm-marq span { animation-play-state: paused; }
+    @keyframes pmMarq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    /* bg ndogo kwa orodha ndogo (explore, hashtag) */
+    .post-content.bgt.bgt-sm, .post-content-text.bgt.bgt-sm { aspect-ratio: auto !important; min-height: 130px !important;
+        padding: 18px 16px !important; border-radius: 14px !important; font-size: 17px !important; margin: 6px 0 8px !important; }
+    .post-music.muted-tap::after { content: '\1F50A'; font-size: 12px; margin-left: -2px; }
+</style>
+
+<script>
+(function () {
+    if (window.pxMusicInit) return;   // zuia kufanya kazi mara mbili
+    window.pxMusicInit = true;
+
+    var audio = new Audio();
+    audio.preload = 'none';
+    audio.loop = true;
+    var current = null;        // kadi inayocheza sasa
+    var wanted = null;         // kadi inayoonekana na inapaswa kucheza
+    var ratios = new Map();    // kadi -> uonekano
+
+    function setPlaying(el, on) {
+        if (!el) return;
+        el.classList.toggle('playing', !!on);
+    }
+    function stop() {
+        try { audio.pause(); } catch (e) {}
+        setPlaying(current, false);
+        current = null;
+    }
+    function play(el) {
+        if (!el || !el.dataset.src) return;
+        if (current === el && !audio.paused) return;
+        if (current && current !== el) setPlaying(current, false);
+        if (audio.getAttribute('data-cur') !== el.dataset.src) {
+            audio.src = el.dataset.src;
+            audio.setAttribute('data-cur', el.dataset.src);
+        }
+        current = el;
+        var pr = audio.play();
+        if (pr && pr.then) {
+            pr.then(function () { setPlaying(el, true); el.classList.remove('muted-tap'); })
+              .catch(function () { setPlaying(el, false); el.classList.add('muted-tap'); /* kivinjari kimezuia — itaanza kwenye mguso wa kwanza */ });
+        } else { setPlaying(el, true); }
+    }
+
+    // Mguso wowote wa kwanza ukifungua autoplay, kisha cheza kadi inayoonekana
+    function unlock() {
+        if (wanted && !wanted._userPaused) play(wanted);
+    }
+    ['touchend', 'click', 'keydown'].forEach(function (ev) {
+        document.addEventListener(ev, unlock, { passive: true });
+    });
+
+    // Mtumiaji akibonyeza kadi: pause / play kwa mkono
+    window.pxToggleMusic = function (el) {
+        if (current === el && !audio.paused) { el._userPaused = true; stop(); return; }
+        el._userPaused = false; play(el);
+    };
+
+    // Chagua kadi inayoonekana zaidi
+    function pick() {
+        var best = null, br = 0;
+        ratios.forEach(function (r, el) { if (r >= 0.6 && r > br && !el.dataset.noauto && document.body.contains(el)) { best = el; br = r; } });
+        wanted = best;
+        if (!best) { if (current) stop(); return; }
+        if (best !== current && !best._userPaused) play(best);
+    }
+
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) { ratios.set(en.target, en.intersectionRatio); });
+            pick();
+        }, { threshold: [0, 0.25, 0.6, 0.9] });
+        function watch() {
+            document.querySelectorAll('.post-music').forEach(function (n) {
+                if (!n._pxw) { n._pxw = true; io.observe(n); }
+            });
+            ratios.forEach(function (r, el) { if (!document.body.contains(el)) { ratios.delete(el); io.unobserve(el); } });
+        }
+        document.addEventListener('DOMContentLoaded', watch);
+        watch();
+        setInterval(watch, 1500); // posts mpya za infinite scroll
+    }
+
+    // Zima muziki tab ikifichwa au unapofungua picha/video kubwa
+    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); });
+    document.addEventListener('click', function (e) {
+        if (e.target.closest && e.target.closest('.image-container, .feed-video-card, [onclick*="openVideoDetail"], [onclick*="openImageFullscreen"]')) stop();
+    }, true);
+})();
+</script>
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

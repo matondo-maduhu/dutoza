@@ -1,0 +1,324 @@
+
+
+<style>
+:root {
+  --tz-green: #1EB53A; --tz-dark: #0d6730; --tz-yellow: #FCD116;
+  --tz-blue: #00A3DD; --page: #f4f6f8; --text: #0f172a; --muted: #64748b;
+}
+html, body { margin: 0 !important; padding: 0 !important; overflow-x: hidden; }
+body { background: var(--page) !important; }
+body .navbar { display: none !important; }
+
+.community-page {
+  min-height: 100dvh; display: flex; flex-direction: column;
+  background: var(--page); padding-top: 64px; padding-bottom: 90px;
+}
+.comm-topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, var(--tz-green), var(--tz-dark));
+  color: #fff; box-shadow: 0 2px 12px rgba(30,181,58,.3);
+}
+.comm-topbar .back-area, .comm-topbar .menu-area { width: 52px; display: flex; }
+.comm-topbar .menu-area { justify-content: flex-end; }
+.rudi-btn, .menu-btn {
+  width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.25);
+  background: rgba(255,255,255,.16); border-radius: 14px; color: #fff;
+  font-size: 22px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; text-decoration: none;
+}
+.comm-topbar .center { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.comm-topbar h1 { margin: 0; font-size: 19px; font-weight: 800; }
+
+.hub-hero {
+  margin: 14px; padding: 18px; border-radius: 18px;
+  background: linear-gradient(145deg, #0f172a, #1e293b);
+  color: #fff; box-shadow: 0 10px 28px rgba(15,23,42,.2);
+}
+.hub-hero h2 { margin: 0 0 6px; font-size: 18px; font-weight: 800; }
+.hub-hero p { margin: 0; font-size: 13px; opacity: .8; line-height: 1.45; }
+.hub-metrics {
+  display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap;
+}
+.hub-metrics .m {
+  flex: 1; min-width: 90px; background: rgba(255,255,255,.1); border-radius: 12px;
+  padding: 10px; text-align: center;
+}
+.hub-metrics .m strong { display: block; font-size: 18px; font-weight: 800; color: #86efac; }
+.hub-metrics .m span { font-size: 11px; opacity: .75; }
+
+.hub-section { padding: 4px 14px 8px; }
+.hub-section h3 {
+  margin: 8px 0 10px; font-size: 14px; font-weight: 800; color: var(--text);
+  display: flex; align-items: center; gap: 6px;
+}
+
+.sector-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.sector-card {
+  background: #fff; border-radius: 16px; padding: 14px; text-decoration: none; color: inherit;
+  box-shadow: 0 2px 10px rgba(0,0,0,.05); border: 1.5px solid #eef1f4;
+  transition: transform .15s, border-color .15s;
+}
+.sector-card:active { transform: scale(.98); }
+.sector-card .em {
+  width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center;
+  justify-content: center; font-size: 22px; margin-bottom: 10px;
+}
+.sector-card:nth-child(1) .em { background: rgba(30,181,58,.14); }
+.sector-card:nth-child(2) .em { background: rgba(0,163,221,.14); }
+.sector-card:nth-child(3) .em { background: rgba(252,209,22,.25); }
+.sector-card:nth-child(4) .em { background: rgba(30,181,58,.1); }
+.sector-card strong { display: block; font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.sector-card small { display: block; font-size: 11.5px; color: var(--muted); line-height: 1.35; }
+.sector-card .nums { margin-top: 8px; font-size: 11px; font-weight: 700; color: var(--tz-dark); }
+
+.quick-row {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+}
+.quick-row a {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 10px 6px; background: #fff; border-radius: 12px; text-decoration: none;
+  color: var(--text); font-size: 11px; font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04); border: 1px solid #eef1f4;
+}
+.quick-row a .qi { font-size: 18px; }
+
+.recent-list { display: flex; flex-direction: column; gap: 8px; }
+.recent-item {
+  display: flex; gap: 10px; align-items: flex-start; background: #fff; border-radius: 14px;
+  padding: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.04); text-decoration: none; color: inherit;
+  transition: transform .12s, box-shadow .12s;
+}
+.recent-item:active { transform: scale(.98); box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+.recent-item .av {
+  width: 36px; height: 36px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: #e2e8f0;
+}
+.recent-item .av img { width: 100%; height: 100%; object-fit: cover; }
+.recent-item .txt { flex: 1; min-width: 0; }
+.recent-item .txt strong { font-size: 13px; }
+.recent-item .txt p {
+  margin: 2px 0 0; font-size: 12.5px; color: #475569;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.recent-item .cat {
+  font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 999px;
+  background: #f1f5f9; color: var(--muted); flex-shrink: 0;
+}
+
+/* Panel */
+.hamburger-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 10000;
+  opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s;
+}
+.hamburger-overlay.open { opacity: 1; visibility: visible; }
+.hamburger-panel {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; background: #fff;
+  z-index: 10001; transform: translateX(-105%);
+  transition: transform .28s cubic-bezier(.4,0,.2,1);
+  display: flex; flex-direction: column;
+}
+.hamburger-panel.open { transform: translateX(0); }
+.panel-header {
+  background: linear-gradient(135deg, var(--tz-green), var(--tz-dark)); color: #fff;
+  padding: calc(16px + env(safe-area-inset-top)) 18px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 3px solid var(--tz-yellow); flex-shrink: 0;
+}
+.panel-header h3 { margin: 0; font-size: 18px; font-weight: 800; }
+.panel-close {
+  width: 40px; height: 40px; border: none; background: rgba(255,255,255,.18);
+  border-radius: 12px; color: #fff; font-size: 18px; cursor: pointer;
+}
+.panel-body { flex: 1; overflow-y: auto; padding: 16px 14px calc(30px + env(safe-area-inset-bottom)); }
+.panel-body .cat-btn {
+  display: flex; align-items: center; gap: 14px; padding: 14px; margin-bottom: 10px;
+  background: #fff; border: 1.5px solid #e8e8e8; border-radius: 16px; text-decoration: none; color: #111;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+.cat-btn .cat-emoji {
+  width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center;
+  justify-content: center; font-size: 24px; flex-shrink: 0; background: rgba(30,181,58,.12);
+}
+.cat-btn .cat-text strong { display: block; font-size: 15px; font-weight: 800; margin-bottom: 2px; }
+.cat-btn .cat-text small { font-size: 12px; color: #666; line-height: 1.35; }
+</style>
+
+<div class="community-page" id="communityPage">
+  <div class="comm-topbar">
+    <div class="back-area">
+      <button type="button" class="rudi-btn" id="communityBackBtn" aria-label="back">‹</button>
+    </div>
+    <div class="center">
+      <span>🌐</span>
+      <h1>Community</h1>
+    </div>
+    <div class="menu-area">
+      <button type="button" class="menu-btn" id="communityMenuBtn" aria-label="Menu">☰</button>
+    </div>
+  </div>
+
+  <div class="hub-hero">
+    <h2>welcome_community</h2>
+    <p>Jiunge na sectors, groups na majadiliano — University, Gamers, politics, Kilimo & Biashara.</p>
+    <div class="hub-metrics">
+      <div class="m"><strong></strong><span>Groups</span></div>
+      <div class="m"><strong></strong><span>Members</span></div>
+      <div class="m"><strong></strong><span>Sectors</span></div>
+    </div>
+  </div>
+
+  <div class="hub-section">
+    <h3>⚡ Haraka</h3>
+    <div class="quick-row">
+      <a href="#"><span class="qi">🔎</span>Find Group</a>
+      <a href="#"><span class="qi">＋</span>Create</a>
+      <a href="#"><span class="qi">👥</span>close_friends</a>
+      <a href="#"><span class="qi">✨</span>For You</a>
+    </div>
+  </div>
+
+  <div class="hub-section">
+    <h3>📂 Sectors</h3>
+    <div class="sector-grid">
+      <a class="sector-card" href="#">
+        <div class="em">🎓</div>
+        <strong>Vyuo Vikuu</strong>
+        <small>Notes, discussions, materials</small>
+        <div class="nums"> posts ·  groups</div>
+      </a>
+      <a class="sector-card" href="#">
+        <div class="em">🎮</div>
+        <strong>Gamers</strong>
+        <small>Tips, clips, tournaments</small>
+        <div class="nums"> posts ·  groups</div>
+      </a>
+      <a class="sector-card" href="#">
+        <div class="em">🗳️</div>
+        <strong>politics</strong>
+        <small>News & mijadala</small>
+        <div class="nums"> posts ·  groups</div>
+      </a>
+      <a class="sector-card" href="#">
+        <div class="em">🌱</div>
+        <strong>agriculture_business</strong>
+        <small>Fursa na ushauri</small>
+        <div class="nums"> posts ·  groups</div>
+      </a>
+    </div>
+  </div>
+
+  
+  <div class="hub-section">
+    <h3>🕒 Recent kwenye Community</h3>
+    <div class="recent-list">
+      
+      
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      <a class="recent-item" href="">
+        <div class="av">
+          
+            <img src="" alt="">
+          
+            <img src="#" alt="">
+          
+            <img src="https://ui-avatars.com/api/?name=&background=1EB53A&color=fff&size=72" alt="">
+          
+        </div>
+        <div class="txt">
+          <strong>@</strong>
+          <p></p>
+        </div>
+        <span class="cat"></span>
+      </a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+<div class="hamburger-overlay" id="hamburgerOverlay"></div>
+<div class="hamburger-panel" id="hamburgerPanel">
+  <div class="panel-header">
+    <h3>🌐 Communities</h3>
+    <button type="button" class="panel-close" id="closeHamburger">✕</button>
+  </div>
+  <div class="panel-body">
+    <a href="#" class="cat-btn">
+      <div class="cat-emoji">🎓</div>
+      <div class="cat-text"><strong>Vyuo Vikuu</strong><small>Arts, Sciences, notes na discussions.</small></div>
+    </a>
+    <a href="#" class="cat-btn">
+      <div class="cat-emoji">🎮</div>
+      <div class="cat-text"><strong>Gamers</strong><small>Adventure, Action, Racing, Sports.</small></div>
+    </a>
+    <a href="#" class="cat-btn">
+      <div class="cat-emoji">🗳️</div>
+      <div class="cat-text"><strong>politics</strong><small>News, magazine na mijadala.</small></div>
+    </a>
+    <a href="#" class="cat-btn">
+      <div class="cat-emoji">🌱</div>
+      <div class="cat-text"><strong>Agriculture & business_company</strong><small>Kilimo, ufugaji na biashara.</small></div>
+    </a>
+    <a href="#" class="cat-btn">
+      <div class="cat-emoji">✨</div>
+      <div class="cat-text"><strong>For You</strong><small>Feed ya community yote.</small></div>
+    </a>
+  </div>
+</div>
+
+<script>
+(function () {
+  var backBtn = document.getElementById('communityBackBtn');
+  var closeBtn = document.getElementById('closeHamburger');
+  var overlay = document.getElementById('hamburgerOverlay');
+  var panel = document.getElementById('hamburgerPanel');
+  var menuBtn = document.getElementById('communityMenuBtn');
+
+  function openPanel() {
+    if (!panel || !overlay) return;
+    overlay.classList.add('open'); panel.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePanel() {
+    if (!panel || !overlay) return;
+    overlay.classList.remove('open'); panel.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  if (menuBtn) menuBtn.addEventListener('click', openPanel);
+  if (closeBtn) closeBtn.addEventListener('click', closePanel);
+  if (overlay) overlay.addEventListener('click', closePanel);
+  if (backBtn) {
+    backBtn.addEventListener('click', function () {
+      if (window.history.length > 1) window.history.back();
+      else window.location.href = '/home';
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closePanel();
+  });
+})();
+</script>
+
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

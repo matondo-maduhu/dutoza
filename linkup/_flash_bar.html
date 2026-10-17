@@ -1,0 +1,27 @@
+{# Ujumbe wa flash kwa kurasa za Linkup / Kijiji Mode (unatoweka wenyewe baada ya sekunde 6) #}
+
+
+<style>
+.kj-flashbar{margin:0 0 12px}
+.kj-flashbar .kjf{display:flex;gap:8px;align-items:flex-start;padding:12px 14px;border-radius:12px;margin-bottom:8px;font-size:14px;line-height:1.4;background:#fff;color:#0f172a;border:1px solid #e2e8f0;border-left:4px solid #F5B800;box-shadow:0 2px 8px rgba(15,23,42,.08);transition:opacity .4s}
+.kj-flashbar .kjf.success{border-left-color:#1EB53A}
+.kj-flashbar .kjf.error,.kj-flashbar .kjf.danger{border-left-color:#dc2626}
+.kj-flashbar .kjf.warning{border-left-color:#F5B800;background:#fffbeb}
+.kj-flashbar .kjf.info{border-left-color:#2563eb}
+@media (prefers-color-scheme:dark){.kj-flashbar .kjf{background:#1e293b;color:#f1f5f9;border-color:#334155}.kj-flashbar .kjf.warning{background:#3a2f0b}}
+</style>
+<div class="kj-flashbar" id="kjFlashBar" role="status">
+  <div class="kjf "></div>
+</div>
+<script>setTimeout(function(){var b=document.getElementById('kjFlashBar');if(b){b.style.transition='opacity .4s';b.style.opacity='0';setTimeout(function(){b.remove()},450)}},6000);</script>
+
+
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

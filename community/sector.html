@@ -1,0 +1,218 @@
+
+
+<style>
+:root {
+  --tz-green: #1EB53A; --tz-dark: #0d6730; --tz-yellow: #FCD116;
+  --tz-blue: #00A3DD; --page: #f4f6f8; --card: #fff; --text: #0f172a; --muted: #64748b;
+}
+body .navbar { display: none !important; }
+.sec-page { min-height: 100dvh; background: var(--page); padding-bottom: 90px; }
+.sec-top {
+  position: sticky; top: 0; z-index: 40;
+  background: linear-gradient(135deg, var(--tz-green), var(--tz-dark));
+  color: #fff; padding: 12px 14px; display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 2px 12px rgba(30,181,58,.28);
+}
+.sec-top a.back {
+  width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,.16); color: #fff; text-decoration: none; font-size: 22px; flex-shrink: 0;
+}
+.sec-top .titles { flex: 1; min-width: 0; }
+.sec-top h1 { margin: 0; font-size: 17px; font-weight: 800; }
+.sec-top p { margin: 2px 0 0; font-size: 11px; opacity: .85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sec-stats {
+  display: flex; gap: 8px; padding: 12px 14px 0; flex-wrap: wrap;
+}
+.sec-stats .chip {
+  background: #fff; border-radius: 999px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--text);
+  box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+.sec-stats .chip span { color: var(--tz-green); }
+.sec-tabs {
+  display: flex; gap: 8px; overflow-x: auto; padding: 12px 14px; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.sec-tabs::-webkit-scrollbar { display: none; }
+.sec-tabs a {
+  flex-shrink: 0; padding: 8px 14px; border-radius: 999px; font-size: 12.5px; font-weight: 700;
+  background: #e8ecef; color: #334155; text-decoration: none;
+}
+.sec-tabs a.active { background: var(--tz-green); color: #fff; }
+.sec-compose {
+  margin: 0 14px 14px; background: var(--card); border-radius: 16px; padding: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+.sec-compose textarea {
+  width: 100%; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 12px; font-size: 14px;
+  font-family: inherit; resize: vertical; min-height: 72px; outline: none; box-sizing: border-box;
+}
+.sec-compose textarea:focus { border-color: var(--tz-green); }
+.sec-compose .row {
+  display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap;
+}
+.sec-compose select {
+  padding: 8px 10px; border-radius: 10px; border: 1.5px solid #e2e8f0; font-size: 13px; background: #f8fafc;
+}
+.sec-compose .file-btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 10px;
+  background: #f1f5f9; font-size: 13px; font-weight: 600; color: #334155; cursor: pointer;
+}
+.sec-compose .file-btn input { display: none; }
+.sec-compose button[type=submit] {
+  margin-left: auto; padding: 10px 18px; border: 0; border-radius: 12px;
+  background: linear-gradient(135deg, #34d399, var(--tz-green)); color: #fff; font-weight: 800; font-size: 13px; cursor: pointer;
+}
+.sec-feed { padding: 0 14px 20px; display: flex; flex-direction: column; gap: 12px; }
+.post-card {
+  background: var(--card); border-radius: 16px; padding: 14px; box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+.post-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.post-head a.av {
+  width: 42px; height: 42px; border-radius: 50%; overflow: hidden; flex-shrink: 0; display: block;
+  background: #e2e8f0;
+}
+.post-head a.av img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.post-head .meta { min-width: 0; flex: 1; }
+.post-head .meta a.name {
+  font-weight: 800; font-size: 14px; color: var(--text); text-decoration: none;
+}
+.post-head .meta .sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.post-head .badge {
+  font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+  background: rgba(30,181,58,.12); color: var(--tz-dark);
+}
+.post-body { font-size: 14.5px; line-height: 1.5; color: #1e293b; white-space: pre-wrap; word-break: break-word; }
+.post-media { margin-top: 10px; border-radius: 12px; overflow: hidden; background: #0f172a; max-height: 360px; }
+.post-media img, .post-media video { width: 100%; max-height: 360px; object-fit: contain; display: block; }
+.sec-empty {
+  text-align: center; padding: 36px 20px; background: #fff; border-radius: 16px; color: var(--muted);
+}
+.sec-empty .big { font-size: 40px; margin-bottom: 8px; }
+.sec-empty h3 { color: var(--text); margin: 0 0 6px; font-size: 17px; }
+.groups-strip { padding: 0 14px 16px; }
+.groups-strip h3 { font-size: 14px; font-weight: 800; margin: 0 0 10px; color: var(--text); }
+.g-card {
+  display: flex; align-items: center; gap: 10px; background: #fff; border-radius: 14px; padding: 12px;
+  margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.04); text-decoration: none; color: inherit;
+}
+.g-card .ico {
+  width: 40px; height: 40px; border-radius: 12px; background: rgba(30,181,58,.12);
+  display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+}
+.g-card strong { display: block; font-size: 13.5px; }
+.g-card small { color: var(--muted); font-size: 12px; }
+</style>
+
+<div class="sec-page">
+  <div class="sec-top">
+    <a class="back" href="#" aria-label="back">‹</a>
+    <div class="titles">
+      <h1> </h1>
+      <p></p>
+    </div>
+  </div>
+
+  <div class="sec-stats">
+    <div class="chip"><span></span> posts</div>
+    <div class="chip"><span></span> groups</div>
+    <div class="chip">📂 </div>
+  </div>
+
+  <div class="sec-tabs">
+    
+      
+        <a href="#" class="active"></a>
+      
+        <a href="#" class="active"></a>
+      
+        <a href="#" class="active"></a>
+      
+        <a href="#" class="active"></a>
+      
+    
+  </div>
+
+  <form class="sec-compose" action="#" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="category" value="">
+    <textarea name="content" placeholder="Andika kitu kwenye ..." maxlength="2000"></textarea>
+    <div class="row">
+      <select name="subcategory">
+        
+        <option value="" selected></option>
+        
+      </select>
+      <label class="file-btn">
+        📎 Media
+        <input type="file" name="file" accept="image/*,video/*">
+      </label>
+      <button type="submit">post</button>
+    </div>
+  </form>
+
+  <div class="sec-feed">
+    
+      
+      <article class="post-card">
+        <div class="post-head">
+          <a class="av" href="#">
+            
+              <img src="" alt="">
+            
+              <img src="#" alt="">
+            
+              <img src="https://ui-avatars.com/api/?name=&background=1EB53A&color=fff&size=84" alt="">
+            
+          </a>
+          <div class="meta">
+            <a class="name" href="#">@ ✓</a>
+            <div class="sub"> · </div>
+          </div>
+          <span class="badge"></span>
+        </div>
+        <div class="post-body"></div>
+        
+        <div class="post-media">
+          
+          
+            <video controls playsinline src=""></video>
+          
+            <img src="" alt="" loading="lazy">
+          
+        </div>
+        
+      </article>
+      
+    
+      <div class="sec-empty">
+        <div class="big"></div>
+        <h3>Bado hakuna posts</h3>
+        <p>Kuwa wa kwanza kuchapisha kwenye  — .</p>
+      </div>
+    
+  </div>
+
+  
+  <div class="groups-strip">
+    <h3>Groups zinazohusiana</h3>
+    
+    <a class="g-card" href="#">
+      <div class="ico">👥</div>
+      <div style="flex:1;min-width:0">
+        <strong></strong>
+        <small> members · @</small>
+      </div>
+    </a>
+    
+  </div>
+  
+</div>
+
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

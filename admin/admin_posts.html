@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simamia Machapisho - Admin</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+body { background: #f0f2f5; padding-bottom: 40px; }
+.topbar { background: #1EB53A; color: white; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+.topbar h1 { font-size: 17px; display: flex; align-items: center; gap: 8px; }
+.topbar a { color: white; text-decoration: none; font-size: 13px; background: rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 6px; }
+.container { max-width: 760px; margin: 16px auto; padding: 0 12px; }
+.flash-msg { background: #e7f3ff; color: #1EB53A; padding: 10px; border-radius: 8px; margin-bottom: 14px; text-align: center; font-size: 14px; border: 1px solid #b6d4fe; }
+.empty { color: #777; font-size: 14px; padding: 20px 0; text-align: center; }
+
+.container { max-width: 640px; }
+.tabs { display: flex; gap: 8px; margin-bottom: 14px; overflow-x: auto; }
+.tabs a { background: #fff; border-radius: 20px; padding: 8px 16px; font-size: 13px; font-weight: bold; color: #65676b; text-decoration: none; white-space: nowrap; }
+.tabs a.on { background: #1EB53A; color: #fff; }
+.post { background: #fff; border-radius: 14px; margin-bottom: 14px; box-shadow: 0 2px 6px rgba(0,0,0,.06); overflow: hidden; }
+.ph { display: flex; gap: 10px; align-items: center; padding: 12px 14px 6px; }
+.av { width: 40px; height: 40px; border-radius: 50%; background: #1EB53A; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; overflow: hidden; flex-shrink: 0; }
+.av img { width: 100%; height: 100%; object-fit: cover; }
+.ph b { font-size: 14.5px; display: block; } .ph small { color: #777; font-size: 12px; }
+.chip { font-size: 10.5px; font-weight: bold; padding: 2px 8px; border-radius: 8px; background: #0f172a; color: #F5B800; margin-left: 6px; }
+.chip.hid { background: #fde2e2; color: #b91c1c; }
+.txt { padding: 4px 14px 12px; font-size: 15px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+.media { display: block; width: 100%; max-height: 560px; object-fit: contain; background: #000; }
+.file { display: block; margin: 0 14px 12px; padding: 12px; background: #f0f2f5; border-radius: 10px; color: #333; text-decoration: none; font-size: 14px; }
+.bar { display: flex; align-items: center; gap: 6px; padding: 8px 10px; border-top: 1px solid #eee; }
+.act { border: 0; background: none; padding: 8px 12px; border-radius: 8px; font-size: 14px; color: #65676b; cursor: pointer; display: flex; gap: 6px; align-items: center; }
+.act.on { color: #1EB53A; font-weight: bold; }
+.act.del { margin-left: auto; color: #dc2626; }
+.cm { display: none; padding: 10px 14px 14px; border-top: 1px solid #eee; background: #fafafa; }
+.cm.open { display: block; }
+.cm-item { font-size: 13.5px; padding: 6px 0; border-bottom: 1px solid #eee; word-break: break-word; }
+.cm-item b { margin-right: 6px; } .cm-item small { color: #888; }
+.cm-form { display: flex; gap: 8px; margin-top: 10px; }
+.cm-form input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; }
+.cm-form button { border: 0; background: #1EB53A; color: #fff; border-radius: 10px; padding: 0 16px; font-weight: bold; cursor: pointer; }
+.more { display: block; text-align: center; background: #fff; border-radius: 12px; padding: 14px; color: #1EB53A; font-weight: bold; text-decoration: none; }
+
+</style>
+</head>
+<body>
+<div class="topbar">
+    <h1><i class="fa-solid fa-newspaper"></i> Simamia Machapisho</h1>
+    <a href="#"><i class="fa-solid fa-arrow-left"></i> Dashboard</a>
+</div>
+<div class="container">
+<div class="flash-msg"></div>
+<div class="tabs">
+  <a class="" href="?type=all">Zote</a>
+  <a class="" href="?type=image"><i class="fa-solid fa-image"></i> Picha</a>
+  <a class="" href="?type=video"><i class="fa-solid fa-video"></i> Video</a>
+  <a class="" href="?type=text"><i class="fa-solid fa-align-left"></i> Maandishi</a>
+</div>
+
+
+<article class="post" id="post-">
+  <div class="ph">
+    <div class="av"><img src="" alt=""></div>
+    <div>
+      <b><span class="chip">Linkup</span><span class="chip hid">Imefichwa</span></b>
+      <small>@ · </small>
+    </div>
+  </div>
+  <div class="txt"></div>
+  
+    
+    <img class="media" src="" alt="" loading="lazy">
+    <video class="media" src="" controls playsinline preload="metadata"></video>
+    <a class="file" href="" target="_blank" rel="noopener"><i class="fa-solid fa-file"></i> </a>
+  
+  <div class="bar">
+    <button class="act " type="button" onclick="adminLike(, this)"><i class="fa-solid fa-thumbs-up"></i> <b></b></button>
+    <button class="act" type="button" onclick="toggleCm()"><i class="fa-regular fa-comment"></i> <b id="cn-"></b></button>
+    <form action="/admin/delete_post/" method="POST" style="margin-left:auto" onsubmit="return confirm('Futa post hii kabisa?');">
+      <button class="act del" type="submit"><i class="fa-solid fa-trash"></i> Futa</button>
+    </form>
+  </div>
+  <div class="cm" id="cm-">
+    <div id="cl-"></div>
+    <div class="cm-form"><input id="ci-" type="text" placeholder="Andika comment kama admin..." maxlength="500"><button type="button" onclick="sendCm()">Tuma</button></div>
+  </div>
+</article>
+<p class="empty">Hakuna posts kwenye kundi hili.</p>
+
+<a class="more" href="?type=&before=">Pakia zaidi</a>
+</div>
+<script>
+function adminLike(id, btn) {
+  fetch('/like/' + id, { method: 'POST', headers: { 'Accept': 'application/json' } })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (!d.success) { alert('Imeshindikana'); return; }
+      btn.classList.toggle('on', !!d.liked);
+      btn.querySelector('b').textContent = d.likes_count;
+    }).catch(function () { alert('Imeshindikana'); });
+}
+function toggleCm(id) {
+  var box = document.getElementById('cm-' + id);
+  box.classList.toggle('open');
+  if (box.classList.contains('open')) loadCm(id);
+}
+function loadCm(id) {
+  var list = document.getElementById('cl-' + id);
+  fetch('/admin/post/' + id + '/comments').then(function (r) { return r.json(); }).then(function (d) {
+    list.textContent = '';
+    if (!d.success || !d.comments.length) { list.textContent = 'Hakuna comments bado.'; return; }
+    d.comments.forEach(function (c) {
+      var row = document.createElement('div'); row.className = 'cm-item';
+      var b = document.createElement('b'); b.textContent = c.name;
+      var t = document.createElement('span'); t.textContent = c.content;
+      var s = document.createElement('small'); s.textContent = ' ' + c.created_at;
+      row.appendChild(b); row.appendChild(t); row.appendChild(s); list.appendChild(row);
+    });
+  });
+}
+function sendCm(id) {
+  var inp = document.getElementById('ci-' + id), val = inp.value.trim();
+  if (!val) return;
+  fetch('/comment/' + id, { method: 'POST', headers: { 'Accept': 'application/json' }, body: new URLSearchParams({ content: val }) })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (!d.success) { alert('Imeshindikana kutuma'); return; }
+      inp.value = '';
+      var n = document.getElementById('cn-' + id); n.textContent = (parseInt(n.textContent, 10) || 0) + 1;
+      loadCm(id);
+    }).catch(function () { alert('Imeshindikana kutuma'); });
+}
+</script>
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body></html>

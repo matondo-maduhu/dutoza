@@ -1,0 +1,157 @@
+<style>
+/* Vitufe vya arena: aikoni + idadi tu, bila fremu */
+#video-detail-arena .vda-actions button { background: none !important; border: none !important; box-shadow: none !important; color: #fff; gap: 7px; padding: 6px 4px; border-radius: 0; }
+#video-detail-arena .vda-actions button i { font-size: 21px !important; line-height: 1; color: inherit !important; }
+#video-detail-arena .vda-actions button .kj-n { font-size: 20px; line-height: 1; font-weight: 600; }
+#video-detail-arena .vda-actions button.liked { color: #1EB53A !important; }
+</style>
+<style>
+/* Music bar – dark, matches video arena */
+.vda-music {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 8px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+}
+.vda-music.show { display: flex !important; }
+.vda-music-left {
+  flex: 1; min-width: 0;
+  display: flex; align-items: center; gap: 10px;
+}
+.vda-music-cover {
+  width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+  background: linear-gradient(135deg,#1EB53A,#00A3DD);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; overflow: hidden;
+}
+.vda-music-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vda-music-info { flex: 1; min-width: 0; line-height: 1.25; }
+.vda-music-info strong {
+  display: block; font-size: 14px; color: #fff;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.vda-music-info span {
+  display: block; font-size: 12px; color: rgba(255,255,255,.7);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.vda-music-reuse {
+  flex-shrink: 0; border: none; border-radius: 20px;
+  padding: 9px 14px; font-weight: 700; font-size: 13px;
+  background: #1EB53A; color: #fff; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.vda-music-reuse:active { transform: scale(0.97); }
+/* Floating music strip over video (extra visibility) */
+.vda-music-float {
+  display: none;
+  position: absolute;
+  left: 12px; right: 12px;
+  bottom: 12px;
+  z-index: 5;
+  align-items: center; gap: 10px;
+  padding: 8px 10px;
+  background: rgba(0,0,0,.72);
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.vda-music-float.show { display: flex !important; }
+.vda-music-float .vda-music-info strong { color: #fff; font-size: 13px; }
+.vda-music-float .vda-music-info span { color: rgba(255,255,255,.75); font-size: 11px; }
+.vda-top { position: relative; }
+</style>
+
+<!-- ===== VIDEO DETAIL ARENA ===== -->
+<div id="video-detail-arena" aria-hidden="true">
+    <div class="vda-top">
+        <button type="button" class="vda-back" onclick="closeVideoDetail()" aria-label="Back">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <video id="vda-video" playsinline controls controlslist="nofullscreen nodownload noremoteplayback" disablepictureinpicture></video>
+        <!-- Float: jina la wimbo + Reuse juu ya video -->
+        <div class="vda-music-float" id="vda-music-float">
+            <div class="vda-music-cover" id="vda-music-float-cover"><i class="fa-solid fa-music"></i></div>
+            <div class="vda-music-info">
+                <strong id="vda-music-float-title">Wimbo</strong>
+                <span id="vda-music-float-artist"></span>
+            </div>
+            <button type="button" class="vda-music-reuse" onclick="vdaReuseMusic()">
+                <i class="fa-solid fa-rotate"></i> Reuse
+            </button>
+        </div>
+    </div>
+    <div class="vda-body">
+        <div class="vda-caption" id="vda-caption"></div>
+        <div class="lnk-slot" id="vda-link"></div>
+
+        <!-- Mziki + Reuse (chini ya caption) — HAKUNA play/pause; sauti iko ndani ya video -->
+        <div class="vda-music" id="vda-music" data-src="" data-title="" data-artist="" data-cover="">
+            <div class="vda-music-left">
+                <div class="vda-music-cover" id="vda-music-cover"><i class="fa-solid fa-music"></i></div>
+                <div class="vda-music-info">
+                    <strong id="vda-music-title">Wimbo</strong>
+                    <span id="vda-music-artist"></span>
+                </div>
+            </div>
+            <button type="button" class="vda-music-reuse" id="vda-music-reuse" onclick="vdaReuseMusic()">
+                <i class="fa-solid fa-rotate"></i> Reuse
+            </button>
+        </div>
+
+        <div class="vda-meta" id="vda-meta"></div>
+
+        <div class="vda-user-row">
+            <a href="#" class="vda-avatar-link" id="vda-profile-link">
+                <img class="vda-avatar" id="vda-avatar" src="" alt="">
+            </a>
+            <div class="vda-user-info">
+                <a href="#" id="vda-username-link">@user</a>
+                <small id="vda-followers"></small>
+                <small id="vda-views" style="display:block;margin-top:2px;opacity:0.85;"></small>
+            </div>
+            <button type="button" class="vda-follow-btn" id="vda-follow-btn" onclick="vdaFollow()">Follow</button>
+        </div>
+
+        <div class="vda-actions">
+            <span id="vda-likes" style="display:none">0</span>
+            <span id="vda-shares" style="display:none">0</span>
+            <span id="vda-saves" style="display:none">0</span>
+            <button type="button" id="vda-like-btn" onclick="vdaLike()" aria-label="like" title="like"><span class="kj-n" data-src="vda-likes">0</span><i class="fa-regular fa-thumbs-up"></i></button>
+            <button type="button" onclick="vdaOpenComments()" aria-label="comment" title="comment"><span class="kj-n" data-src="vda-comments-title">0</span><i class="fa-regular fa-comment"></i></button>
+            <button type="button" onclick="vdaShare()" aria-label="share" title="share"><span class="kj-n" data-src="vda-shares">0</span><i class="fa-regular fa-paper-plane"></i></button>
+            <button type="button" id="vda-save-btn" onclick="vdaSave()" aria-label="save_post" title="save_post"><span class="kj-n" data-src="vda-saves">0</span><i class="fa-regular fa-bookmark"></i></button>
+            <button type="button" id="vda-download-btn" onclick="vdaDownload()" aria-label="Offline" title="Offline"><i class="fa-solid fa-download"></i></button>
+        </div>
+
+        <!-- Comments: kadi ndogo; kubonyeza kunafungua sheet ile ile ya feed (nusu skrini, composer chini) -->
+        <div class="vda-comments-box" id="vda-comments-box" role="button" tabindex="0"
+             onclick="vdaOpenComments()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();vdaOpenComments();}">
+            <div class="vda-comments-head">
+                <span id="vda-comments-title">Comments 0</span>
+                <i class="fa-solid fa-chevron-up" id="vda-comments-chevron"></i>
+            </div>
+            <div class="vda-feed-comments" id="vda-feed-comments">
+                <div class="vda-comment-empty"><i class="fa-regular fa-user"></i> No comments yet. Be the first to comment!</div>
+            </div>
+            <div class="vda-peek-input"><i class="fa-regular fa-pen-to-square"></i> <span>type_comment</span></div>
+        </div>
+
+        <div class="vda-upnext-title">Up Next</div>
+        <div id="vda-upnext"></div>
+    </div>
+</div>
+
+<div class="ov-bar"><div id="ovProgressBar"></div></div>
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

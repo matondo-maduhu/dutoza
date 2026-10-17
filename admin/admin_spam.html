@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spam · Admin Kijiji</title>
+<style>
+:root{--bg:#0f1419;--card:#1e293b;--border:#334155;--text:#f1f5f9;--muted:#94a3b8;--accent:#22c55e;--danger:#ef4444;--warn:#f59e0b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:16px;padding-top:max(16px,env(safe-area-inset-top))}
+.wrap{max-width:900px;margin:0 auto}
+h1{font-size:20px;margin:8px 0 4px}
+h2{font-size:15px;margin:20px 0 8px}
+a{color:var(--accent);text-decoration:none}
+.sub{color:var(--muted);font-size:13px;margin-bottom:12px}
+.nav{display:flex;gap:14px;font-size:14px;flex-wrap:wrap}
+.row{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:8px;font-size:13px}
+.row.live{border-color:#b45309}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;background:#78350f;color:#fde68a}
+.tag.on{background:#7f1d1d;color:#fecaca}
+.tag.rep{background:#581c87;color:#e9d5ff}
+.muted{color:var(--muted)}
+.mono{font-family:ui-monospace,Menlo,monospace;word-break:break-word}
+.btns{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+button,.btn{border:0;border-radius:8px;padding:7px 12px;font-size:13px;font-weight:600;cursor:pointer;background:var(--accent);color:#06240f;display:inline-block}
+button.danger{background:#7f1d1d;color:#fecaca}
+details{margin-top:8px}
+summary{cursor:pointer;color:var(--accent);font-size:13px}
+.act{border-left:3px solid var(--border);padding:4px 8px;margin:6px 0;font-size:12px}
+.act.link{border-color:var(--warn)}
+.empty{color:var(--muted);text-align:center;padding:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="/admin">← Admin</a><a href="/admin/security">🛡️ Usalama</a></div>
+  <h1>🚫 Spam</h1>
+  <div class="sub">Watu waliopewa onyo kwa kutuma links, post au comments nyingi mno kwa muda mfupi. Maelezo yanahifadhiwa siku 30.</div>
+
+  <h2>Wanaozuiliwa sasa</h2>
+  
+  <div class="row live">
+    <b><a href="/profile/">@</a></b> · <span class="tag on"></span>
+    <span class="muted"> · amezuiwa  · amebakiza </span>
+    <form method="post" action="/admin/spam/unblock/" class="btns" onsubmit="return confirm('Kumfungulia @?')">
+      <button type="submit">Mfungulie</button>
+    </form>
+  </div>
+  <div class="empty">Hakuna anayezuiliwa sasa. 👍</div>
+
+  <h2>Historia ya maonyo <a href="/admin/spam" class="muted">(onyesha wote)</a></h2>
+  
+  <div class="row">
+    <b><a href="/profile/">@</a></b> · <span class="tag"></span>
+    <span class="tag on">Bado amezuiliwa</span>
+    <span class="tag rep">Mara  ndani ya saa 24</span>
+    <span class="tag on">Akaunti imezuiwa</span>
+    <div class="muted"> · mpaka </div>
+    <div style="margin-top:6px"><span class="muted">Alichojaribu kutuma:</span> <span class="mono"></span></div>
+    
+    <details>
+      <summary>Alichotuma saa 1 kabla ()</summary>
+      
+      <div class="act "><span class="muted"> · </span><br><span class="mono"></span></div>
+      
+    </details>
+    
+    <div class="btns">
+      <a class="btn" href="/admin/spam?uid=">Historia yake yote</a>
+      
+      <form method="post" action="/admin/block/" onsubmit="return confirm('Kuzuia akaunti ya @ kabisa?')">
+        <button type="submit" class="danger">Zuia akaunti</button>
+      </form>
+      
+    </div>
+  </div>
+  <div class="empty">Hakuna maonyo bado.</div>
+</div>
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

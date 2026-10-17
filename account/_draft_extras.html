@@ -1,0 +1,1024 @@
+{# Zana za ✨ (link, wimbo, quote, rangi, font) — zilihamishwa kutoka composer ya Home kuja Drafts #}
+<style>
+.cpx-hashtag-wrap { position: relative; flex: 1; }
+@media (prefers-color-scheme: dark) {
+        .cpx-cat-in input { background: #121a27; border-color: #2b3a4f; color: #f1f5f9; }
+    }
+.cpx-prov { display: flex; gap: 10px; margin-bottom: 10px; }
+.cpx-prov-btn {
+        position: relative; flex: 1; height: 46px; padding: 0; display: flex; align-items: center; justify-content: center;
+        border: 2px solid #e3e8ec; background: #f7f9fa; color: #8a94a0; border-radius: 16px; font-size: 20px;
+        cursor: pointer; -webkit-tap-highlight-color: transparent; transition: all .18s ease;
+    }
+.cpx-prov-btn.on { border-color: #1EB53A; background: #e8f8ec; color: #0d9a2c; }
+.cpx-prov-btn.jam {
+        border-color: #f3d77a; background: linear-gradient(135deg, #fffbea, #fff1c2); color: #E8A800;
+        animation: cpxGoldBreath 2.6s ease-in-out infinite;
+    }
+.cpx-prov-btn.jam i.note { filter: drop-shadow(0 1px 3px rgba(232,168,0,.55)); animation: cpxNoteBreath 2.6s ease-in-out infinite; }
+.cpx-prov-btn.jam .plus {
+        position: absolute; top: -7px; right: -6px; width: 20px; height: 20px; border-radius: 50%;
+        background: linear-gradient(135deg, #FFC93C, #E8A800); color: #fff; font-size: 10px;
+        display: flex; align-items: center; justify-content: center; border: 2px solid #fff; box-shadow: 0 2px 6px rgba(232,168,0,.5);
+    }
+.cpx-prov-btn.jam.on { border-color: #E8A800; background: linear-gradient(135deg, #fff3c4, #ffe07a); }
+.cpx-prov-btn.dutoza {
+        position: relative; border-color: #c7d2fe; background: linear-gradient(135deg, #eef2ff, #e0e7ff); color: #3730a3;
+    }
+.cpx-prov-btn.dutoza.on { border-color: #4f46e5; background: linear-gradient(135deg, #e0e7ff, #c7d2fe); color: #312e81; }
+.cpx-quotes { display: none; margin-top: 8px; border: 1px solid #e3e8ec; border-radius: 14px; background: #fff; padding: 10px; }
+.cpx-quotes.show { display: block; }
+.cpx-quotes input[type=search] { width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e3e8ec; border-radius: 20px; font-size: 16px; font-family: inherit; outline: none; }
+.cpx-quotes input[type=search]:focus { border-color: #4f46e5; }
+.cpx-qres { max-height: 280px; overflow-y: auto; margin-top: 8px; }
+.cpx-qrow { padding: 10px 8px; border-bottom: 1px solid #f0f2f5; cursor: pointer; border-radius: 10px; }
+.cpx-qrow:last-child { border-bottom: none; }
+.cpx-qrow:hover, .cpx-qrow:active { background: #eef2ff; }
+.cpx-qrow .qt { font-size: 13.5px; font-weight: 600; line-height: 1.4; color: #1c1e21; }
+.cpx-qrow .qa { display: block; margin-top: 4px; font-size: 12px; font-weight: 600; color: #65676b; }
+.cpx-qrow .qc { display: inline-block; margin-top: 4px; font-size: 11px; font-weight: 700; color: #4f46e5; background: #eef2ff; padding: 2px 8px; border-radius: 99px; }
+@media (prefers-reduced-motion: reduce) { .cpx-prov-btn.jam, .cpx-prov-btn.jam i.note { animation: none; } }
+.cpx-hashtag-wrap.bgt {
+        --bgt-fg: #fff; --bgt-shadow: 0 2px 14px rgba(0,0,0,.28);
+        isolation: isolate; border-radius: 22px; min-height: 250px; padding: 30px 22px 36px;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 14px 34px rgba(15,23,42,.18), inset 0 0 0 1px rgba(255,255,255,.14);
+    }
+.cpx-hashtag-wrap.bgt::before {
+        content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit;
+        background: radial-gradient(120% 80% at 12% 0%, rgba(255,255,255,.30), transparent 55%),
+                    radial-gradient(90% 70% at 100% 100%, rgba(0,0,0,.20), transparent 60%);
+    }
+.cpx-hashtag-wrap.bgt textarea {
+        color: var(--bgt-fg) !important; text-shadow: var(--bgt-shadow); background: transparent;
+        text-align: center; font-size: 24px; font-weight: 800; line-height: 1.28; min-height: 120px; max-height: 320px !important; width: 100%; padding: 0;
+    }
+.cpx-hashtag-wrap.bgt.bgt-l1 textarea { font-size: 34px; }
+.cpx-hashtag-wrap.bgt.bgt-l2 textarea { font-size: 28px; }
+.cpx-hashtag-wrap.bgt.bgt-l3 textarea { font-size: 24px; }
+.cpx-hashtag-wrap.bgt.bgt-l4 textarea { font-size: 21px; }
+.cpx-hashtag-wrap.bgt textarea::placeholder { color: var(--bgt-fg); opacity: .6; }
+.cpx-hashtag-wrap.bgt .cpx-bg-count { display: block; }
+.cpx-palette { display: none; gap: 8px; padding: 10px 2px 2px; flex-wrap: wrap; }
+.cpx-palette.show { display: flex; }
+.cpx-sw { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 10px; border: 2px solid #fff; box-shadow: 0 0 0 1px #d0d5da; cursor: pointer; padding: 0; }
+.cpx-sw.on { box-shadow: 0 0 0 2px #1EB53A; }
+.cpx-sw-none { background: #fff; color: #65676b; font-size: 14px; }
+.cpx-font-panel { display: none; gap: 8px; padding: 8px 2px 2px; flex-wrap: wrap; }
+.cpx-font-panel.show { display: flex !important; }
+.cpx-font-sw {
+        border: 1.5px solid #e3e8ec; background: #fff; border-radius: 10px;
+        padding: 8px 12px; font-size: 13px; cursor: pointer; color: #050505;
+    }
+.cpx-font-sw.on { border-color: #1EB53A; background: #e8f8ec; font-weight: 700; }
+.cpx-chip { display: none; align-items: center; gap: 10px; margin-top: 8px; padding: 8px 10px; background: #e8f8ec; border-radius: 14px; }
+.cpx-chip.show { display: flex; }
+.cpx-chip img { width: 38px; height: 38px; border-radius: 8px; object-fit: cover; }
+.cpx-chip .t { flex: 1; min-width: 0; font-size: 13px; font-weight: 700; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cpx-chip .t small { display: block; font-weight: 500; color: #65676b; }
+.cpx-chip button { border: none; background: none; color: #65676b; font-size: 16px; cursor: pointer; padding: 6px; }
+.cpx-music { display: none; margin-top: 8px; border: 1px solid #e3e8ec; border-radius: 14px; background: #fff; padding: 10px; }
+.cpx-music.show { display: block; }
+.cpx-music input[type=search] { width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e3e8ec; border-radius: 20px; font-size: 16px; font-family: inherit; outline: none; }
+.cpx-music input[type=search]:focus { border-color: #1EB53A; }
+.cpx-mres { max-height: 260px; overflow-y: auto; margin-top: 8px; }
+.cpx-mrow { display: flex; align-items: center; gap: 10px; padding: 8px 4px; border-bottom: 1px solid #f0f2f5; }
+.cpx-mrow:last-child { border-bottom: none; }
+.cpx-mrow img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; background: #e8f8ec; }
+.cpx-mrow .t { flex: 1; min-width: 0; font-size: 13px; font-weight: 700; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cpx-mrow .t small { display: block; font-weight: 500; color: #65676b; }
+.cpx-mrow .pv, .cpx-mrow .pick { border: none; border-radius: 50%; width: 34px; height: 34px; cursor: pointer; flex-shrink: 0; }
+.cpx-mrow .pv { background: #f0f2f5; color: #1c1e21; }
+.cpx-mrow .pick { background: #1EB53A; color: #fff; }
+.cpx-mmsg { padding: 12px 4px; font-size: 13px; color: #8a8d91; text-align: center; }
+.cpx-msug-label {
+        font-size: 12px; font-weight: 800; color: #65676b;
+        padding: 10px 4px 4px; letter-spacing: 0.2px;
+        text-transform: uppercase;
+    }
+.cpx-mrow.is-sug .pick { background: #00A3DD; }
+.cpx-link { display: none; margin-top: 8px; padding: 10px; border: 1px solid #e3e8ec; border-radius: 14px; background: #fff; }
+.cpx-link.show { display: block; }
+.cpx-link input { width: 100%; box-sizing: border-box; padding: 10px 14px; margin-bottom: 8px; border: 1.5px solid #e3e8ec; border-radius: 20px; font-size: 16px; font-family: inherit; outline: none; }
+.cpx-link input:focus { border-color: #1EB53A; }
+.cpx-link-hint { font-size: 11px; color: #8a8d91; margin: -2px 4px 6px; }
+.cpx-link-prev .lnk-btn { pointer-events: none; margin: 2px 0; }
+.cpx-dot[hidden], .cpx-cchip[hidden], .cpx-qsel[hidden], .cpx-sheet-ov[hidden] { display: none !important; }
+.cpx-sheet-ov {
+        position: fixed; inset: 0; z-index: 100050; background: rgba(15, 23, 42, 0);
+        display: flex; align-items: flex-end; justify-content: center; transition: background .22s ease;
+    }
+.cpx-sheet-ov.open { background: rgba(15, 23, 42, .55); }
+.cpx-sheet {
+        width: 100%; max-width: 560px; max-height: 92vh; max-height: 92dvh; background: #fff;
+        border-radius: 24px 24px 0 0; box-shadow: 0 -12px 40px rgba(15, 23, 42, .28);
+        display: flex; flex-direction: column; transform: translateY(100%); transition: transform .26s cubic-bezier(.2, .8, .2, 1);
+        overflow: hidden;
+    }
+.cpx-sheet-ov.open .cpx-sheet { transform: translateY(0); }
+@media (min-width: 700px) {
+        .cpx-sheet-ov { align-items: center; }
+        .cpx-sheet { border-radius: 24px; max-height: 86vh; transform: translateY(24px) scale(.98); opacity: 0; transition: transform .22s ease, opacity .22s ease; }
+        .cpx-sheet-ov.open .cpx-sheet { transform: none; opacity: 1; }
+    }
+.cpx-sh-head { position: relative; padding: 16px 56px 12px 18px; border-bottom: 1px solid #eef0f2; background: linear-gradient(180deg, #f5f3ff, #fff); flex: 0 0 auto; }
+.cpx-sh-grab { position: absolute; top: 6px; left: 50%; width: 38px; height: 4px; margin-left: -19px; border-radius: 4px; background: #d7dbe0; }
+.cpx-sh-head h3 { margin: 6px 0 0; font-size: 17px; font-weight: 800; color: #1e1b4b; display: flex; align-items: center; gap: 8px; }
+.cpx-sh-head h3 i { color: #6366f1; font-size: 16px; }
+.cpx-sh-x { position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border: none; border-radius: 50%; background: #f0f2f5; color: #444; font-size: 16px; cursor: pointer; }
+.cpx-sh-body { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px 14px 8px; overscroll-behavior: contain; }
+.cpx-sh-foot { flex: 0 0 auto; display: flex; gap: 10px; padding: 10px 14px calc(12px + env(safe-area-inset-bottom)); border-top: 1px solid #eef0f2; background: #fff; }
+.cpx-sh-clear { flex: 0 0 auto; border: 1.5px solid #fecaca; background: #fff5f5; color: #b91c1c; border-radius: 14px; padding: 12px 14px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.cpx-sh-ok { flex: 1; border: none; background: linear-gradient(135deg, #1EB53A, #16a34a); color: #fff; border-radius: 14px; padding: 12px 16px; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 6px 16px rgba(30, 181, 58, .32); }
+.cpx-sh-ok:active { transform: scale(.985); }
+.cpx-sec { border: 1.5px solid #e8ebef; border-radius: 18px; background: #fff; margin-bottom: 10px; overflow: hidden; transition: border-color .15s, box-shadow .15s; }
+.cpx-sec.has { border-color: #bbf7d0; }
+.cpx-sec.open { border-color: #a5b4fc; box-shadow: 0 6px 18px rgba(99, 102, 241, .10); }
+.cpx-sec-h { width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: none; background: none; cursor: pointer; font-family: inherit; text-align: left; -webkit-tap-highlight-color: transparent; }
+.cpx-sec-h .ic { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 13px; display: inline-flex; align-items: center; justify-content: center; font-size: 17px; }
+.cpx-sec-h .tt { flex: 1; min-width: 0; font-size: 15px; font-weight: 800; color: #1c1e21; display: flex; flex-direction: column; }
+.cpx-sec-h .tt small { font-size: 12px; font-weight: 600; color: #8a8d91; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cpx-sec.has .tt small { color: #15803d; }
+.cpx-sec-h .chev { color: #9aa0a6; font-size: 13px; transition: transform .2s ease; }
+.cpx-sec.open .chev { transform: rotate(180deg); }
+.cpx-sec-b { display: none; padding: 2px 14px 14px; }
+.cpx-sec.open .cpx-sec-b { display: block; animation: cpxSecIn .2s ease; }
+.cpx-sec-note { font-size: 12px; color: #8a8d91; margin: 0 2px 6px; }
+.cpx-lbl { display: block; font-size: 12px; font-weight: 700; color: #475569; margin: 2px 4px 5px; }
+.cpx-sec-b .cpx-link, .cpx-sec-b .cpx-music, .cpx-sec-b .cpx-quotes { display: block; margin: 0; padding: 0; border: none; background: transparent; }
+.cpx-sec-b .cpx-palette { display: flex; padding: 4px 0 0; }
+.cpx-sec-b .cpx-font-panel { display: flex !important; padding: 4px 0 0; }
+.cpx-sec-b .cpx-chip { margin: 0 0 10px; }
+.cpx-sec-b .cpx-sw { width: 40px; height: 40px; }
+.cpx-sec-b .cpx-mres, .cpx-sec-b .cpx-qres { max-height: 300px; }
+.cpx-prov-btn { gap: 7px; font-size: 18px; }
+.cpx-prov-btn .pl { font-size: 12px; font-weight: 800; letter-spacing: .1px; }
+.cpx-prov { gap: 8px; }
+.cpx-cats { display: flex; gap: 7px; overflow-x: auto; padding: 8px 2px 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.cpx-cats::-webkit-scrollbar { display: none; }
+.cpx-cat { flex: 0 0 auto; border: 1.5px solid #e0e7ff; background: #f5f7ff; color: #3730a3; border-radius: 99px; padding: 6px 12px; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.cpx-cat.on { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+.cpx-cat small { opacity: .7; margin-left: 3px; font-weight: 600; }
+.cpx-qsel { display: flex; gap: 10px; align-items: flex-start; margin: 0 0 10px; padding: 10px 12px; border-radius: 14px; background: linear-gradient(135deg, #eef2ff, #f5f3ff); border: 1.5px solid #c7d2fe; }
+.cpx-qsel .mark { font-size: 30px; line-height: .9; color: #6366f1; font-family: Georgia, serif; }
+.cpx-qsel .qtxt { flex: 1; min-width: 0; font-size: 13px; font-weight: 600; color: #312e81; line-height: 1.4; word-break: break-word; }
+.cpx-qsel button { border: none; background: none; color: #6b7280; font-size: 15px; cursor: pointer; padding: 4px; }
+.cpx-qrow .qt::before { content: "\275D\00a0"; color: #6366f1; }
+html.cpx-lock, html.cpx-lock body { overflow: hidden !important; }
+/* Drafts: sheet iwe juu ya kila kitu, na kitufe cha Ongeza kiwe na kidoti */
+.cpx-sheet-ov { z-index: 100050; }
+#extrasBtn { position: relative; }
+#extrasBtn .cpx-dot { position: absolute; top: 4px; right: 6px; width: 8px; height: 8px; border-radius: 50%; background: #1EB53A; }
+.dr-field .cpx-hashtag-wrap { position: relative; display: block; }
+
+</style>
+<!-- Zinatumwa na fomu ya draft: rangi, font, wimbo, link -->
+<input type="hidden" name="extras" value="1">
+<input type="hidden" name="bg_style" id="cpxBgStyle" value="">
+<input type="hidden" name="font_style" id="cpxFontStyle" value="">
+<input type="hidden" name="music_title" id="cpxMusicTitle" value="">
+<input type="hidden" name="music_artist" id="cpxMusicArtist" value="">
+<input type="hidden" name="music_url" id="cpxMusicUrl" value="">
+<input type="hidden" name="music_cover" id="cpxMusicCover" value="">
+        <div class="cpx-sheet-ov" id="cpxSheetOv" hidden onclick="if(event.target===this) cpxSheetClose();">
+            <div class="cpx-sheet" role="dialog" aria-modal="true" aria-labelledby="cpxShTitle">
+                <div class="cpx-sh-head">
+                    <span class="cpx-sh-grab"></span>
+                    <h3 id="cpxShTitle"><i class="fa-solid fa-wand-magic-sparkles"></i> add kwenye post</h3>
+                    <button type="button" class="cpx-sh-x" onclick="cpxSheetClose()" aria-label="close"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <div class="cpx-sh-body" id="cpxShBody">
+
+                    <!-- LINK -->
+                    <section class="cpx-sec" id="cpxSecLink" data-sec="link">
+                        <button type="button" class="cpx-sec-h" onclick="cpxSecToggle('link')">
+                            <span class="ic" style="background:#e0f2fe;color:#0369a1;"><i class="fa-solid fa-link"></i></span>
+                            <span class="tt">Link<small id="cpxSumLink">nothing_yet</small></span>
+                            <i class="fa-solid fa-chevron-down chev"></i>
+                        </button>
+                        <div class="cpx-sec-b">
+                            <div class="cpx-link" id="cpxLinkPanel">
+                                <label class="cpx-lbl" for="cpxLinkLabel">button_label</label>
+                                <input type="text" name="link_label" id="cpxLinkLabel" maxlength="30" placeholder="Mfano: Tembelea duka letu" autocomplete="off" oninput="cpxLinkPreview()">
+                                <label class="cpx-lbl" for="cpxLinkUrl">Link</label>
+                                <input type="text" name="link_url" id="cpxLinkUrl" maxlength="500" inputmode="url" placeholder="https://kijiji.co.tz" autocomplete="off" oninput="cpxLinkPreview()">
+                                <div class="cpx-link-hint" id="cpxLinkHint">Watu wataona kitufe tu, link inabaki imefichwa nyuma yake.</div>
+                                <div class="cpx-link-prev" id="cpxLinkPrev"></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- WIMBO -->
+                    <section class="cpx-sec" id="cpxSecMusic" data-sec="music">
+                        <button type="button" class="cpx-sec-h" onclick="cpxSecToggle('music')">
+                            <span class="ic" style="background:#dcfce7;color:#15803d;"><i class="fa-solid fa-music"></i></span>
+                            <span class="tt">Wimbo<small id="cpxSumMusic">nothing_yet</small></span>
+                            <i class="fa-solid fa-chevron-down chev"></i>
+                        </button>
+                        <div class="cpx-sec-b">
+                            <div class="cpx-chip" id="cpxMusicChip">
+                                <img id="cpxChipImg" src="" alt="">
+                                <div class="t"><span id="cpxChipTitle"></span><small id="cpxChipArtist"></small></div>
+                                <button type="button" onclick="cpxMusicClear()" title="Ondoa wimbo"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                            <div class="cpx-music" id="cpxMusicPanel">
+                                <div class="cpx-prov" id="cpxProv">
+                                    <button type="button" class="cpx-prov-btn on" data-p="itunes" onclick="cpxMusicProvider('itunes')" title="music (iTunes)" aria-label="iTunes"><i class="fa-solid fa-music"></i><span class="pl">iTunes</span></button>
+                                    <button type="button" class="cpx-prov-btn jam" data-p="jamendo" onclick="cpxMusicProvider('jamendo')" title="Jamendo: muziki wa bure" aria-label="Jamendo"><i class="fa-solid fa-music note"></i><span class="pl">Jamendo</span><span class="plus"><i class="fa-solid fa-plus"></i></span></button>
+                                    <button type="button" class="cpx-prov-btn dutoza" data-p="dutoza" onclick="cpxMusicProvider('dutoza')" title="Dutoza Music" aria-label="Dutoza"><i class="fa-solid fa-compact-disc"></i><span class="pl">Dutoza</span></button>
+                                </div>
+                                <input type="search" id="cpxMusicQ" placeholder="search wimbo au msanii…" oninput="cpxMusicSearch(this.value)" autocomplete="off" enterkeyhint="search">
+                                <div class="cpx-msug-label" id="cpxMusicSugLabel" style="display:none;">Mapendekezo</div>
+                                <div class="cpx-mres" id="cpxMusicRes"><div class="cpx-mmsg">Inapakia mapendekezo…</div></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- QUOTE -->
+                    <section class="cpx-sec" id="cpxSecQuote" data-sec="quote">
+                        <button type="button" class="cpx-sec-h" onclick="cpxSecToggle('quote')">
+                            <span class="ic" style="background:#e0e7ff;color:#4338ca;"><i class="fa-solid fa-quote-left"></i></span>
+                            <span class="tt">Quote<small id="cpxSumQuote">nothing_yet</small></span>
+                            <i class="fa-solid fa-chevron-down chev"></i>
+                        </button>
+                        <div class="cpx-sec-b">
+                            <div class="cpx-qsel" id="cpxQSel" hidden>
+                                <span class="mark">&#10077;</span>
+                                <div class="qtxt" id="cpxQSelText"></div>
+                                <button type="button" onclick="cpxQuoteRemove()" title="Ondoa quote"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                            <div class="cpx-quotes" id="cpxQuotesPanel">
+                                <input type="search" id="cpxQuotesQ" placeholder="search quote, msanii au category…" oninput="cpxQuotesSearch(this.value)" autocomplete="off" enterkeyhint="search">
+                                <div class="cpx-cats" id="cpxQuoteCats"></div>
+                                <div class="cpx-msug-label" id="cpxQuotesSugLabel" style="display:none;">Quotes</div>
+                                <div class="cpx-qres" id="cpxQuotesRes"><div class="cpx-mmsg">Inapakia quotes…</div></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- RANGI -->
+                    <section class="cpx-sec" id="cpxSecBg" data-sec="bg">
+                        <button type="button" class="cpx-sec-h" onclick="cpxSecToggle('bg')">
+                            <span class="ic" style="background:#fce7f3;color:#be185d;"><i class="fa-solid fa-palette"></i></span>
+                            <span class="tt">Rangi ya background<small id="cpxSumBg">nothing_yet</small></span>
+                            <i class="fa-solid fa-chevron-down chev"></i>
+                        </button>
+                        <div class="cpx-sec-b">
+                            <div class="cpx-sec-note">Kwa post ya maandishi tu (herufi 150 au chini).</div>
+                            <div class="cpx-palette" id="cpxPalette"></div>
+                        </div>
+                    </section>
+
+                    <!-- FONT -->
+                    <section class="cpx-sec" id="cpxSecFont" data-sec="font">
+                        <button type="button" class="cpx-sec-h" onclick="cpxSecToggle('font')">
+                            <span class="ic" style="background:#f1f5f9;color:#334155;"><i class="fa-solid fa-font"></i></span>
+                            <span class="tt">Font ya maandishi<small id="cpxSumFont">Default</small></span>
+                            <i class="fa-solid fa-chevron-down chev"></i>
+                        </button>
+                        <div class="cpx-sec-b">
+                            <div class="cpx-font-panel" id="cpxFontPanel">
+                                <button type="button" class="cpx-font-sw on" data-font="" onclick="cpxPickFont('')">Default</button>
+                                <button type="button" class="cpx-font-sw" data-font="serif" onclick="cpxPickFont('serif')" style="font-family:Georgia,'Times New Roman',serif;">Serif</button>
+                                <button type="button" class="cpx-font-sw" data-font="mono" onclick="cpxPickFont('mono')" style="font-family:'Courier New',Consolas,monospace;">Mono</button>
+                                <button type="button" class="cpx-font-sw" data-font="rounded" onclick="cpxPickFont('rounded')" style="font-family:system-ui,-apple-system,sans-serif;">Rounded</button>
+                                <button type="button" class="cpx-font-sw" data-font="bold" onclick="cpxPickFont('bold')" style="font-weight:800;">Bold</button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="cpx-sh-foot">
+                    <button type="button" class="cpx-sh-clear" onclick="cpxSheetClearAll()"><i class="fa-regular fa-trash-can"></i> delete vyote</button>
+                    <button type="button" class="cpx-sh-ok" onclick="cpxSheetClose()"><i class="fa-solid fa-check"></i> Sawa</button>
+                </div>
+            </div>
+        </div>
+
+<script src="/static/category_picker.js"></script>
+<script>
+    // ===== Background za rangi (post ya maandishi) =====
+    var CPX_BG_MAX = 150;   // herufi za juu kwa post yenye background
+    window.CPX_BG_MAX = CPX_BG_MAX;
+    var CPX_BGS = ['g1','g2','g3','g4','g5','g6','g7','g8','g9','g10','g11','g12','g13','g14','g15','g16'];
+    var CPX_FLORAL = ['g9','g10','g11','g12','g13','g14','g15','g16'];
+    var CPX_BG_CSS = {
+        g1:'linear-gradient(135deg,#1EB53A,#00A3DD)', g2:'linear-gradient(135deg,#7F00FF,#E100FF)',
+        g3:'linear-gradient(135deg,#f12711,#f5af19)', g4:'linear-gradient(135deg,#232526,#414345)',
+        g5:'linear-gradient(135deg,#ff0844,#ff7a59)', g6:'linear-gradient(135deg,#0f2027,#2c5364)',
+        g7:'#111111', g8:'linear-gradient(135deg,#11998e,#2bc66b)'
+    };
+    function cpxPaletteBuild() {
+        var box = document.getElementById('cpxPalette');
+        if (!box || box.children.length) return;
+        var none = document.createElement('button');
+        none.type = 'button'; none.className = 'cpx-sw cpx-sw-none on'; none.dataset.id = '';
+        none.innerHTML = '<i class="fa-solid fa-ban"></i>';
+        none.onclick = function () { cpxPickBg(''); };
+        box.appendChild(none);
+        CPX_BGS.forEach(function (id) {
+            var b = document.createElement('button');
+            b.type = 'button'; b.className = 'cpx-sw bgt-' + id + (CPX_FLORAL.indexOf(id) > -1 ? ' fl' : ''); b.dataset.id = id;
+            if (CPX_BG_CSS[id]) b.style.background = CPX_BG_CSS[id];
+            b.onclick = function () { cpxPickBg(id); };
+            box.appendChild(b);
+        });
+    }
+    function cpxPaletteToggle() {
+        cpxPaletteBuild();
+        document.getElementById('cpxPalette').classList.toggle('show');
+    }
+    function cpxPickBg(id) {
+        var wrap = document.querySelector('#draftForm .cpx-hashtag-wrap');
+        if (!wrap) return;
+        var ta = wrap.querySelector('textarea');
+        if (id && ta && ta.value.length > CPX_BG_MAX) {
+            var msg = 'Post yenye background inaruhusu herufi ' + CPX_BG_MAX + ' tu. Punguza maandishi kwanza.';
+            if (typeof showToast === 'function') showToast(msg, 'error'); else alert(msg);
+            return;
+        }
+        CPX_BGS.forEach(function (x) { wrap.classList.remove('bgt-' + x); });
+        wrap.classList.toggle('bgt', !!id);
+        if (id) wrap.classList.add('bgt-' + id);
+        document.getElementById('cpxBgStyle').value = id || '';
+        document.querySelectorAll('#cpxPalette .cpx-sw').forEach(function (b) {
+            b.classList.toggle('on', b.dataset.id === (id || ''));
+        });
+        if (ta) { if (id) ta.maxLength = CPX_BG_MAX; else ta.maxLength = 5000; }
+        cpxApplyTone(wrap);
+        cpxBgUpdate();
+        if (typeof cpxSync === 'function') cpxSync();
+        if (typeof cpxSheetRefresh === 'function') cpxSheetRefresh();
+    }
+
+    // Rangi ya maandishi inachaguliwa automatic kulingana na background (nyeusi ↔ nyeupe)
+    function cpxRgbList(str) {
+        var out = [], re = /rgba?\(\s*([\d.]+)[ ,]+([\d.]+)[ ,]+([\d.]+)/g, m;
+        while ((m = re.exec(str || ''))) out.push([+m[1], +m[2], +m[3]]);
+        return out;
+    }
+    function cpxLum(c) {
+        var a = c.map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+        return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+    }
+    function cpxRatio(l1, l2) { var hi = Math.max(l1, l2), lo = Math.min(l1, l2); return (hi + 0.05) / (lo + 0.05); }
+    function cpxApplyTone(wrap) {
+        wrap.style.removeProperty('--bgt-fg');
+        wrap.style.removeProperty('--bgt-shadow');
+        if (!wrap.classList.contains('bgt')) return;
+        var cs = getComputedStyle(wrap);
+        var cols = cpxRgbList(cs.backgroundImage);
+        if (!cols.length) cols = cpxRgbList(cs.backgroundColor);
+        if (!cols.length) return;
+        var lums = cols.map(cpxLum), dark = cpxLum([15, 23, 42]);
+        var w = Math.min.apply(null, lums.map(function (l) { return cpxRatio(1, l); }));
+        var d = Math.min.apply(null, lums.map(function (l) { return cpxRatio(dark, l); }));
+        var white = (w >= 3 || w >= d * 0.8);
+        wrap.style.setProperty('--bgt-fg', white ? '#ffffff' : '#0f172a');
+        wrap.style.setProperty('--bgt-shadow', white ? '0 2px 14px rgba(0,0,0,.28)' : '0 1px 0 rgba(255,255,255,.35)');
+    }
+    // Ukubwa wa herufi + kihesabu (herufi 150 tu)
+    function cpxBgUpdate() {
+        var wrap = document.querySelector('#draftForm .cpx-hashtag-wrap');
+        var ta = wrap && wrap.querySelector('textarea');
+        if (!wrap || !ta) return;
+        var n = ta.value.length;
+        ['bgt-l1', 'bgt-l2', 'bgt-l3', 'bgt-l4'].forEach(function (x) { wrap.classList.remove(x); });
+        if (wrap.classList.contains('bgt')) wrap.classList.add(n <= 40 ? 'bgt-l1' : n <= 80 ? 'bgt-l2' : n <= 120 ? 'bgt-l3' : 'bgt-l4');
+        var cnt = document.getElementById('cpxBgCount');
+        if (cnt) { cnt.textContent = n + '/' + CPX_BG_MAX; cnt.classList.toggle('warn', n >= CPX_BG_MAX - 15); }
+    }
+    function cpxPaletteReset() {
+        cpxPickBg('');
+        var p = document.getElementById('cpxPalette');
+        if (p) p.classList.remove('show');
+    }
+
+    // ===== Font ya maandishi =====
+    function cpxFontToggle() {
+        var p = document.getElementById('cpxFontPanel');
+        if (p) p.classList.toggle('show');
+    }
+    function cpxPickFont(id) {
+        var hid = document.getElementById('cpxFontStyle');
+        if (hid) hid.value = id || '';
+        var ta = document.querySelector('#draftForm textarea[name="content"]');
+        if (ta) {
+            ta.classList.remove('font-serif', 'font-mono', 'font-rounded', 'font-bold');
+            if (id) ta.classList.add('font-' + id);
+        }
+        document.querySelectorAll('#cpxFontPanel .cpx-font-sw').forEach(function (b) {
+            b.classList.toggle('on', (b.getAttribute('data-font') || '') === (id || ''));
+        });
+        if (typeof cpxSheetRefresh === 'function') cpxSheetRefresh();
+    }
+
+    // ===== music: mapendekezo + tafuta mtandaoni, sikiliza kidogo, chagua =====
+    var cpxMTimer = null, cpxPrev = new Audio(), cpxPrevBtn = null;
+    var cpxSugCache = null; // cache ya mapendekezo
+    var cpxSugLoading = false;
+    var cpxProv = 'itunes';      // 'itunes' | 'jamendo' | 'dutoza'
+    var cpxJamCache = null;      // cache ya mapendekezo ya Jamendo
+    var cpxDutozaCache = null;   // cache ya mapendekezo ya Dutoza
+    var cpxQuotesCache = null;
+    var cpxQTimer = null;
+
+    function cpxMusicProvider(p) {
+        if (p === cpxProv) return;
+        cpxProv = p;
+        cpxPrevStop();
+        document.querySelectorAll('#cpxProv .cpx-prov-btn').forEach(function (b) {
+            b.classList.toggle('on', b.getAttribute('data-p') === p);
+        });
+        var q = (document.getElementById('cpxMusicQ').value || '').trim();
+        if (q.length >= (p === 'dutoza' ? 1 : 2)) cpxMusicSearch(q); else cpxMusicLoadSuggestions();
+    }
+
+    function cpxJamSuggestions() {
+        if (cpxJamCache && cpxJamCache.length) {
+            cpxMusicSugLabel(true, '🇹🇿 Jamendo');
+            cpxMusicRender(cpxJamCache, true);
+            return;
+        }
+        cpxMusicSugLabel(true, '🇹🇿 Jamendo');
+        cpxMusicMsg('Inapakia mapendekezo…');
+        fetch('/api/music/jamendo/suggestions?limit=12', { credentials: 'same-origin' })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (cpxProv !== 'jamendo') return;
+                var items = (d && d.items) || [];
+                if (items.length) cpxJamCache = items;
+                if (!items.length) {
+                    cpxMusicSugLabel(false);
+                    cpxMusicMsg((d && d.error) ? 'Jamendo haipatikani sasa.' : 'search_song_name');
+                    return;
+                }
+                cpxMusicRender(items, true);
+            })
+            .catch(function () {
+                if (cpxProv !== 'jamendo') return;
+                cpxMusicSugLabel(false);
+                cpxMusicMsg('Tatizo la mtandao. Jaribu tena.');
+            });
+    }
+
+    function cpxDutozaSuggestions() {
+        if (cpxDutozaCache && cpxDutozaCache.length) {
+            cpxMusicSugLabel(true, '🎵 Dutoza');
+            cpxMusicRender(cpxDutozaCache, true);
+            return;
+        }
+        cpxMusicSugLabel(true, '🎵 Dutoza');
+        cpxMusicMsg('Inapakia muziki wa Dutoza…');
+        fetch('/api/music/dutoza/suggestions?limit=12', { credentials: 'same-origin' })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (cpxProv !== 'dutoza') return;
+                var items = (d && d.items) || [];
+                if (items.length) cpxDutozaCache = items;
+                if (!items.length) {
+                    cpxMusicSugLabel(false);
+                    cpxMusicMsg((d && d.error) ? 'Dutoza API haipatikani. Weka DUTOZA_API_KEY.' : 'Hakuna nyimbo bado. search au ongeza kwenye admin.');
+                    return;
+                }
+                cpxMusicRender(items, true);
+            })
+            .catch(function () {
+                if (cpxProv !== 'dutoza') return;
+                cpxMusicSugLabel(false);
+                cpxMusicMsg('Tatizo la mtandao. Jaribu tena.');
+            });
+    }
+
+    function cpxMusicSugLabel(show, text) {
+        var el = document.getElementById('cpxMusicSugLabel');
+        if (!el) return;
+        if (show) {
+            el.style.display = 'block';
+            if (text) el.textContent = text;
+        } else {
+            el.style.display = 'none';
+        }
+    }
+
+    function cpxMusicToggle() {
+        var p = document.getElementById('cpxMusicPanel');
+        var quotes = document.getElementById('cpxQuotesPanel');
+        var link = document.getElementById('cpxLinkPanel');
+        if (quotes) quotes.classList.remove('show');
+        if (link) link.classList.remove('show');
+        p.classList.toggle('show');
+        if (p.classList.contains('show')) {
+            document.getElementById('cpxMusicQ').focus();
+            var q = (document.getElementById('cpxMusicQ').value || '').trim();
+            if (q.length < 2) cpxMusicLoadSuggestions();
+        } else {
+            cpxPrevStop();
+        }
+    }
+    function cpxPrevStop() {
+        cpxPrev.pause();
+        if (cpxPrevBtn) cpxPrevBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+        cpxPrevBtn = null;
+    }
+    function cpxMusicMsg(t) {
+        var r = document.getElementById('cpxMusicRes');
+        r.innerHTML = '';
+        var d = document.createElement('div'); d.className = 'cpx-mmsg'; d.textContent = t;
+        r.appendChild(d);
+    }
+
+    /** Pakia mapendekezo ya muziki (trending / popular) */
+    function cpxMusicLoadSuggestions() {
+        if (cpxProv === 'jamendo') { cpxJamSuggestions(); return; }
+        if (cpxProv === 'dutoza') { cpxDutozaSuggestions(); return; }
+        if (cpxSugCache && cpxSugCache.length) {
+            cpxMusicSugLabel(true, 'Mapendekezo');
+            cpxMusicRender(cpxSugCache, true);
+            return;
+        }
+        if (cpxSugLoading) return;
+        cpxSugLoading = true;
+        cpxMusicSugLabel(true, 'Mapendekezo');
+        cpxMusicMsg('Inapakia mapendekezo…');
+
+        // Jaribu endpoint ya suggestions; ikishindikana → search ya maneno maarufu
+        function apply(items) {
+            cpxSugLoading = false;
+            items = items || [];
+            if (items.length) {
+                cpxSugCache = items;
+                cpxMusicSugLabel(true, 'Mapendekezo');
+                cpxMusicRender(items, true);
+            } else {
+                cpxMusicSugLabel(false);
+                cpxMusicMsg('search_song_name');
+            }
+        }
+        function fail() {
+            // Fallback: tafuta maneno maarufu (TZ / Bongo / Afro)
+            var seeds = ['bongo', 'diamond', 'harmo', 'wasafi', 'afrobeat', 'amapiano'];
+            var seed = seeds[Math.floor(Math.random() * seeds.length)];
+            fetch('/api/music/search?q=' + encodeURIComponent(seed), { credentials: 'same-origin' })
+                .then(function (r) { return r.json(); })
+                .then(function (d) { apply((d && d.items) || []); })
+                .catch(function () {
+                    cpxSugLoading = false;
+                    cpxMusicSugLabel(false);
+                    cpxMusicMsg('search_song_name');
+                });
+        }
+
+        fetch('/api/music/suggestions?limit=12', { credentials: 'same-origin' })
+            .then(function (r) {
+                if (!r.ok) throw new Error('no-sug');
+                return r.json();
+            })
+            .then(function (d) {
+                var items = (d && (d.items || d.results || d.tracks)) || [];
+                if (!items.length) throw new Error('empty');
+                apply(items);
+            })
+            .catch(fail);
+    }
+
+    function cpxMusicSearch(q) {
+        clearTimeout(cpxMTimer);
+        q = (q || '').trim();
+        // Dutoza: herufi moja inatosha. Wengine: angalau 2.
+        if (q.length < (cpxProv === 'dutoza' ? 1 : 2)) {
+            // Rudi kwenye mapendekezo
+            cpxMusicLoadSuggestions();
+            return;
+        }
+        cpxMusicSugLabel(true, 'Matokeo');
+        cpxMusicMsg('Inatafuta…');
+        var prov = cpxProv;
+        var searchUrl;
+        if (prov === 'jamendo') searchUrl = '/api/music/jamendo/search?q=';
+        else if (prov === 'dutoza') searchUrl = '/api/music/dutoza/search?q=';
+        else searchUrl = '/api/music/search?q=';
+        searchUrl += encodeURIComponent(q);
+        cpxMTimer = setTimeout(function () {
+            fetch(searchUrl, { credentials: 'same-origin' })
+                .then(function (r) { return r.json(); })
+                .then(function (d) {
+                    if (prov !== cpxProv) return;  // mtumiaji amebadilisha provider
+                    cpxMusicSugLabel(true, 'Matokeo');
+                    cpxMusicRender((d && d.items) || [], false);
+                })
+                .catch(function () {
+                    cpxMusicSugLabel(false);
+                    cpxMusicMsg('Tatizo la mtandao. Jaribu tena.');
+                });
+        }, 350);
+    }
+    function cpxMusicRender(items, isSuggestion) {
+        var r = document.getElementById('cpxMusicRes');
+        r.innerHTML = '';
+        if (!items.length) {
+            cpxMusicMsg(isSuggestion ? 'Hakuna mapendekezo sasa. search wimbo.' : 'Hakuna wimbo uliopatikana');
+            return;
+        }
+        items.forEach(function (it) {
+            var row = document.createElement('div');
+            row.className = 'cpx-mrow' + (isSuggestion ? ' is-sug' : '');
+            var img = document.createElement('img'); img.src = it.cover || ''; img.alt = '';
+            var t = document.createElement('div'); t.className = 't';
+            t.appendChild(document.createTextNode(it.title || it.name || 'Wimbo'));
+            var sm = document.createElement('small');
+            sm.textContent = it.artist || it.artist_name || '';
+            t.appendChild(sm);
+            var pv = document.createElement('button'); pv.type = 'button'; pv.className = 'pv';
+            pv.innerHTML = '<i class="fa-solid fa-play"></i>';
+            pv.onclick = function () {
+                if (cpxPrevBtn === pv) { cpxPrevStop(); return; }
+                cpxPrevStop();
+                cpxPrev.src = it.url || it.preview_url || it.audio || '';
+                cpxPrev.play().catch(function () {});
+                pv.innerHTML = '<i class="fa-solid fa-pause"></i>'; cpxPrevBtn = pv;
+            };
+            var pk = document.createElement('button'); pk.type = 'button'; pk.className = 'pick';
+            pk.innerHTML = '<i class="fa-solid fa-check"></i>'; pk.title = 'Chagua';
+            pk.onclick = function () {
+                cpxMusicPick({
+                    title: it.title || it.name || 'Wimbo',
+                    artist: it.artist || it.artist_name || '',
+                    url: it.url || it.preview_url || it.audio || '',
+                    cover: it.cover || it.cover_url || it.image || ''
+                });
+            };
+            row.appendChild(img); row.appendChild(t); row.appendChild(pv); row.appendChild(pk);
+            r.appendChild(row);
+        });
+    }
+    function cpxMusicPick(it) {
+        cpxPrevStop();
+        document.getElementById('cpxMusicTitle').value = it.title;
+        document.getElementById('cpxMusicArtist').value = it.artist;
+        document.getElementById('cpxMusicUrl').value = it.url;
+        document.getElementById('cpxMusicCover').value = it.cover || '';
+        document.getElementById('cpxChipImg').src = it.cover || '';
+        document.getElementById('cpxChipTitle').textContent = it.title;
+        document.getElementById('cpxChipArtist').textContent = it.artist;
+        document.getElementById('cpxMusicChip').classList.add('show');
+        if (typeof cpxSheetRefresh === 'function') cpxSheetRefresh();
+    }
+    function cpxMusicClear() {
+        ['cpxMusicTitle','cpxMusicArtist','cpxMusicUrl','cpxMusicCover'].forEach(function (id) {
+            document.getElementById(id).value = '';
+        });
+        document.getElementById('cpxMusicChip').classList.remove('show');
+        if (typeof cpxSheetRefresh === 'function') cpxSheetRefresh();
+    }
+
+    // ===== Quotes (Dutoza API): tafuta kwa herufi moja, kwa msanii, au kwa category nzima =====
+    var cpxQuoteLast = '';        // maandishi ya quote yaliyoingizwa kwenye post
+    var cpxQCat = '';             // category iliyochaguliwa
+    var cpxQCatsLoaded = false;
+    var cpxQReq = 0;
+
+    function cpxQuotesMsg(t) {
+        var r = document.getElementById('cpxQuotesRes');
+        if (!r) return;
+        r.innerHTML = '';
+        var d = document.createElement('div'); d.className = 'cpx-mmsg'; d.textContent = t;
+        r.appendChild(d);
+    }
+    function cpxQLabel(text) {
+        var label = document.getElementById('cpxQuotesSugLabel');
+        if (label) { label.style.display = text ? 'block' : 'none'; if (text) label.textContent = text; }
+    }
+
+    function cpxQuotesLoad() {
+        cpxQCat = ''; cpxQuotesCatMark();
+        if (cpxQuotesCache && cpxQuotesCache.length) {
+            cpxQLabel('Quotes · Dutoza');
+            cpxQuotesRender(cpxQuotesCache);
+            return;
+        }
+        cpxQuotesMsg('Inapakia quotes…');
+        cpxQLabel('Quotes · Dutoza');
+        var my = ++cpxQReq;
+        fetch('/api/quotes/dutoza?limit=30', { credentials: 'same-origin' })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (my !== cpxQReq) return;
+                var items = (d && d.items) || [];
+                if (items.length) cpxQuotesCache = items;
+                if (!items.length) {
+                    cpxQuotesMsg((d && d.error) ? 'Dutoza API haipatikani. Weka DUTOZA_API_KEY.' : 'Hakuna quotes bado.');
+                    return;
+                }
+                cpxQuotesRender(items);
+            })
+            .catch(function () { if (my === cpxQReq) cpxQuotesMsg('Tatizo la mtandao. Jaribu tena.'); });
+    }
+
+    function cpxQuotesCats() {
+        if (cpxQCatsLoaded) return;
+        cpxQCatsLoaded = true;
+        fetch('/api/quotes/dutoza/categories', { credentials: 'same-origin' })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                var box = document.getElementById('cpxQuoteCats');
+                var items = (d && d.items) || [];
+                if (!box || !items.length) { cpxQCatsLoaded = !!items.length; return; }
+                box.innerHTML = '';
+                items.forEach(function (c) {
+                    var b = document.createElement('button');
+                    b.type = 'button'; b.className = 'cpx-cat'; b.setAttribute('data-c', c.category);
+                    b.appendChild(document.createTextNode(c.category));
+                    var sm = document.createElement('small'); sm.textContent = c.count; b.appendChild(sm);
+                    b.onclick = function () { cpxQuotesPickCat(c.category); };
+                    box.appendChild(b);
+                });
+            })
+            .catch(function () { cpxQCatsLoaded = false; });
+    }
+    function cpxQuotesCatMark() {
+        document.querySelectorAll('#cpxQuoteCats .cpx-cat').forEach(function (b) {
+            b.classList.toggle('on', !!cpxQCat && b.getAttribute('data-c') === cpxQCat);
+        });
+    }
+    function cpxQuotesPickCat(cat) {
+        var inp = document.getElementById('cpxQuotesQ');
+        if (cpxQCat === cat) { cpxQCat = ''; if (inp) inp.value = ''; cpxQuotesCatMark(); cpxQuotesLoad(); return; }
+        cpxQCat = cat;
+        if (inp) inp.value = '';
+        cpxQuotesCatMark();
+        cpxQuotesFetch('', cat);
+    }
+
+    function cpxQuotesFetch(q, cat) {
+        cpxQLabel(cat ? ('Category: ' + cat) : 'Matokeo');
+        cpxQuotesMsg('Inatafuta…');
+        var url = '/api/quotes/dutoza?limit=100' + (q ? '&q=' + encodeURIComponent(q) : '') + (cat ? '&category=' + encodeURIComponent(cat) : '');
+        var my = ++cpxQReq;
+        fetch(url, { credentials: 'same-origin' })
+            .then(function (r) { return r.json(); })
+            .then(function (d) { if (my === cpxQReq) cpxQuotesRender((d && d.items) || []); })
+            .catch(function () { if (my === cpxQReq) cpxQuotesMsg('Tatizo la mtandao. Jaribu tena.'); });
+    }
+
+    function cpxQuotesSearch(q) {
+        clearTimeout(cpxQTimer);
+        q = (q || '').trim();
+        if (q) { cpxQCat = ''; cpxQuotesCatMark(); }
+        if (!q) { cpxQuotesLoad(); return; }          // herufi moja inatosha
+        cpxQuotesMsg('Inatafuta…');
+        cpxQTimer = setTimeout(function () { cpxQuotesFetch(q, ''); }, 280);
+    }
+
+    function cpxQuotesRender(items) {
+        var r = document.getElementById('cpxQuotesRes');
+        if (!r) return;
+        r.innerHTML = '';
+        if (!items.length) {
+            cpxQuotesMsg('Hakuna quote iliyopatikana');
+            return;
+        }
+        items.forEach(function (it) {
+            var row = document.createElement('div');
+            row.className = 'cpx-qrow';
+            var qt = document.createElement('div'); qt.className = 'qt';
+            qt.textContent = it.text || '';
+            var qa = document.createElement('span'); qa.className = 'qa';
+            qa.textContent = '— ' + (it.author || 'Unknown');
+            row.appendChild(qt);
+            row.appendChild(qa);
+            if (it.category) {
+                var qc = document.createElement('span'); qc.className = 'qc';
+                qc.textContent = it.category;
+                row.appendChild(qc);
+            }
+            row.onclick = function () { cpxQuotePick(it); };
+            r.appendChild(row);
+        });
+    }
+
+    function cpxQuoteBody(it) {
+        var text = (it.text || '').trim();
+        var author = (it.author || '').trim();
+        return '❝ ' + text + ' ❞' + (author ? ('\n— ' + author) : '');
+    }
+    function cpxQuoteTA() {
+        return document.querySelector('#draftForm textarea[name="content"]') || document.querySelector('textarea');
+    }
+    function cpxQuoteRemove(silent) {
+        var ta = cpxQuoteTA();
+        if (ta && cpxQuoteLast && ta.value.indexOf(cpxQuoteLast) > -1) {
+            ta.value = ta.value.replace(cpxQuoteLast, '').replace(/\n{3,}/g, '\n\n').replace(/^\s+|\s+$/g, '');
+            try { ta.dispatchEvent(new Event('input', { bubbles: true })); } catch (e) {}
+        }
+        cpxQuoteLast = '';
+        if (!silent && typeof cpxSheetRefresh === 'function') cpxSheetRefresh();
+    }
+    function cpxQuotePick(it) {
+        var text = (it.text || '').trim();
+        if (!text) return;
+        var ta = cpxQuoteTA();
+        if (!ta) return;
+        cpxQuoteRemove(true);                          // quote mpya inachukua nafasi ya ya zamani
+        var body = cpxQuoteBody(it);
+        var cur = (ta.value || '').trim();
+        ta.value = cur ? (cur + '\n\n' + body) : body;
+        cpxQuoteLast = body;
+        try { ta.dispatchEvent(new Event('input', { bubbles: true })); } catch (e) {}
+        if (typeof cpxSheetRefresh === 'function') cpxSheetRefresh();
+        if (typeof showToast === 'function') showToast('Quote imeongezwa kwenye post', 'success');
+    }
+
+    // ===== FOMU MOJA (sheet): fungua/funga, sehemu, muhtasari =====
+    var cpxSecLoaded = {};
+    function cpxSheetOpen() {
+        var ov = document.getElementById('cpxSheetOv');
+        if (!ov) return;
+        if (typeof cpxPaletteBuild === 'function') cpxPaletteBuild();
+        ov.hidden = false;
+        document.documentElement.classList.add('cpx-lock');
+        cpxSheetRefresh();
+        requestAnimationFrame(function () { requestAnimationFrame(function () { ov.classList.add('open'); }); });
+    }
+    function cpxSheetClose() {
+        var ov = document.getElementById('cpxSheetOv');
+        if (!ov) return;
+        try { cpxPrevStop(); } catch (e) {}
+        ov.classList.remove('open');
+        document.documentElement.classList.remove('cpx-lock');
+        setTimeout(function () { if (!ov.classList.contains('open')) ov.hidden = true; }, 260);
+        cpxSheetRefresh();
+    }
+    function cpxSecToggle(name) {
+        var secs = document.querySelectorAll('#cpxShBody .cpx-sec');
+        var target = document.querySelector('#cpxShBody .cpx-sec[data-sec="' + name + '"]');
+        if (!target) return;
+        var willOpen = !target.classList.contains('open');
+        secs.forEach(function (x) { x.classList.remove('open'); });
+        if (!willOpen) return;
+        target.classList.add('open');
+        if (!cpxSecLoaded[name]) {
+            cpxSecLoaded[name] = true;
+            if (name === 'music') cpxMusicLoadSuggestions();
+            if (name === 'quote') { cpxQuotesLoad(); cpxQuotesCats(); }
+        }
+        setTimeout(function () { try { target.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) {} }, 60);
+    }
+    function cpxSheetClearAll() {
+        try { cpxMusicClear(); } catch (e) {}
+        var l = document.getElementById('cpxLinkLabel'), u = document.getElementById('cpxLinkUrl');
+        if (l) l.value = ''; if (u) u.value = '';
+        try { cpxLinkPreview(); } catch (e) {}
+        cpxQuoteRemove(true);
+        try { cpxPickBg(''); } catch (e) {}
+        try { cpxPickFont(''); } catch (e) {}
+        cpxSheetRefresh();
+    }
+    function cpxSheetRefresh() {
+        function val(id) { var e = document.getElementById(id); return e ? (e.value || '').trim() : ''; }
+        function setSec(id, sumId, on, text) {
+            var sec = document.getElementById(id), sum = document.getElementById(sumId);
+            if (sec) sec.classList.toggle('has', !!on);
+            if (sum) sum.textContent = text;
+        }
+        var url = val('cpxLinkUrl'), label = val('cpxLinkLabel');
+        var linkOn = !!url;
+        var linkTxt = 'Hakuna';
+        if (linkOn) { linkTxt = (label ? label + ' · ' : '') + url.replace(/^https?:\/\//i, '').slice(0, 40); }
+        setSec('cpxSecLink', 'cpxSumLink', linkOn, linkTxt);
+
+        var mTitle = val('cpxMusicTitle'), mArtist = val('cpxMusicArtist');
+        var musicOn = !!val('cpxMusicUrl');
+        setSec('cpxSecMusic', 'cpxSumMusic', musicOn, musicOn ? (mTitle + (mArtist ? ' — ' + mArtist : '')) : 'Hakuna');
+
+        var ta = cpxQuoteTA();
+        if (cpxQuoteLast && (!ta || ta.value.indexOf(cpxQuoteLast) === -1)) cpxQuoteLast = '';   // mtu amefuta mwenyewe
+        var quoteOn = !!cpxQuoteLast;
+        setSec('cpxSecQuote', 'cpxSumQuote', quoteOn, quoteOn ? cpxQuoteLast.replace(/❝|❞/g, '').replace(/\s+/g, ' ').trim().slice(0, 50) + '…' : 'Hakuna');
+        var qsel = document.getElementById('cpxQSel');
+        if (qsel) {
+            qsel.hidden = !quoteOn;
+            var qt = document.getElementById('cpxQSelText');
+            if (qt) qt.textContent = quoteOn ? cpxQuoteLast.replace(/❝|❞/g, '').trim() : '';
+        }
+
+        var bg = val('cpxBgStyle');
+        setSec('cpxSecBg', 'cpxSumBg', !!bg, bg ? 'Imechaguliwa' : 'Hakuna');
+        var font = val('cpxFontStyle');
+        var fontNames = { serif: 'Serif', mono: 'Mono', rounded: 'Rounded', bold: 'Bold' };
+        setSec('cpxSecFont', 'cpxSumFont', !!font, font ? (fontNames[font] || font) : 'Default');
+
+        var items = [];
+        if (linkOn) items.push('fa-link');
+        if (musicOn) items.push('fa-music');
+        if (quoteOn) items.push('fa-quote-left');
+        if (bg) items.push('fa-palette');
+        if (font) items.push('fa-font');
+        var chip = document.getElementById('cpxContentChip'), icons = document.getElementById('cpxCChipIcons'), dot = document.getElementById('cpxMoreDot');
+        if (icons) icons.innerHTML = items.map(function (c) { return '<i class="fa-solid ' + c + '"></i>'; }).join('');
+        if (chip) chip.hidden = !items.length;
+        if (dot) dot.hidden = !items.length;
+        if (typeof drExtrasChanged === 'function') drExtrasChanged();
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        cpxSheetRefresh();
+        var ov = document.getElementById('cpxSheetOv');
+        if (ov) {
+            // Enter ndani ya sehemu za utafutaji isitume post
+            ov.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' && e.target && e.target.tagName === 'INPUT') e.preventDefault();
+                if (e.key === 'Escape') cpxSheetClose();
+            });
+        }
+        // Back ya simu ifunge fomu badala ya kutoka ukurasani
+        if (typeof window.wireOverlayBack === 'function') {
+            try { window.wireOverlayBack('cpxSheetOpen', 'cpxSheetClose'); } catch (e) {}
+        }
+    });
+
+// ===== Link: jina la kitufe + link iliyofichwa =====
+    function cpxLinkToggle() {
+        var p = document.getElementById('cpxLinkPanel');
+        p.classList.toggle('show');
+        document.getElementById('cpxLinkBtn').style.color = p.classList.contains('show') || document.getElementById('cpxLinkUrl').value ? '#1EB53A' : '';
+        if (p.classList.contains('show')) document.getElementById('cpxLinkLabel').focus();
+    }
+    function cpxLinkPreview() {
+        var label = document.getElementById('cpxLinkLabel').value.trim();
+        var raw = document.getElementById('cpxLinkUrl').value.trim();
+        var prev = document.getElementById('cpxLinkPrev'), hint = document.getElementById('cpxLinkHint');
+        var url = (window.lnkNormalize ? lnkNormalize(raw) : '');
+        if (!raw) { prev.innerHTML = ''; hint.textContent = 'Watu wataona kitufe tu, link inabaki imefichwa nyuma yake.'; hint.style.color = ''; return; }
+        if (!url) { prev.innerHTML = ''; hint.textContent = 'Link si sahihi. Mfano: https://kijiji.co.tz'; hint.style.color = '#dc3545'; return; }
+        hint.textContent = 'Hivi ndivyo kitufe kitakavyoonekana:'; hint.style.color = '#0d7a28';
+        prev.innerHTML = window.lnkBtnHtml ? lnkBtnHtml(label, url, false) : '';
+    }
+    (function () {
+        var _lp = cpxLinkPreview;
+        cpxLinkPreview = function () { _lp(); if (typeof cpxSheetRefresh === 'function') cpxSheetRefresh(); };
+    })();
+
+    // ===== Daraja kati ya sheet na Drafts =====
+    var drExtrasLast = '', drExtrasLoading = false;
+    function drExtrasSig() {
+        return ['cpxBgStyle', 'cpxFontStyle', 'cpxMusicUrl', 'cpxLinkUrl', 'cpxLinkLabel'].map(function (id) {
+            var e = document.getElementById(id); return e ? e.value : '';
+        }).join('|');
+    }
+    function drExtrasChanged() {
+        var sig = drExtrasSig();
+        if (sig === drExtrasLast) return;
+        drExtrasLast = sig;
+        if (!drExtrasLoading && typeof window.drOnExtrasChange === 'function') window.drOnExtrasChange();
+    }
+    function drExtrasReset() {
+        drExtrasLoading = true;
+        try {
+            try { cpxMusicClear(); } catch (e) {}
+            var l = document.getElementById('cpxLinkLabel'), u = document.getElementById('cpxLinkUrl');
+            if (l) l.value = ''; if (u) u.value = '';
+            try { cpxLinkPreview(); } catch (e) {}
+            cpxQuoteLast = '';
+            try { cpxPickBg(''); } catch (e) {}
+            try { cpxPickFont(''); } catch (e) {}
+            cpxSheetRefresh();
+        } finally { drExtrasLoading = false; drExtrasLast = drExtrasSig(); }
+    }
+    function drExtrasLoad(d) {
+        drExtrasReset();
+        drExtrasLoading = true;
+        try {
+            d = d || {};
+            var l = document.getElementById('cpxLinkLabel'), u = document.getElementById('cpxLinkUrl');
+            if (l) l.value = d.link_label || ''; if (u) u.value = d.link_url || '';
+            try { cpxLinkPreview(); } catch (e) {}
+            if (d.music_url) {
+                cpxMusicPick({ title: d.music_title || '', artist: d.music_artist || '', url: d.music_url, cover: d.music_cover || '' });
+            }
+            if (d.bg_style) cpxPickBg(d.bg_style);
+            if (d.font_style) cpxPickFont(d.font_style);
+            cpxSheetRefresh();
+        } finally { drExtrasLoading = false; drExtrasLast = drExtrasSig(); }
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        // Sheet iwe juu ya ukurasa mzima (nje ya fomu/kadi iliyo na transform); inputs zake bado zinatumwa na fomu
+        var ov = document.getElementById('cpxSheetOv');
+        if (ov) {
+            ov.querySelectorAll('input[name]').forEach(function (i) { i.setAttribute('form', 'draftForm'); });
+            document.body.appendChild(ov);
+        }
+        var ta = document.getElementById('content');
+        if (ta) ta.addEventListener('input', function () { try { cpxBgUpdate(); } catch (e) {} });
+    });
+
+</script>
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

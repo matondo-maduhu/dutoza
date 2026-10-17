@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>insights · DUTOZA</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* =====================================================================
+   INSIGHTS — mfumo wa muundo (tokens) + vipengele vyenye prefix in-
+   ===================================================================== */
+:root {
+  --in-green: #1EB53A;
+  --in-green-d: #0f8a2a;
+  --in-green-soft: #e8f7ec;
+  --in-blue: #0284c7;
+  --in-blue-soft: #e0f2fe;
+  --in-amber: #d97706;
+  --in-amber-soft: #fff4d6;
+  --in-red: #dc2626;
+  --in-red-soft: #fdecec;
+  --in-purple: #7c3aed;
+  --in-purple-soft: #efe8fd;
+  --in-pink: #db2777;
+  --in-pink-soft: #fde7f1;
+
+  --in-bg: #f0f4f1;
+  --in-card: #ffffff;
+  --in-text: #0f1a12;
+  --in-muted: #65727a;
+  --in-line: #e3eae5;
+  --in-chip: #eaf0ec;
+  --in-field: #f5f8f6;
+  --in-glass: rgba(255, 255, 255, .92);
+
+  --in-s1: 4px; --in-s2: 8px; --in-s3: 12px; --in-s4: 16px; --in-s5: 24px;
+  --in-r-sm: 10px; --in-r-md: 14px; --in-r-lg: 20px;
+  --in-shadow: 0 2px 10px rgba(16, 60, 30, .07);
+  --in-shadow-2: 0 14px 36px rgba(16, 60, 30, .16);
+
+  --in-fs-xs: .72rem; --in-fs-sm: .82rem; --in-fs-md: .94rem; --in-fs-lg: 1.1rem;
+  --in-col: 1100px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --in-green-soft: #15351f; --in-blue-soft: #10344a; --in-amber: #fbbf24; --in-amber-soft: #3a2c0c;
+    --in-red: #f87171; --in-red-soft: #3b1618; --in-purple: #a78bfa; --in-purple-soft: #2a2145;
+    --in-pink: #f472b6; --in-pink-soft: #3a1830; --in-blue: #38bdf8;
+    --in-bg: #0f1419; --in-card: #1a2332; --in-text: #f1f5f9; --in-muted: #94a3b8; --in-line: #2b3a4f;
+    --in-chip: #243044; --in-field: #121a27; --in-glass: rgba(15, 20, 25, .92);
+    --in-shadow: 0 2px 10px rgba(0, 0, 0, .35); --in-shadow-2: 0 14px 36px rgba(0, 0, 0, .55);
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--in-bg); color: var(--in-text); min-height: 100vh; line-height: 1.45;
+  padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+}
+a { color: inherit; text-decoration: none; }
+button, select, input { font-family: inherit; font-size: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid color-mix(in srgb, var(--in-green) 55%, transparent); outline-offset: 2px; }
+
+/* ---------- header ---------- */
+.in-top {
+  position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: var(--in-s3);
+  padding: var(--in-s3) max(var(--in-s4), calc((100% - var(--in-col)) / 2 + var(--in-s3)));
+  padding-top: calc(var(--in-s3) + env(safe-area-inset-top, 0px));
+  background: var(--in-glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--in-line);
+}
+.in-iconbtn {
+  width: 40px; height: 40px; flex-shrink: 0; border: none; border-radius: 50%; background: var(--in-chip);
+  display: inline-flex; align-items: center; justify-content: center; font-size: 15px; color: var(--in-text);
+}
+.in-top h1 { flex: 1; min-width: 0; font-size: var(--in-fs-lg); font-weight: 800; letter-spacing: -.2px; display: flex; align-items: center; gap: var(--in-s2); }
+.in-top h1 i { color: var(--in-green); font-size: 16px; }
+
+/* ---------- layout ---------- */
+.in-wrap { max-width: var(--in-col); margin: 0 auto; padding: var(--in-s4) 14px; display: flex; flex-direction: column; gap: var(--in-s4); }
+.in-grid { display: flex; flex-direction: column; gap: var(--in-s4); }
+.in-cols { display: contents; }
+.in-sec { display: flex; flex-direction: column; min-width: 0; }
+.in-sec-title {
+  display: flex; align-items: center; gap: var(--in-s2); margin: 0 2px var(--in-s2);
+  font-size: var(--in-fs-xs); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--in-muted);
+}
+.in-sec-title i { color: var(--in-green); font-size: 13px; }
+.in-card { background: var(--in-card); border: 1px solid var(--in-line); border-radius: var(--in-r-lg); box-shadow: var(--in-shadow); padding: var(--in-s4); min-width: 0; }
+.in-muted { color: var(--in-muted); font-size: var(--in-fs-sm); }
+.in-empty { text-align: center; padding: var(--in-s5) var(--in-s4); color: var(--in-muted); font-size: var(--in-fs-md); }
+.in-empty i { display: block; font-size: 34px; margin-bottom: var(--in-s2); opacity: .45; }
+
+/* ---------- buttons ---------- */
+.in-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 0 16px;
+  border: none; border-radius: var(--in-r-sm); font-weight: 700; font-size: var(--in-fs-sm); transition: transform .12s;
+}
+.in-btn:active { transform: scale(.97); }
+.in-btn-primary { background: linear-gradient(135deg, var(--in-green), #12a04c); color: #fff; box-shadow: 0 6px 14px rgba(30, 181, 58, .28); }
+.in-btn-ghost { background: var(--in-chip); color: var(--in-text); }
+.in-btn-light { background: rgba(255, 255, 255, .22); color: #fff; border: 1px solid rgba(255, 255, 255, .4); }
+
+/* ---------- status strip ---------- */
+.in-status { display: flex; align-items: center; gap: var(--in-s3); padding: var(--in-s3) var(--in-s4); border-radius: var(--in-r-lg); border: 1px solid; }
+.in-status.ok { background: var(--in-green-soft); border-color: color-mix(in srgb, var(--in-green) 35%, transparent); }
+.in-status.bad { background: var(--in-red-soft); border-color: color-mix(in srgb, var(--in-red) 35%, transparent); }
+.in-status .ico { width: 38px; height: 38px; flex-shrink: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; }
+.in-status.ok .ico { background: var(--in-green); }
+.in-status.bad .ico { background: #dc2626; }
+.in-status strong { display: block; font-size: var(--in-fs-md); }
+.in-status.ok strong { color: var(--in-green-d); }
+.in-status.bad strong { color: var(--in-red); }
+.in-status p { margin-top: 2px; font-size: var(--in-fs-xs); line-height: 1.5; color: var(--in-muted); }
+.in-newf { display: flex; align-items: center; gap: var(--in-s3); padding: var(--in-s3) var(--in-s4); font-size: var(--in-fs-sm); }
+.in-newf i { color: var(--in-blue); font-size: 16px; }
+
+/* ---------- period (chips) ---------- */
+.in-period { display: flex; flex-direction: column; align-items: stretch; gap: var(--in-s2); }
+.in-period-label { display: flex; align-items: center; gap: 6px; flex-shrink: 0; font-size: var(--in-fs-sm); font-weight: 800; color: var(--in-muted); }
+.in-period-label i { color: var(--in-green); }
+.in-seg { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; padding: 2px; }
+.in-seg::-webkit-scrollbar { display: none; }
+.in-seg button {
+  flex-shrink: 0; min-height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--in-line);
+  background: var(--in-card); font-weight: 700; font-size: var(--in-fs-sm); color: var(--in-muted);
+}
+.in-seg button.active { background: var(--in-green); border-color: var(--in-green); color: #fff; }
+
+/* ---------- hero: engagement ---------- */
+.in-hero {
+  position: relative; overflow: hidden; border-radius: var(--in-r-lg); color: #fff; padding: var(--in-s5) var(--in-s4);
+  background: linear-gradient(135deg, #0c8f2c 0%, #1EB53A 45%, #00A3DD 100%); box-shadow: 0 12px 28px rgba(0, 140, 90, .28);
+  display: flex; align-items: center; gap: var(--in-s4); flex-wrap: wrap;
+}
+.in-hero::before, .in-hero::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; background: rgba(255, 255, 255, .1); }
+.in-hero::before { width: 200px; height: 200px; top: -80px; right: -50px; }
+.in-hero::after { width: 130px; height: 130px; bottom: -60px; left: -30px; background: rgba(252, 209, 22, .16); }
+.in-hero > * { position: relative; z-index: 1; }
+.in-hero-ico { width: 56px; height: 56px; flex-shrink: 0; border-radius: 18px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, .2); border: 1px solid rgba(255, 255, 255, .35); font-size: 22px; }
+.in-hero-body { flex: 1; min-width: 180px; }
+.in-hero-body .lbl { font-size: var(--in-fs-sm); font-weight: 700; opacity: .92; }
+.in-hero-body .rate { font-size: 2.6rem; font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin: 2px 0; }
+.in-hero-body .fx { font-size: var(--in-fs-xs); opacity: .9; }
+
+/* ---------- KPI ---------- */
+.in-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--in-s2); }
+.in-kpi { background: var(--in-card); border: 1px solid var(--in-line); border-radius: var(--in-r-md); padding: var(--in-s3); box-shadow: var(--in-shadow); min-width: 0; }
+.in-kpi .top { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 6px; }
+.in-kpi .lbl { max-width: 100%; }
+.in-kpi .ico { width: 32px; height: 32px; flex-shrink: 0; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.in-kpi .lbl { font-size: var(--in-fs-xs); font-weight: 700; color: var(--in-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.in-kpi b { display: block; font-size: 1.45rem; font-weight: 800; letter-spacing: -.5px; line-height: 1.1; }
+.in-delta { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; padding: 2px 8px; border-radius: 999px; font-size: var(--in-fs-xs); font-weight: 800; }
+.in-delta::before { font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 9px; }
+.in-delta.up { background: var(--in-green-soft); color: var(--in-green-d); }
+.in-delta.up::before { content: "\f062"; }
+.in-delta.down { background: var(--in-red-soft); color: var(--in-red); }
+.in-delta.down::before { content: "\f063"; }
+.in-delta.flat { background: var(--in-chip); color: var(--in-muted); }
+.in-delta.flat::before { content: "\f068"; }
+@media (prefers-color-scheme: dark) { .in-delta.up { color: #4ade80; } }
+.t-green { background: var(--in-green-soft); color: var(--in-green-d); }
+.t-pink { background: var(--in-pink-soft); color: var(--in-pink); }
+.t-blue { background: var(--in-blue-soft); color: var(--in-blue); }
+.t-purple { background: var(--in-purple-soft); color: var(--in-purple); }
+.t-amber { background: var(--in-amber-soft); color: var(--in-amber); }
+.t-slate { background: var(--in-chip); color: var(--in-muted); }
+
+/* ---------- fold (sehemu zinazofunguka) ---------- */
+.in-fold { padding: 0; overflow: hidden; }
+.in-fold-head { width: 100%; display: flex; align-items: center; gap: var(--in-s3); padding: var(--in-s4); border: none; background: transparent; text-align: left; min-height: 64px; }
+.in-fold-head .ico { width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.in-fold-title { flex: 1; min-width: 0; }
+.in-fold-title strong { display: block; font-size: var(--in-fs-md); font-weight: 800; }
+.in-fold-title span { display: block; margin-top: 2px; font-size: var(--in-fs-xs); color: var(--in-muted); }
+.in-fold-chev { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--in-chip); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--in-muted); transition: transform .25s; }
+.in-fold.open .in-fold-chev { transform: rotate(180deg); }
+.in-fold-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
+.in-fold.open .in-fold-body { grid-template-rows: 1fr; }
+.in-fold-inner { overflow: hidden; min-height: 0; }
+.in-fold-pad { padding: 0 var(--in-s4) var(--in-s4); border-top: 1px solid var(--in-line); padding-top: var(--in-s4); }
+.in-fold:not(.open) .in-fold-inner { visibility: hidden; }
+
+/* ---------- tips ---------- */
+.in-tip { display: flex; gap: var(--in-s3); align-items: flex-start; padding: var(--in-s3); border-radius: var(--in-r-md); background: var(--in-amber-soft); font-size: var(--in-fs-sm); line-height: 1.55; }
+.in-tip + .in-tip { margin-top: var(--in-s2); }
+.in-tip i { color: var(--in-amber); margin-top: 3px; flex-shrink: 0; }
+
+/* ---------- chati ya siku ---------- */
+.in-chart-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--in-s3); flex-wrap: wrap; margin-bottom: var(--in-s3); }
+.in-chart-head .tt { font-weight: 800; font-size: var(--in-fs-md); }
+.in-chart-head .ss { font-size: var(--in-fs-xs); color: var(--in-muted); margin-top: 2px; }
+.in-legend { display: flex; gap: var(--in-s3); font-size: var(--in-fs-xs); font-weight: 700; color: var(--in-muted); }
+.in-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.in-legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.dot-likes { background: var(--in-pink); }
+.dot-views { background: var(--in-blue); }
+.in-daily-sum { display: grid; grid-template-columns: 1fr 1fr; gap: var(--in-s2); margin-bottom: var(--in-s4); }
+.in-daily-sum .box { padding: var(--in-s3); border-radius: var(--in-r-md); background: var(--in-field); border: 1px solid var(--in-line); text-align: center; }
+.in-daily-sum b { display: block; font-size: 1.4rem; font-weight: 800; letter-spacing: -.5px; }
+.in-daily-sum span { font-size: var(--in-fs-xs); color: var(--in-muted); font-weight: 600; }
+.in-readout { min-height: 22px; margin-bottom: 6px; font-size: var(--in-fs-xs); font-weight: 700; color: var(--in-muted); }
+.in-readout b { color: var(--in-text); }
+.in-chart { display: flex; gap: 6px; }
+.in-yaxis { width: 30px; flex-shrink: 0; height: 170px; display: flex; flex-direction: column; justify-content: space-between; text-align: right; font-size: 10px; font-weight: 700; color: var(--in-muted); line-height: 1; }
+.in-chart-scroll { flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: thin; }
+.in-chart-inner { min-width: calc(var(--n, 30) * 13px); }
+.in-chart-area {
+  position: relative; height: 170px; display: flex; align-items: flex-end; gap: 3px; padding: 0 2px;
+  background:
+    linear-gradient(var(--in-line), var(--in-line)) 0 0 / 100% 1px no-repeat,
+    linear-gradient(var(--in-line), var(--in-line)) 0 50% / 100% 1px no-repeat,
+    linear-gradient(var(--in-line), var(--in-line)) 0 100% / 100% 1px no-repeat;
+}
+.in-col { flex: 1; min-width: 0; height: 100%; display: flex; align-items: flex-end; justify-content: center; gap: 2px; border-radius: 6px; cursor: pointer; border: none; background: transparent; padding: 0; }
+.in-col:hover, .in-col.sel { background: color-mix(in srgb, var(--in-green) 10%, transparent); }
+.in-bar { width: 42%; max-width: 12px; border-radius: 4px 4px 0 0; min-height: 3px; }
+.in-bar.likes { background: var(--in-pink); }
+.in-bar.views { background: var(--in-blue); }
+.in-xlabels { display: flex; gap: 3px; padding: 6px 2px 0; }
+.in-xlabels span { flex: 1; min-width: 0; text-align: center; font-size: 9.5px; font-weight: 700; color: var(--in-muted); white-space: nowrap; overflow: visible; }
+.in-records { margin-top: var(--in-s4); max-height: 300px; overflow-y: auto; border: 1px solid var(--in-line); border-radius: var(--in-r-md); }
+.in-record { display: flex; align-items: center; justify-content: space-between; gap: var(--in-s3); padding: 10px var(--in-s3); border-bottom: 1px solid var(--in-line); }
+.in-record:last-child { border-bottom: none; }
+.in-record .dt { font-weight: 800; font-size: var(--in-fs-sm); }
+.in-record .vals { display: flex; gap: var(--in-s4); }
+.in-mini { text-align: center; min-width: 46px; }
+.in-mini b { display: block; font-size: var(--in-fs-md); font-weight: 800; }
+.in-mini span { font-size: 10px; color: var(--in-muted); font-weight: 600; }
+
+/* ---------- saa bora ---------- */
+.in-pills { display: flex; flex-wrap: wrap; gap: var(--in-s2); margin-bottom: var(--in-s3); }
+.in-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: var(--in-amber-soft); color: var(--in-amber); font-size: var(--in-fs-xs); font-weight: 800; }
+.in-hours { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.in-hour { padding: 8px 4px; border-radius: var(--in-r-sm); text-align: center; background: color-mix(in srgb, var(--in-green) calc(var(--lv, 0) * 78%), var(--in-chip)); color: var(--in-text); }
+.in-hour strong { display: block; font-size: var(--in-fs-xs); font-weight: 800; }
+.in-hour small { display: block; font-size: 10px; font-weight: 600; opacity: .85; }
+.in-hour.hi { color: #fff; }
+.in-hour.best { outline: 2px solid var(--in-amber); outline-offset: -2px; }
+
+/* ---------- siku za wiki, media, categories ---------- */
+.in-row { display: grid; grid-template-columns: 82px minmax(0, 1fr) 40px; align-items: center; gap: var(--in-s3); padding: 7px 0; }
+.in-row .nm { font-size: var(--in-fs-sm); font-weight: 700; }
+.in-track { height: 10px; border-radius: 999px; background: var(--in-chip); overflow: hidden; }
+.in-track i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--in-green), var(--in-blue)); }
+.in-row .vl { text-align: right; font-size: var(--in-fs-sm); font-weight: 800; }
+.in-item { display: flex; align-items: center; justify-content: space-between; gap: var(--in-s3); padding: var(--in-s3) 0; border-bottom: 1px solid var(--in-line); }
+.in-item:last-child { border-bottom: none; padding-bottom: 0; }
+.in-item:first-child { padding-top: 0; }
+.in-item .left { display: flex; align-items: center; gap: var(--in-s3); min-width: 0; }
+.in-item .ico { width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.in-item .nm { font-weight: 800; font-size: var(--in-fs-md); overflow-wrap: anywhere; }
+.in-item .sb { font-size: var(--in-fs-xs); color: var(--in-muted); }
+.in-item .right { font-size: var(--in-fs-sm); font-weight: 700; white-space: nowrap; }
+.in-cat { padding: var(--in-s3) 0; border-bottom: 1px solid var(--in-line); }
+.in-cat:last-child { border-bottom: none; padding-bottom: 0; }
+.in-cat:first-child { padding-top: 0; }
+.in-cat .hd { display: flex; align-items: baseline; justify-content: space-between; gap: var(--in-s3); margin-bottom: 6px; }
+.in-cat strong { overflow-wrap: anywhere; }
+
+/* ---------- hashtags ---------- */
+.in-tags { display: flex; flex-wrap: wrap; gap: var(--in-s2); }
+.in-tag { padding: 8px 14px; border-radius: 999px; background: var(--in-blue-soft); color: var(--in-blue); font-weight: 700; font-size: var(--in-fs-sm); overflow-wrap: anywhere; }
+
+/* ---------- malengo ---------- */
+.in-goal + .in-goal { margin-top: var(--in-s4); }
+.in-goal label { display: block; margin-bottom: 6px; font-size: var(--in-fs-sm); font-weight: 700; color: var(--in-muted); }
+.in-goal input { width: 100%; min-height: 44px; padding: 0 12px; border-radius: var(--in-r-sm); border: 1px solid var(--in-line); background: var(--in-field); }
+.in-goal input:focus { outline: none; border-color: var(--in-green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--in-green) 20%, transparent); }
+.in-progress { height: 12px; margin-top: var(--in-s3); border-radius: 999px; background: var(--in-chip); overflow: hidden; }
+.in-progress i { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, var(--in-green), var(--in-blue)); transition: width .5s ease; }
+.in-goal .tx { margin-top: 6px; min-height: 1.2em; }
+.in-actions { display: flex; gap: var(--in-s2); margin-top: var(--in-s4); }
+.in-actions .in-btn { flex: 1; }
+
+/* ---------- posts ---------- */
+.in-post { display: block; padding: var(--in-s3); border: 1px solid var(--in-line); border-radius: var(--in-r-md); background: var(--in-field); }
+.in-post + .in-post { margin-top: var(--in-s3); }
+.in-post:hover { border-color: color-mix(in srgb, var(--in-green) 50%, var(--in-line)); }
+.in-post-top { display: flex; align-items: center; gap: var(--in-s2); flex-wrap: wrap; margin-bottom: var(--in-s2); }
+.in-rank { width: 26px; height: 26px; border-radius: 50%; background: var(--in-green); color: #fff; font-size: var(--in-fs-xs); font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.in-badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: var(--in-fs-xs); font-weight: 800; background: var(--in-blue-soft); color: var(--in-blue); }
+.in-post-meta { font-size: var(--in-fs-xs); color: var(--in-muted); }
+.in-preview { position: relative; margin-bottom: var(--in-s2); border-radius: var(--in-r-sm); overflow: hidden; background: #000; }
+.in-preview img, .in-preview video { display: block; width: 100%; max-height: 220px; object-fit: cover; }
+.in-vlabel { position: absolute; top: 8px; left: 8px; z-index: 1; display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: rgba(0, 0, 0, .65); color: #fff; font-size: var(--in-fs-xs); font-weight: 700; pointer-events: none; }
+.in-post-body { font-size: var(--in-fs-md); line-height: 1.5; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: var(--in-s3); }
+.in-pm { display: grid; grid-template-columns: repeat(auto-fit, minmax(74px, 1fr)); gap: 6px; }
+.in-pm div { padding: 8px 4px; border-radius: var(--in-r-sm); background: var(--in-card); border: 1px solid var(--in-line); text-align: center; min-width: 0; }
+.in-pm b { display: block; font-size: var(--in-fs-md); font-weight: 800; }
+.in-pm span { display: block; font-size: 10px; color: var(--in-muted); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.in-score { display: flex; align-items: center; justify-content: space-between; margin-top: var(--in-s3); padding: 9px var(--in-s3); border-radius: var(--in-r-sm); background: var(--in-green-soft); color: var(--in-green-d); font-size: var(--in-fs-sm); font-weight: 700; }
+.in-score strong { font-size: var(--in-fs-md); font-weight: 800; }
+.in-score.low { background: var(--in-red-soft); color: var(--in-red); }
+@media (prefers-color-scheme: dark) { .in-score:not(.low) { color: #4ade80; } }
+
+/* ---------- watu ---------- */
+.in-people { display: grid; grid-template-columns: 1fr; gap: var(--in-s2); }
+.in-person { display: flex; align-items: center; gap: var(--in-s3); padding: var(--in-s3); border-radius: var(--in-r-md); background: var(--in-field); border: 1px solid var(--in-line); min-width: 0; }
+.in-person img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: var(--in-chip); }
+.in-person .info { flex: 1; min-width: 0; }
+.in-person strong { display: block; font-size: var(--in-fs-md); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.in-person .info span { font-size: var(--in-fs-xs); color: var(--in-muted); }
+.in-pscore { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; background: var(--in-amber-soft); color: var(--in-amber); font-size: var(--in-fs-sm); font-weight: 800; flex-shrink: 0; }
+
+.in-refresh { display: flex; justify-content: center; margin-top: var(--in-s2); }
+
+/* ---------- ukubwa wa skrini ---------- */
+@media (min-width: 560px) {
+  .in-period { flex-direction: row; align-items: center; gap: var(--in-s3); }
+  .in-kpi .top { flex-direction: row; align-items: center; gap: var(--in-s2); }
+  .in-kpi { padding: var(--in-s4); }
+  .in-people { grid-template-columns: 1fr 1fr; }
+  .in-hours { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+@media (min-width: 1000px) {
+  .in-grid { flex-direction: row; align-items: flex-start; gap: var(--in-s5); }
+  .in-cols { display: flex; flex-direction: column; gap: var(--in-s4); min-width: 0; }
+  .in-col-a { flex: 1.55; }
+  .in-col-b { flex: 1; }
+  .in-people { grid-template-columns: 1fr; }
+  .in-hours { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 380px) {
+  .in-hero-body .rate { font-size: 2.2rem; }
+  .in-row { grid-template-columns: 70px minmax(0, 1fr) 36px; }
+  .in-record .vals { gap: var(--in-s3); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="in-top">
+  <a class="in-iconbtn" href="#" aria-label="Back">
+    <i class="fa-solid fa-arrow-left"></i>
+  </a>
+  <h1><i class="fa-solid fa-chart-line"></i> insights</h1>
+  <button type="button" class="in-iconbtn" id="exportBtn" title="Export CSV" aria-label="Export CSV">
+    <i class="fa-solid fa-download"></i>
+  </button>
+</header>
+
+<main class="in-wrap">
+
+
+<!-- ===== KIJIJI MODE: RECOMMENDABLE STATUS ===== -->
+<div class="in-status ">
+  <div class="ico">
+    <i class="fa-solid fa-circle-checkfa-triangle-exclamation"></i>
+  </div>
+  <div>
+    
+      <strong>Profile yako ni Recommendable</strong>
+      <p>Hauna warning — unaweza kupendekezwa kwa watumiaji wengine kwenye Explore na Home.</p>
+    
+      <strong>Your profile is on risk</strong>
+      <p>Profile yako ina warning — kwa sasa haiwezi kupendekezwa kwa watumiaji wengine mpaka warning iondolewe.</p>
+    
+  </div>
+</div>
+
+
+<div class="in-card in-newf">
+  <i class="fa-solid fa-user-plus"></i>
+  <span><strong></strong> followers wamekufuata moja kwa moja kupitia posts zako.</span>
+</div>
+
+
+<!-- ===== PERIOD ===== -->
+<div class="in-period">
+  <div class="in-period-label"><i class="fa-solid fa-calendar-days"></i> Kipindi cha takwimu</div>
+  <div class="in-seg" id="periodSeg" role="group" aria-label="Chagua kipindi">
+    <button type="button" data-p="1"   class=""  aria-pressed="">Leo</button>
+    <button type="button" data-p="7"   class=""  aria-pressed="">Siku 7 zilizopita</button>
+    <button type="button" data-p="30"  class="" aria-pressed="">Siku 30</button>
+    <button type="button" data-p="90"  class="" aria-pressed="">Miezi 3</button>
+    <button type="button" data-p="all" class="" aria-pressed="">Tangu mwanzo · Yote</button>
+  </div>
+</div>
+
+<!-- ===== ENGAGEMENT (hero) ===== -->
+<section class="in-hero" aria-label="engagement">
+  <div class="in-hero-ico"><i class="fa-solid fa-bolt"></i></div>
+  <div class="in-hero-body">
+    <div class="lbl">engagement rate · kipindi</div>
+    <div class="rate">%</div>
+    <div class="fx">likes + comments + shares + saves ÷ views</div>
+  </div>
+  <a class="in-btn in-btn-light" href="">
+    <i class="fa-solid fa-file-lines"></i> drafts_label
+  </a>
+</section>
+
+<!-- ===== MUHTASARI ===== -->
+<section class="in-sec" aria-labelledby="sumTitle">
+  <div class="in-sec-title" id="sumTitle"><i class="fa-solid fa-layer-group"></i> Muhtasari wa akaunti</div>
+  <div class="in-kpis">
+
+    <div class="in-kpi">
+      <div class="top"><div class="ico t-green"><i class="fa-solid fa-paper-plane"></i></div><span class="lbl">Posts</span></div>
+      <b></b>
+      <div class="in-delta ">%</div>
+    </div>
+
+    <div class="in-kpi">
+      <div class="top"><div class="ico t-pink"><i class="fa-solid fa-heart"></i></div><span class="lbl">likes</span></div>
+      <b></b>
+      <div class="in-delta ">%</div>
+    </div>
+
+    <div class="in-kpi">
+      <div class="top"><div class="ico t-blue"><i class="fa-solid fa-comment"></i></div><span class="lbl">Comments</span></div>
+      <b></b>
+    </div>
+
+    <div class="in-kpi">
+      <div class="top"><div class="ico t-purple"><i class="fa-solid fa-eye"></i></div><span class="lbl">Views</span></div>
+      <b></b>
+      <div class="in-delta ">%</div>
+    </div>
+
+    <div class="in-kpi">
+      <div class="top"><div class="ico t-green"><i class="fa-solid fa-share-nodes"></i></div><span class="lbl">Shares</span></div>
+      <b></b>
+    </div>
+
+    <div class="in-kpi">
+      <div class="top"><div class="ico t-amber"><i class="fa-solid fa-bookmark"></i></div><span class="lbl">Saves</span></div>
+      <b></b>
+    </div>
+
+    <div class="in-kpi">
+      <div class="top"><div class="ico t-green"><i class="fa-solid fa-user-plus"></i></div><span class="lbl">followers</span></div>
+      <b></b>
+    </div>
+
+    <div class="in-kpi">
+      <div class="top"><div class="ico t-slate"><i class="fa-solid fa-user-group"></i></div><span class="lbl">following</span></div>
+      <b></b>
+    </div>
+
+    <div class="in-kpi">
+      <div class="top"><div class="ico t-blue"><i class="fa-solid fa-bullseye"></i></div><span class="lbl">Reach</span></div>
+      <b></b>
+    </div>
+
+  </div>
+</section>
+
+<div class="in-grid">
+
+<!-- ================= SAFU A ================= -->
+<div class="in-cols in-col-a">
+
+<!-- ===== DAILY ENGAGEMENT ===== -->
+<section class="in-sec" style="order:3">
+  <div class="in-sec-title"><i class="fa-solid fa-chart-column"></i> engagement kwa siku</div>
+  <div class="in-card in-fold open">
+    <button class="in-fold-head" type="button" data-fold aria-expanded="true">
+      <div class="in-fold-title">
+        <strong>Views na likes kwa siku</strong>
+        <span>tap_open_graph</span>
+      </div>
+      <div class="in-fold-chev"><i class="fa-solid fa-chevron-down"></i></div>
+    </button>
+    <div class="in-fold-body"><div class="in-fold-inner"><div class="in-fold-pad">
+
+    
+
+      <div class="in-daily-sum">
+        <div class="box"><b></b><span>Views (kipindi)</span></div>
+        <div class="box"><b></b><span>likes (kipindi)</span></div>
+      </div>
+
+      
+      
+        
+        
+      
+
+      <div class="in-chart-head">
+        <div>
+          <div class="tt">Performance</div>
+          <div class="ss">Urefu wa bar unaonyesha kiwango cha activity</div>
+        </div>
+        <div class="in-legend">
+          <span><i class="dot-likes"></i> likes</span>
+          <span><i class="dot-views"></i> Views / viewers</span>
+        </div>
+      </div>
+
+      <div class="in-readout" id="dayReadout" aria-live="polite"></div>
+
+      <div class="in-chart">
+        <div class="in-yaxis" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span>0</span>
+        </div>
+        <div class="in-chart-scroll">
+          <div class="in-chart-inner" style="--n: ">
+            <div class="in-chart-area" id="dayChart">
+              
+                
+                
+                <button type="button" class="in-col" data-date="" data-likes="" data-views=""
+                        title=" · likes:  · Views: "
+                        aria-label=" · likes:  · Views: ">
+                  <span class="in-bar likes" style="height:%"></span>
+                  <span class="in-bar views" style="height:%"></span>
+                </button>
+              
+            </div>
+            <div class="in-xlabels" aria-hidden="true">
+              
+                <span></span>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="in-records">
+        
+        <div class="in-record">
+          <div class="dt"></div>
+          <div class="vals">
+            <div class="in-mini"><b></b><span>viewers</span></div>
+            <div class="in-mini"><b></b><span>likes</span></div>
+            <div class="in-mini"><b>%0%</b><span>Rate</span></div>
+          </div>
+        </div>
+        
+      </div>
+
+    
+      <div class="in-empty"><i class="fa-solid fa-chart-column"></i>no_daily_data_yet</div>
+    
+
+    </div></div></div>
+  </div>
+</section>
+
+<!-- ===== TOP POSTS ===== -->
+<section class="in-sec" style="order:11">
+  <div class="in-sec-title"><i class="fa-solid fa-trophy"></i> Post bora</div>
+  <div class="in-card in-fold open">
+    <button class="in-fold-head" type="button" data-fold aria-expanded="true">
+      <div class="in-fold-title">
+        <strong>Posts zilizofanya vizuri zaidi</strong>
+        <span>video au picha itaonekana moja kwa moja hapa</span>
+      </div>
+      <div class="in-fold-chev"><i class="fa-solid fa-chevron-down"></i></div>
+    </button>
+    <div class="in-fold-body"><div class="in-fold-inner"><div class="in-fold-pad">
+
+    
+      
+      
+      <a class="in-post" id="post-insight-" href="/post/">
+        <div class="in-post-top">
+          <span class="in-rank"></span>
+          <span class="in-badge">
+            <i class="fa-solid fa-video"></i> video
+            <i class="fa-solid fa-image"></i> Picha
+            <i class="fa-solid fa-file"></i> 
+          </span>
+          <span class="in-post-meta"> · </span>
+        </div>
+
+        
+        <div class="in-preview">
+          
+            <span class="in-vlabel"><i class="fa-solid fa-play"></i> video</span>
+            <video controls preload="metadata" playsinline>
+              <source src="/static/uploads/">
+            </video>
+          
+            <img src="/static/uploads/" alt="Post image" loading="lazy" data-hide-on-error>
+          
+        </div>
+        
+
+        <div class="in-post-body"></div>
+
+        <div class="in-pm">
+          <div><b></b><span>likes</span></div>
+          <div><b></b><span>Comments</span></div>
+          <div><b></b><span>viewers</span></div>
+          <div><b></b><span>followers wapya</span></div>
+          <div><b></b><span>Shares</span></div>
+          <div><b></b><span>Saves</span></div>
+          <div><b></b><span>engagement</span></div>
+        </div>
+
+        <div class="in-score">
+          <span><i class="fa-solid fa-chart-line"></i> Performance ya post</span>
+          <strong></strong>
+        </div>
+      </a>
+      
+    
+      <div class="in-empty"><i class="fa-solid fa-chart-line"></i>post post ili uone insights</div>
+    
+
+    </div></div></div>
+  </div>
+</section>
+
+<!-- ===== LOW ENGAGEMENT ===== -->
+
+<section class="in-sec" style="order:12">
+  <div class="in-sec-title"><i class="fa-solid fa-arrow-trend-down"></i> engagement ya chini</div>
+  <div class="in-card in-fold">
+    <button class="in-fold-head" type="button" data-fold aria-expanded="false">
+      <div class="in-fold-title">
+        <strong>Posts zinazohitaji attention</strong>
+        <span>Angalia views, likes na engagement ya kila post</span>
+      </div>
+      <div class="in-fold-chev"><i class="fa-solid fa-chevron-down"></i></div>
+    </button>
+    <div class="in-fold-body"><div class="in-fold-inner"><div class="in-fold-pad">
+
+    
+    
+    <a class="in-post" href="/post/">
+      <div class="in-post-top">
+        <span class="in-badge">
+          <i class="fa-solid fa-video"></i> video
+          <i class="fa-solid fa-image"></i> Picha
+          <i class="fa-solid fa-file"></i> 
+        </span>
+        <span class="in-post-meta"></span>
+      </div>
+
+      
+      <div class="in-preview">
+        
+          <span class="in-vlabel"><i class="fa-solid fa-play"></i> video</span>
+          <video controls preload="metadata" playsinline>
+            <source src="/static/uploads/">
+          </video>
+        
+          <img src="/static/uploads/" alt="Post image" loading="lazy" data-hide-on-error>
+        
+      </div>
+      
+
+      <div class="in-post-body"></div>
+
+      <div class="in-pm">
+        <div><b></b><span>likes</span></div>
+        <div><b></b><span>Comments</span></div>
+        <div><b></b><span>viewers</span></div>
+        <div><b></b><span>engagement</span></div>
+      </div>
+
+      <div class="in-score low">
+        <span><i class="fa-solid fa-arrow-trend-down"></i> engagement</span>
+        <strong></strong>
+      </div>
+    </a>
+    
+
+    </div></div></div>
+  </div>
+</section>
+
+
+<!-- ===== ACTIVE FOLLOWERS ===== -->
+<section class="in-sec" style="order:13">
+  <div class="in-sec-title"><i class="fa-solid fa-users"></i> Wafuasi active zaidi</div>
+  <div class="in-card in-fold">
+    <button class="in-fold-head" type="button" data-fold aria-expanded="false">
+      <div class="in-fold-title">
+        <strong>Wafuasi wanao-interact zaidi</strong>
+        <span>followers wenye engagement kubwa</span>
+      </div>
+      <div class="in-fold-chev"><i class="fa-solid fa-chevron-down"></i></div>
+    </button>
+    <div class="in-fold-body"><div class="in-fold-inner"><div class="in-fold-pad">
+
+    
+      <div class="in-people">
+      
+        <a class="in-person" href="/profile/">
+          <img src="/static/uploads//static/images/default-avatar.png.jfif" alt="" loading="lazy" data-avatar>
+          <div class="info">
+            <strong></strong>
+            <span>@</span>
+          </div>
+          <span class="in-pscore"><i class="fa-solid fa-bolt"></i> </span>
+        </a>
+      
+      </div>
+    
+      <div class="in-empty"><i class="fa-solid fa-users"></i>no_data_yet</div>
+    
+
+    </div></div></div>
+  </div>
+</section>
+
+</div><!-- /safu A -->
+
+<!-- ================= SAFU B ================= -->
+<div class="in-cols in-col-b">
+
+<!-- ===== TIPS ===== -->
+
+<section class="in-sec" style="order:2">
+  <div class="in-sec-title"><i class="fa-solid fa-lightbulb"></i> Tips</div>
+  <div class="in-card in-fold">
+    <button class="in-fold-head" type="button" data-fold aria-expanded="false">
+      <div class="ico t-amber"><i class="fa-solid fa-lightbulb"></i></div>
+      <div class="in-fold-title">
+        <strong>Tips za kuboresha performance</strong>
+        <span>tap_for_system_tips</span>
+      </div>
+      <div class="in-fold-chev"><i class="fa-solid fa-chevron-down"></i></div>
+    </button>
+    <div class="in-fold-body"><div class="in-fold-inner"><div class="in-fold-pad">
+      
+      <div class="in-tip"><i class="fa-solid fa-lightbulb"></i><span></span></div>
+      
+    </div></div></div>
+  </div>
+</section>
+
+
+<!-- ===== BEST HOURS ===== -->
+<section class="in-sec" style="order:4">
+  <div class="in-sec-title"><i class="fa-regular fa-clock"></i> Saa bora</div>
+  <div class="in-card in-fold open">
+    <button class="in-fold-head" type="button" data-fold aria-expanded="true">
+      <div class="in-fold-title">
+        <strong>Ni saa gani watu wanaangalia zaidi?</strong>
+        <span>Idadi halisi ya viewers kwa kila saa</span>
+      </div>
+      <div class="in-fold-chev"><i class="fa-solid fa-chevron-down"></i></div>
+    </button>
+    <div class="in-fold-body"><div class="in-fold-inner"><div class="in-fold-pad">
+
+      
+      <div class="in-pills">
+        
+        <div class="in-pill"><i class="fa-solid fa-star"></i> :00 ·  viewers</div>
+        
+      </div>
+      
+
+      
+      
+      
+      
+
+      <div class="in-hours">
+        
+          
+          
+          <div class="in-hour" style="--lv: ">
+            <strong>:00</strong>
+            <small> viewers</small>
+          </div>
+        
+      </div>
+
+    </div></div></div>
+  </div>
+</section>
+
+<!-- ===== WEEKDAYS ===== -->
+<section class="in-sec" style="order:5">
+  <div class="in-sec-title"><i class="fa-solid fa-calendar-week"></i> Siku za wiki</div>
+  <div class="in-card in-fold">
+    <button class="in-fold-head" type="button" data-fold aria-expanded="false">
+      <div class="in-fold-title">
+        <strong>Performance kwa siku za wiki</strong>
+        <span>Linganisha views za Jumatatu hadi Jumapili</span>
+      </div>
+      <div class="in-fold-chev"><i class="fa-solid fa-chevron-down"></i></div>
+    </button>
+    <div class="in-fold-body"><div class="in-fold-inner"><div class="in-fold-pad">
+
+    
+      
+      
+      
+      <div class="in-row">
+        <span class="nm"></span>
+        <div class="in-track"><i style="width:%"></i></div>
+        <span class="vl"></span>
+      </div>
+      
+    
+      <div class="in-empty"><i class="fa-solid fa-calendar-xmark"></i>no_data_yet</div>
+    
+
+    </div></div></div>
+  </div>
+</section>
+
+<!-- ===== MEDIA ===== -->
+<section class="in-sec" style="order:6">
+  <div class="in-sec-title"><i class="fa-solid fa-photo-film"></i> Aina ya media</div>
+  <div class="in-card in-fold">
+    <button class="in-fold-head" type="button" data-fold aria-expanded="false">
+      <div class="in-fold-title">
+        <strong>Content performance</strong>
+        <span>video, picha na aina nyingine za post</span>
+      </div>
+      <div class="in-fold-chev"><i class="fa-solid fa-chevron-down"></i></div>
+    </button>
+    <div class="in-fold-body"><div class="in-fold-inner"><div class="in-fold-pad">
+
+    
+      
+      
+      <div class="in-item">
+        <div class="left">
+          <div class="ico ">
+            <i class="fa-solid fa-video"></i>
+            <i class="fa-solid fa-image"></i>
+            <i class="fa-solid fa-file"></i>
+          </div>
+          <div>
+            <div class="nm"></div>
+            <div class="sb"> posts</div>
+          </div>
+        </div>
+        <div class="right">❤️  · 👁️ </div>
+      </div>
+      
+    
+      <div class="in-empty">post post ili uone breakdown</div>
+    
+
+    </div></div></div>
+  </div>
+</section>
+
+<!-- ===== CATEGORIES ===== -->
+
+<section class="in-sec" style="order:7">
+  <div class="in-sec-title"><i class="fa-solid fa-folder-open"></i> Categories</div>
+  <div class="in-card in-fold">
+    <button class="in-fold-head" type="button" data-fold aria-expanded="false">
+      <div class="in-fold-title">
+        <strong>Category performance</strong>
+        <span>Angalia category zinazofanya vizuri</span>
+      </div>
+      <div class="in-fold-chev"><i class="fa-solid fa-chevron-down"></i></div>
+    </button>
+    <div class="in-fold-body"><div class="in-fold-inner"><div class="in-fold-pad">
+      
+      
+      
+      <div class="in-cat">
+        <div class="hd">
+          <strong></strong>
+          <span class="in-muted"> posts ·  likes</span>
+        </div>
+        <div class="in-track"><i style="width:%"></i></div>
+      </div>
+      
+    </div></div></div>
+  </div>
+</section>
+
+
+<!-- ===== HASHTAGS ===== -->
+<section class="in-sec" style="order:8">
+  <div class="in-sec-title"><i class="fa-solid fa-hashtag"></i> Top hashtags</div>
+  <div class="in-card in-fold">
+    <button class="in-fold-head" type="button" data-fold aria-expanded="false">
+      <div class="in-fold-title">
+        <strong>Hashtags zinazotumika zaidi</strong>
+        <span>tap_open_full_list</span>
+      </div>
+      <div class="in-fold-chev"><i class="fa-solid fa-chevron-down"></i></div>
+    </button>
+    <div class="in-fold-body"><div class="in-fold-inner"><div class="in-fold-pad">
+    
+      <div class="in-tags">
+        
+        <a class="in-tag" href="/hashtag/"># · </a>
+        
+      </div>
+    
+      <div class="in-empty">Tumia #hashtags kwenye posts zako</div>
+    
+    </div></div></div>
+  </div>
+</section>
+
+<!-- ===== GOALS ===== -->
+<section class="in-sec" style="order:9">
+  <div class="in-sec-title"><i class="fa-solid fa-bullseye"></i> Malengo</div>
+  <div class="in-card in-fold">
+    <button class="in-fold-head" type="button" data-fold aria-expanded="false">
+      <div class="in-fold-title">
+        <strong>set_your_goals</strong>
+        <span>followers na posts</span>
+      </div>
+      <div class="in-fold-chev"><i class="fa-solid fa-chevron-down"></i></div>
+    </button>
+    <div class="in-fold-body"><div class="in-fold-inner"><div class="in-fold-pad">
+
+      <div class="in-goal">
+        <label for="goalFollowers">Lengo la followers</label>
+        <input type="number" id="goalFollowers" min="1" inputmode="numeric" placeholder="mf. 1000">
+        <div class="in-progress" id="goalProgFollowers"><i id="goalBarFollowers"></i></div>
+        <p class="in-muted tx" id="goalTextFollowers"></p>
+      </div>
+
+      <div class="in-goal">
+        <label for="goalPosts">Lengo la posts / mwezi</label>
+        <input type="number" id="goalPosts" min="1" inputmode="numeric" placeholder="mf. 20">
+        <div class="in-progress" id="goalProgPosts"><i id="goalBarPosts"></i></div>
+        <p class="in-muted tx" id="goalTextPosts"></p>
+      </div>
+
+      <div class="in-actions">
+        <button type="button" class="in-btn in-btn-primary" id="saveGoalsBtn">
+          <i class="fa-solid fa-floppy-disk"></i> save malengo
+        </button>
+      </div>
+
+    </div></div></div>
+  </div>
+</section>
+
+</div><!-- /safu B -->
+
+</div><!-- /in-grid -->
+
+<div class="in-refresh">
+  <button type="button" class="in-btn in-btn-ghost" id="refreshBtn"><i class="fa-solid fa-rotate"></i> Refresh</button>
+</div>
+
+</main>
+
+<script>
+const STATS = ;
+const FOLLOWERS = ;
+const POSTS_MONTH = ;
+const TXT = { likes:  };
+
+const $ = (id) => document.getElementById(id);
+
+/* ---------- kipindi ---------- */
+function changePeriod(value) {
+  if (!value) return;
+  const url = new URL(window.location.href);
+  url.searchParams.set('period', value);
+  window.location.href = url.toString();
+}
+document.querySelectorAll('#periodSeg button').forEach(b => {
+  b.addEventListener('click', () => { if (!b.classList.contains('active')) changePeriod(b.getAttribute('data-p')); });
+});
+(function () {
+  const act = document.querySelector('#periodSeg button.active');
+  if (act && act.scrollIntoView) act.scrollIntoView({ block: 'nearest', inline: 'center' });
+})();
+
+/* ---------- sehemu zinazofunguka ---------- */
+document.addEventListener('click', function (e) {
+  const head = e.target.closest('[data-fold]');
+  if (!head) return;
+  const card = head.closest('.in-fold');
+  if (!card) return;
+  const open = card.classList.toggle('open');
+  head.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+
+/* ---------- chati ya siku: gusa/hover kuona namba ---------- */
+(function () {
+  const chart = $('dayChart');
+  const out = $('dayReadout');
+  if (!chart || !out) return;
+  function show(col) {
+    chart.querySelectorAll('.in-col.sel').forEach(c => c.classList.remove('sel'));
+    col.classList.add('sel');
+    out.textContent = '';
+    const b = document.createElement('b');
+    b.textContent = col.getAttribute('data-date');
+    out.appendChild(b);
+    out.appendChild(document.createTextNode(' · ' + TXT.likes + ': ' + col.getAttribute('data-likes') + ' · Views: ' + col.getAttribute('data-views')));
+  }
+  chart.addEventListener('click', e => { const c = e.target.closest('.in-col'); if (c) show(c); });
+  chart.addEventListener('mouseover', e => { const c = e.target.closest('.in-col'); if (c) show(c); });
+  const cols = chart.querySelectorAll('.in-col');
+  if (cols.length) show(cols[cols.length - 1]);
+})();
+
+/* ---------- picha zinazoshindwa ---------- */
+document.addEventListener('error', function (e) {
+  const el = e.target;
+  if (!el || el.tagName !== 'IMG') return;
+  if (el.hasAttribute('data-hide-on-error') && el.parentElement) el.parentElement.style.display = 'none';
+  else if (el.hasAttribute('data-avatar') && !el.dataset.fb) { el.dataset.fb = '1'; el.src = '/static/images/default-avatar.png.jfif'; }
+}, true);
+
+/* ---------- malengo (huhifadhiwa kwenye kifaa hiki) ---------- */
+function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* hifadhi haipatikani */ } }
+
+function saveGoals() {
+  const f = parseInt($('goalFollowers').value, 10) || 0;
+  const p = parseInt($('goalPosts').value, 10) || 0;
+  lsSet('kijiji_goal_followers', String(f));
+  lsSet('kijiji_goal_posts', String(p));
+  renderGoals();
+}
+
+function setGoal(barId, textId, current, goal, doneText, emptyText) {
+  if (goal > 0) {
+    const pct = Math.min(100, Math.round((current / goal) * 100));
+    $(barId).style.width = pct + '%';
+    $(textId).textContent = current + ' / ' + goal + ' ' + doneText + ' (' + pct + '%)';
+  } else {
+    $(barId).style.width = '0%';
+    $(textId).textContent = emptyText;
+  }
+}
+
+function renderGoals() {
+  const gf = parseInt(lsGet('kijiji_goal_followers') || '0', 10) || 0;
+  const gp = parseInt(lsGet('kijiji_goal_posts') || '0', 10) || 0;
+  if (gf) $('goalFollowers').value = gf;
+  if (gp) $('goalPosts').value = gp;
+  setGoal('goalBarFollowers', 'goalTextFollowers', FOLLOWERS, gf, 'followers', 'Weka lengo la followers');
+  setGoal('goalBarPosts', 'goalTextPosts', POSTS_MONTH, gp, 'posts kipindi hiki', 'Weka lengo la posts');
+}
+
+/* ---------- export CSV ---------- */
+function csvCell(c) {
+  let v = String(c == null ? '' : c);
+  if (/^[=+\-@\t\r]/.test(v)) v = "'" + v;   // kinga dhidi ya formula injection kwenye Excel
+  return '"' + v.replace(/"/g, '""') + '"';
+}
+function exportCSV() {
+  const rows = [['metric', 'value']];
+  const s = STATS || {};
+  ['posts_count', 'likes_count', 'comments_count', 'views_count', 'views_total', 'shares_count', 'saves_count',
+   'followers', 'following', 'engagement_rate', 'posts_period', 'likes_period', 'views_period'].forEach(k => {
+    if (s[k] !== undefined) rows.push([k, s[k]]);
+  });
+  if (s.top_posts) {
+    rows.push([]);
+    rows.push(['post_id', 'likes', 'comments', 'views', 'engagement', 'content']);
+    s.top_posts.forEach(p => {
+      rows.push([p.id, p.likes_count, p.comments_count, p.views_count, p.engagement, (p.content || '').replace(/\n/g, ' ')]);
+    });
+  }
+  const csv = rows.map(r => r.map(csvCell).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'kijiji-insights.csv';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+$('exportBtn').addEventListener('click', exportCSV);
+$('saveGoalsBtn').addEventListener('click', saveGoals);
+$('refreshBtn').addEventListener('click', () => location.reload());
+
+renderGoals();
+</script>
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

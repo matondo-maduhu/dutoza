@@ -1,0 +1,40 @@
+
+
+<style>
+.community-wrap{max-width:800px;margin:auto;padding:16px 14px 30px}
+.community-wrap a{color:#1EB53A;text-decoration:none;font-weight:600}
+h1{color:#1EB53A;margin:12px 0 8px;font-size:22px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.tabs a{padding:10px 14px;background:#f1f5f2;border-radius:20px;font-size:13px;font-weight:600;color:#333;text-decoration:none}
+.tabs a:hover,.tabs a.active{background:#1EB53A;color:#fff}
+.info{background:#fff;border-radius:14px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.06);margin-top:10px}
+.info p{color:#555;font-size:14px;line-height:1.5;margin:0}
+</style>
+<div class="community-wrap">
+    <a href="/community">back_to_community</a>
+    <h1>🎓 Vyuo Vikuu / University</h1>
+    <div class="tabs">
+        <a href="/community/university/all" class="active">All</a>
+        <a href="/community/university/arts" class="active">Arts</a>
+        <a href="/community/university/sciences" class="active">Sciences</a>
+        <a href="/community/university/engineering" class="active">Engineering</a>
+        <a href="/community/university/business" class="active">business_company</a>
+        <a href="/community/university/ict" class="active">ICT</a>
+        <a href="/community/university/health" class="active">Health</a>
+        <a href="/community/university/law" class="active">Law</a>
+        <a href="/community/university/education" class="active">Education</a>
+    </div>
+    <div class="info">
+        <p>Sehemu ya wanafunzi na wasomi. Hapa mnaweza kujadili masomo, kushare notes, vitabu, video na materials. Sub-community: <strong></strong></p>
+        <p style="margin-top:12px"><a href="/community/find-group">🔎 search / unda group la chuo lako →</a></p>
+    </div>
+</div>
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

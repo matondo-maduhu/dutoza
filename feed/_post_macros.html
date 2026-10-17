@@ -1,0 +1,34 @@
+{# ===== Vipande vinavyotumika na kila sehemu inayoonyesha post (feed, post, LinkUp, profile, hashtag, explore) =====
+   Badilisha hapa mara moja na kila ukurasa unabadilika.
+   Matumizi:     #}
+
+
+< class=" bgt bgt- bgt-l bgt-sm font-"></>
+
+
+{# Kidisc cha muziki (si kwa video) + kitufe cha link #}
+{# noauto=true: kidisc hakianzi chenyewe (orodha ndogo kama explore/hashtag) #}
+
+
+<div class="post-music" data-noauto="1" style="margin:6px " data-src="" onclick="event.stopPropagation(); pxToggleMusic(this)" title="">
+    <div class="pm-disc"><img src="" alt="" loading="lazy"></div>
+    <div class="pm-marq"><span> &nbsp;•&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;•&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+</div>
+
+
+<div class="lnk-wrap-post" style="padding:4px  8px">
+    <button type="button" class="lnk-btn" data-url="" data-label="" onclick="event.stopPropagation(); openExternalLink(this)">
+        <i class="fa-solid fa-link"></i><span></span><i class="fa-solid fa-arrow-up-right-from-square ext"></i>
+    </button>
+</div>
+
+
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

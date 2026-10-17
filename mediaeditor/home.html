@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kihariri - DUTOZA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    html, body { margin: 0; padding: 0; }
+    body.mxp-body { background: #0b0e14; color: #fff; min-height: 100vh; font-family: -apple-system,'Segoe UI',Roboto,Arial,sans-serif; }
+    .mxp-wrap { max-width: 520px; margin: 0 auto; padding: 14px 16px calc(env(safe-area-inset-bottom,0px) + 28px); }
+    .mxp-top { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .mxp-back { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 18px; }
+    .mxp-title { font-size: 19px; font-weight: 800; flex: 1; }
+    .mxp-card { background: #141a24; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 22px 18px; text-align: center; }
+    .mxp-card p { margin: 8px 0 18px; color: rgba(255,255,255,.7); font-size: 14px; line-height: 1.45; }
+    .mxp-ic { width: 76px; height: 76px; border-radius: 24px; margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 34px; color: #fff; background: linear-gradient(145deg, var(--mxp-c1), var(--mxp-c2)); box-shadow: 0 8px 22px rgba(0,0,0,.35); }
+    .mxp-btn { display: block; width: 100%; border: none; border-radius: 16px; padding: 15px 18px; margin-top: 12px; font-size: 16px; font-weight: 800; color: #fff; cursor: pointer; text-decoration: none; text-align: center; font-family: inherit; box-sizing: border-box; }
+    .mxp-btn.go { background: linear-gradient(90deg, #00A3DD, #1EB53A); }
+    .mxp-btn.dl { background: linear-gradient(90deg, #1EB53A, #159447); }
+    .mxp-btn.again { background: #ff9f1c; color: #1a1200; }
+    .mxp-btn.ghost { background: rgba(255,255,255,.12); }
+    .mxp-result { display: none; }
+    .mxp-result.show { display: block; }
+    .mxp-preview { width: 100%; max-height: 62vh; border-radius: 16px; background: #000; display: block; object-fit: contain; }
+    .mxp-note { font-size: 12.5px; color: rgba(255,255,255,.6); margin-top: 12px; line-height: 1.4; }
+    .mxp-pick { display: grid; gap: 14px; }
+    .mxp-pick a { text-decoration: none; color: #fff; }
+    .mxp-pick .mxp-card { padding: 20px 16px; }
+    .mxp-pick h2 { margin: 6px 0 0; font-size: 18px; }
+</style>
+</head>
+<body class="mxp-body">
+    <div class="mxp-wrap">
+        <div class="mxp-top">
+            <a class="mxp-back" href="#"><i class="fa-solid fa-arrow-left"></i></a>
+            <div class="mxp-title">Kihariri cha Kijiji</div>
+        </div>
+        <div class="mxp-pick">
+            <a href="#">
+                <div class="mxp-card" style="--mxp-c1:#ff4d6d;--mxp-c2:#d81b60;">
+                    <div class="mxp-ic"><i class="fa-solid fa-film"></i></div>
+                    <h2>edit_video</h2>
+                    <p>Kata, maneno, rangi, muziki na sauti.</p>
+                </div>
+            </a>
+            <a href="#">
+                <div class="mxp-card" style="--mxp-c1:#00A3DD;--mxp-c2:#0077b6;">
+                    <div class="mxp-ic"><i class="fa-solid fa-image"></i></div>
+                    <h2>edit_photo</h2>
+                    <p>Kata, geuza, rangi, maneno na emoji.</p>
+                </div>
+            </a>
+            <a href="#">
+                <div class="mxp-card" style="--mxp-c1:#7c5cff;--mxp-c2:#4b2fd0;">
+                    <div class="mxp-ic"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <h2>Kihariri PRO MAX</h2>
+                    <p>Layers, maandishi, timeline, na export ya video yenye layers.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

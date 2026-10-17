@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Posts za Linkup</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f0f2f5;color:#0f172a;padding:16px;padding-bottom:40px}
+h1{font-size:20px;margin-bottom:6px;color:#1EB53A;display:flex;align-items:center;gap:8px}
+.sub{font-size:13px;color:#64748b;margin-bottom:16px}
+a.back{display:inline-block;margin-bottom:12px;color:#1EB53A;text-decoration:none;font-weight:600}
+.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.top .who{font-size:13px;color:#334155}
+.top .who strong{color:#0f172a}
+.pid{font-size:11px;color:#64748b;font-weight:700}
+.txt{font-size:14px;line-height:1.45;white-space:pre-wrap;word-break:break-word;margin-bottom:8px}
+.media{display:block;max-width:100%;max-height:260px;border-radius:10px;margin-bottom:8px;background:#000}
+.file{display:inline-flex;align-items:center;gap:6px;color:#00A3DD;font-size:13px;margin-bottom:8px}
+.badge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:700;display:inline-block;background:#f1f5f9;color:#64748b}
+.badge.warn{background:#fef3c7;color:#b45309}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.date{font-size:12px;color:#64748b}
+button{border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;background:#fee2e2;color:#b91c1c;display:inline-flex;align-items:center;gap:5px;font-family:inherit}
+.empty{text-align:center;color:#64748b;padding:30px 10px;font-size:14px}
+.flash-msg{background:#fff;border-left:4px solid #1EB53A;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:13px}
+</style>
+</head>
+<body>
+<a class="back" href="#">← Linkups</a>
+<h1><i class="fa-solid fa-link"></i> </h1>
+<p class="sub">@ · posts  (za hivi karibuni 100)</p>
+
+<div class="flash-msg"></div>
+
+
+  
+  <div class="card">
+    <div class="top">
+      <div class="who"><strong>@</strong> <span class="pid">#</span></div>
+      <div>
+        <span class="badge warn"></span>
+        <span class="badge">Draft</span>
+      </div>
+    </div>
+
+    <div class="txt"></div>
+
+    
+      
+      <img class="media" src="" alt="" loading="lazy">
+      <video class="media" src="" controls playsinline preload="metadata"></video>
+      <a class="file" href="" target="_blank" rel="noopener"><i class="fa-solid fa-file"></i> </a>
+    
+
+    <div class="foot">
+      <span class="date"></span>
+      <form method="post" action="#"
+            onsubmit="return confirm('Futa post # kabisa?');">
+        <button type="submit"><i class="fa-solid fa-trash"></i> Futa</button>
+      </form>
+    </div>
+  </div>
+  
+
+  <div class="empty"><i class="fa-regular fa-folder-open" style="font-size:28px;display:block;margin-bottom:8px"></i>Hakuna posts kwenye Linkup hii.</div>
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

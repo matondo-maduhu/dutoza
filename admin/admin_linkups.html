@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Linkups - Kijiji Tanzania</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f0f2f5;color:#0f172a;padding:16px;padding-bottom:40px}
+h1{font-size:20px;margin-bottom:8px;color:#1EB53A}
+.sub{font-size:13px;color:#64748b;margin-bottom:16px}
+.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.card h2{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.row{display:flex;gap:10px;align-items:center;padding:10px 0;border-top:1px solid #f1f5f9;flex-wrap:wrap}
+.row:first-of-type{border-top:0}
+.av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1EB53A,#00A3DD);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;overflow:hidden}
+.av img{width:100%;height:100%;object-fit:cover}
+.meta{flex:1;min-width:140px}
+.meta strong{display:block;font-size:14px}
+.meta span{font-size:12px;color:#64748b;display:block}
+.btns{display:flex;flex-wrap:wrap;gap:6px}
+button,.btn{border:none;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-family:inherit}
+.btn-g{background:#1EB53A;color:#fff}
+.btn-b{background:#00A3DD;color:#fff}
+.btn-r{background:#fee2e2;color:#b91c1c}
+.btn-x{background:#e2e8f0;color:#334155}
+.badge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:700;display:inline-block}
+.badge.on{background:#ecfdf5;color:#15803d}
+.badge.off{background:#f1f5f9;color:#64748b}
+.badge.gold{background:#fef3c7;color:#b45309}
+.empty{text-align:center;color:#64748b;padding:20px;font-size:13px}
+a.back{display:inline-block;margin-bottom:12px;color:#1EB53A;text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<a class="back" href="/admin">← Admin</a>
+<h1><i class="fa-solid fa-link"></i> Linkups</h1>
+<p class="sub">Akaunti za Linkup + maombi ya Verified Badge</p>
+
+<div class="card">
+  <h2><i class="fa-solid fa-certificate" style="color:#F5B800"></i> Maombi ya Badge (Linkup) — </h2>
+  
+    
+    <div class="row">
+      <div class="av"></div>
+      <div class="meta">
+        <strong> <span class="badge gold">Badge</span></strong>
+        <span>@ · ombi la @ · </span>
+        <span style="margin-top:4px;color:#334155">…</span>
+      </div>
+      <div class="btns">
+        <form method="post" action="#" style="display:inline">
+          <button class="btn-g" type="submit">Kubali</button>
+        </form>
+        <form method="post" action="#" style="display:inline">
+          <button class="btn-r" type="submit">Kataa</button>
+        </form>
+      </div>
+    </div>
+    
+  
+    <p class="empty">Hakuna ombi la badge ya Linkup linalosubiri.</p>
+  
+</div>
+
+<div class="card">
+  <h2><i class="fa-solid fa-link"></i> Linkups zote — </h2>
+  
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+      
+      <button type="button" class="btn-x" onclick="luFilter('')"></button>
+      
+    </div>
+    
+    
+    <div class="row lu-row" data-state="">
+      <div class="av">
+        
+        <img src="#" alt="">
+        
+        
+        
+      </div>
+      <div class="meta">
+        <strong>
+          <a href="#" target="_blank" style="color:#0f172a;text-decoration:none;">
+            
+          </a>
+          <span class="badge gold">Verified</span>
+          <span class="badge off">Tupioni · itafutwa </span>
+          <span class="badge off">Imepumzishwa hadi </span>
+          <span class="badge off">Blocked</span>
+          <span class="badge on">Active</span>
+        </strong>
+        <span>
+          <a href="#" target="_blank" style="color:#64748b;">@</a>
+          ·  · owner @
+        </span>
+        <span>
+           followers ·
+          <a href="#" style="color:#00A3DD;font-weight:700;">
+             posts
+          </a>
+          · 
+        </span>
+      </div>
+      <div class="btns">
+        <a class="btn btn-b" href="#"><i class="fa-solid fa-images"></i> Posts ()</a>
+        {# Buttons: Verify · Block · Futa tu. Jina = link public. "X posts" = link ya kuona/futa posts. #}
+        <form method="post" action="#" style="display:inline">
+          <button class="btn-g" type="submit">Ondoa badgeVerify</button>
+        </form>
+        <form method="post" action="#" style="display:inline">
+          <button class="btn-x" type="submit">UnblockBlock</button>
+        </form>
+        <form method="post" action="#" style="display:inline" onsubmit="return confirm('Futa Linkup hii kabisa?');">
+          <button class="btn-r" type="submit">Futa</button>
+        </form>
+      </div>
+
+
+    </div>
+    
+  
+    <p class="empty">Hakuna Linkup bado.</p>
+  
+</div>
+<script>
+function luFilter(k) {
+  document.querySelectorAll('.lu-row').forEach(function (r) { r.style.display = (k === 'all' || r.dataset.state === k) ? '' : 'none'; });
+}
+</script>
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

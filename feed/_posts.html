@@ -1,0 +1,538 @@
+
+
+<style>
+/* ===== Preserve line breaks + spaces (paste) ===== */
+.post-content,
+.rf-text,
+[id^="comment-text-"],
+.comment-item p,
+.reply-item p {
+  white-space: pre-wrap !important;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* ===== Clickable links ===== */
+.post-url-link {
+  color: #00A3DD !important;
+  font-weight: 600;
+  text-decoration: underline !important;
+  word-break: break-all;
+}
+.post-url-link:hover { color: #0077a8 !important; }
+.hashtag-link {
+  color: #00A3DD !important;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+.hashtag-link:hover { text-decoration: underline !important; }
+.mention-link {
+  color: #1EB53A !important;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+
+/* ===== Background colors (text-only posts): kadi kubwa ya kuvutia, maandishi yote yanaonekana ===== */
+.post-content.bgt,
+.rf-text.bgt {
+  --bgt-fg: #ffffff; --bgt-shadow: 0 2px 14px rgba(0,0,0,.28);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  width: 100%; box-sizing: border-box; aspect-ratio: 1 / 1; min-height: 260px;
+  padding: 34px 26px; margin: 6px 0 10px; border-radius: 22px;
+  color: var(--bgt-fg) !important; text-shadow: var(--bgt-shadow);
+  font-size: 24px; font-weight: 800; line-height: 1.28; letter-spacing: .2px;
+  box-shadow: 0 14px 34px rgba(15,23,42,.18), inset 0 0 0 1px rgba(255,255,255,.14);
+}
+.post-content.bgt::before,
+.rf-text.bgt::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(120% 80% at 12% 0%, rgba(255,255,255,.30), transparent 55%),
+              radial-gradient(90% 70% at 100% 100%, rgba(0,0,0,.20), transparent 60%);
+}
+.post-content.bgt::after,
+.rf-text.bgt::after {
+  content: '\201C'; position: absolute; top: 4px; left: 16px; z-index: -1; pointer-events: none;
+  font: 800 96px/1 Georgia, "Times New Roman", serif; color: var(--bgt-fg); opacity: .16; text-shadow: none;
+}
+.post-content.bgt .bgt-in,
+.rf-text.bgt .bgt-in { display: block; max-width: 100%; }
+.post-content.bgt-l1,
+.rf-text.bgt-l1 { font-size: 34px; }
+.post-content.bgt-l2,
+.rf-text.bgt-l2 { font-size: 28px; }
+.post-content.bgt-l3,
+.rf-text.bgt-l3 { font-size: 24px; }
+.post-content.bgt-l4,
+.rf-text.bgt-l4 { font-size: 21px; }
+.post-content.bgt a,
+.post-content.bgt .hashtag-link,
+.post-content.bgt .post-url-link,
+.post-content.bgt .mention-link,
+.rf-text.bgt a,
+.rf-text.bgt .hashtag-link,
+.rf-text.bgt .post-url-link,
+.rf-text.bgt .mention-link {
+  color: inherit !important; text-decoration: underline !important; text-underline-offset: 3px; word-break: break-word;
+}
+.post-content.bgt-g1,
+.rf-text.bgt-g1 { background: linear-gradient(135deg,#1EB53A,#00A3DD); --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g2,
+.rf-text.bgt-g2 { background: linear-gradient(135deg,#7F00FF,#E100FF); }
+.post-content.bgt-g3,
+.rf-text.bgt-g3 { background: linear-gradient(135deg,#f12711,#f5af19); --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g4,
+.rf-text.bgt-g4 { background: linear-gradient(135deg,#232526,#414345); }
+.post-content.bgt-g5,
+.rf-text.bgt-g5 { background: linear-gradient(135deg,#ff0844,#ff7a59); --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g6,
+.rf-text.bgt-g6 { background: linear-gradient(135deg,#0f2027,#2c5364); }
+.post-content.bgt-g7,
+.rf-text.bgt-g7 { background: #111111; }
+.post-content.bgt-g8,
+.rf-text.bgt-g8 { background: linear-gradient(135deg,#11998e,#2bc66b); --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g9,
+.rf-text.bgt-g9 { --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g12,
+.rf-text.bgt-g12 { --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g15,
+.rf-text.bgt-g15 { --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g16,
+.rf-text.bgt-g16 { --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+
+/* ===== Fonts ===== */
+.post-content.font-serif,
+.rf-text.font-serif { font-family: Georgia, "Times New Roman", serif !important; }
+.post-content.font-mono,
+.rf-text.font-mono { font-family: "Courier New", Consolas, monospace !important; }
+.post-content.font-rounded,
+.rf-text.font-rounded { font-family: system-ui, -apple-system, sans-serif !important; }
+.post-content.font-bold,
+.rf-text.font-bold { font-weight: 800 !important; letter-spacing: 0.3px; }
+
+/* ===== REPOST FRAME (post asili ndani ya repost) - ukubwa mmoja kwa zote ===== */
+.repost-frame {
+    display: flex;
+    flex-direction: column;
+    height: 380px;
+    margin: 6px 0 12px;
+    padding: 14px;
+    border: 1px solid #d9e2dc;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #fbfdfb 0%, #f2f7f3 100%);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .15s, box-shadow .15s;
+}
+.repost-frame:active { transform: scale(0.99); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+.repost-frame .rf-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex: 0 0 auto; }
+.repost-frame .rf-avatar-link {
+    display: block; flex-shrink: 0; line-height: 0;
+    text-decoration: none; -webkit-tap-highlight-color: transparent;
+}
+.repost-frame .rf-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    object-fit: cover; background: #e4e6eb; flex-shrink: 0;
+    border: 2px solid #1EB53A;
+}
+.repost-frame .rf-who { min-width: 0; display: flex; flex-direction: column; line-height: 1.3; }
+.repost-frame .rf-who strong {
+    font-size: 14px; color: #050505;
+    display: inline-flex; align-items: center; gap: 4px;
+}
+.repost-frame .rf-who span { font-size: 12px; color: #65676b; }
+.repost-frame .rf-text {
+    flex: 0 0 auto;
+    font-size: 14px; color: #1c1e21; line-height: 1.45;
+    white-space: pre-wrap; word-break: break-word;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+    overflow: hidden; margin-bottom: 10px;
+}
+/* Kama hakuna picha/video: maandishi yanajaza frame */
+.repost-frame.rf-text-only .rf-text {
+    flex: 1 1 auto; min-height: 0; margin-bottom: 0;
+    font-size: 17px; line-height: 1.55;
+    -webkit-line-clamp: 10;
+}
+.repost-frame .rf-media {
+    position: relative; flex: 1 1 auto; min-height: 0;
+    border-radius: 12px; overflow: hidden; background: #0d1117;
+}
+.repost-frame .rf-media img,
+.repost-frame .rf-media video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover;
+    pointer-events: none;
+}
+.repost-frame .rf-play {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 44px; text-shadow: 0 2px 10px rgba(0,0,0,.6);
+    background: rgba(0,0,0,.2);
+}
+.repost-frame .rf-doc {
+    flex: 1 1 auto; min-height: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    padding: 12px; text-align: center; word-break: break-word;
+    background: #fff; border: 1px solid #e4e6eb; border-radius: 12px;
+    font-size: 13px; color: #1c1e21;
+}
+.repost-frame .rf-doc i { font-size: 34px; color: #1EB53A; }
+.repost-frame.rf-missing {
+    height: auto; align-items: center; justify-content: center;
+    cursor: default; color: #65676b; font-size: 13px; text-align: center; padding: 22px 16px;
+}
+
+/* ===== Repost: post asili yenye background + video yenye kadi kamili ===== */
+.repost-frame .rf-text.bgt, .repost-frame.rf-text-only .rf-text.bgt {
+    display: flex; -webkit-line-clamp: unset; aspect-ratio: auto; flex: 1 1 auto; min-height: 0; margin: 0 0 2px;
+    width: auto; padding: 18px 16px; border-radius: 14px; overflow: hidden; line-height: 1.28;
+}
+.repost-frame .rf-text.bgt-l1 { font-size: 28px; }
+.repost-frame .rf-text.bgt-l2 { font-size: 24px; }
+.repost-frame .rf-text.bgt-l3 { font-size: 21px; }
+.repost-frame .rf-text.bgt-l4 { font-size: 19px; }
+.repost-frame .rf-text.bgt::after { font-size: 64px; top: 0; left: 12px; }
+.repost-frame .rf-media.rf-vid { background: #000; }
+.repost-frame .rf-media.rf-vid .feed-video-card {
+    position: absolute; inset: 0; width: 100%; height: 100%; max-height: none; aspect-ratio: auto; margin: 0; border-radius: 0;
+}
+
+/* ===== Posts za linkup kwenye feed: muonekano wao wenyewe ===== */
+.card.lu-card { border-left: 4px solid #F5B800; }
+.card.lu-card .post-header { background: linear-gradient(90deg, rgba(245,184,0,.10), rgba(245,184,0,0) 70%); border-radius: 10px; }
+.card.lu-card .profile-avatar { border-radius: 14px !important; }
+.lu-chip { font-size: 11px; background: #0f172a; color: #F5B800; padding: 2px 8px; border-radius: 6px;
+    font-weight: 700; margin-left: 4px; vertical-align: middle; }
+.lu-chip i { font-size: 9px; margin-right: 3px; }
+</style>
+
+
+    
+        
+        <div class="card lu-card" id="post-card-">
+            <div class="post-header">
+                <div class="post-header-left">
+                    <div class="profile-avatar-wrapper">
+                        <a href="/linkup//profile/" style="display:block;">
+                        <img src=""
+                             onerror="this.onerror=null; this.src='/static/images/default-avatar.png.jfif';"
+                             alt="Avatar"
+                             class="profile-avatar">
+                        </a>
+                    </div>
+                    <div class="post-header-info">
+                        <strong>
+                            
+                            <a href="/linkup/" style="text-decoration: none; color: inherit;"></a>
+                            
+                            <svg class="verified-badge-custom" viewBox="0 0 24 24" title="Verified linkup" style="width:16px;height:16px;vertical-align:middle;">
+                                <path d="M12 0L15.3 3.5L20.1 2.3L20.5 7.3L24 10.4L21.7 14.8L22.9 19.6L18 20.8L15.7 25.2L12 23L8.3 25.2L6 20.8L1.1 19.6L2.3 14.8L0 10.4L3.5 7.3L3.9 2.3L8.7 3.5L12 0Z" fill="#F5B800"/>
+                                <path d="M9.8 15.6L6.2 12L4.8 13.4L9.8 18.4L20 8.2L18.6 6.8L9.8 15.6Z" fill="#FFFFFF"/>
+                            </svg>
+                            
+                            <span class="lu-chip"><i class="fa-solid fa-link"></i> linkup</span>
+                            
+                            <a href="/profile/" style="text-decoration: none; color: inherit;"></a>
+                            
+                            <svg class="verified-badge-custom" viewBox="0 0 24 24" title="Verified Account">
+                                <path d="M12 0L15.3 3.5L20.1 2.3L20.5 7.3L24 10.4L21.7 14.8L22.9 19.6L18 20.8L15.7 25.2L12 23L8.3 25.2L6 20.8L1.1 19.6L2.3 14.8L0 10.4L3.5 7.3L3.9 2.3L8.7 3.5L12 0Z" fill="#8A2BE2"/>
+                                <path d="M9.8 15.6L6.2 12L4.8 13.4L9.8 18.4L20 8.2L18.6 6.8L9.8 15.6Z" fill="#FFFFFF"/>
+                            </svg>
+                            
+                            
+
+                            
+                            <button class="btn-follow-inline"
+                                    data-linkup-id=""
+                                    data-following="0"
+                                    onclick="followLinkup(, this)">
+                                · follow
+                            </button>
+                            
+                            <button class="btn-follow-inline follow-back"
+                                    data-username=""
+                                    data-following="0"
+                                    data-follows-you=""
+                                    onclick="followUser('', this, )">
+                                · Follow back· follow
+                            </button>
+                            
+                            <span class="friends-inline-badge" title="close_friends" aria-label="close_friends" style="background:none;border:none;padding:0;box-shadow:none;"><i class="fa-solid fa-user-group"></i></span>
+                            
+
+                            
+                            <a href="/insights#post-insight-" class="post-insight-link" title="Ona insights za post hii" style="margin-left:6px;font-size:12px;color:#00A3DD;text-decoration:none;">
+                                <i class="fa-solid fa-chart-simple"></i>
+                            </a>
+                            
+                        </strong>
+                        <span>@ · linkup ·  · <span class="linkup-followers-count" data-linkup-id="" style="white-space:nowrap;"> followers</span>@ · <span class="follows-you-label">Follows you</span> ·  followers</span>
+                    </div>
+                </div>
+
+                <div class="post-menu-container" style="margin-left:auto;">
+                    <button type="button" class="post-menu-btn" onclick="togglePostMenu();event.stopPropagation();">
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </button>
+                    <div class="post-dropdown" id="post-dropdown-">
+
+                        
+                            <a href="/edit_post/"><i class="fa-solid fa-pen-to-square" style="color: #1EB53A;"></i> edit_post</a>
+                            <form action="/delete_post/" method="POST" onsubmit="return confirm('Una uhakika unataka kufuta post hii?');" style="margin: 0;">
+                                <button type="submit" style="color: #dc3545;"><i class="fa-solid fa-trash"></i> delete_post</button>
+                            </form>
+                        
+                            
+                                <button onclick="followUser('', this)"><i class="fa-solid fa-user-plus" style="color: #1EB53A;"></i> Follow backfollow</button>
+                            
+                            <button onclick="repostPost()"><i class="fa-solid fa-retweet" style="color: #28a745;"></i> Repost</button>
+                            <button onclick="openReportModal()"><i class="fa-solid fa-flag" style="color: #dc3545;"></i> Report this post</button>
+                            <button onclick="setPostInterest(, 'interested')"><i class="fa-solid fa-check" style="color: #28a745;"></i> Interested</button>
+                            <button onclick="setPostInterest(, 'not_interested')"><i class="fa-solid fa-ban" style="color: #dc3545;"></i> Not Interested</button>
+                        
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-time-line" style="font-size:12px;color:#65676b;margin:0 0 6px;font-weight:500;">
+                <span class="rel-time" data-ts=""></span>
+            </div>
+            
+            
+            
+            
+    
+    
+    
+    <div class="repost-frame rf-has-mediarf-text-only"
+         role="link" tabindex="0"
+         data-href="/post/"
+         onclick="if(!event.target.closest('a')) window.location.href=this.dataset.href;"
+         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.href=this.dataset.href;}">
+        <div class="rf-head">
+            <a href="" class="rf-avatar-link" onclick="event.stopPropagation();" title="@">
+                <img class="rf-avatar"
+                     src=""
+                     onerror="this.onerror=null; this.src='/static/images/default-avatar.png.jfif';"
+                     alt="">
+            </a>
+            <div class="rf-who">
+                <strong>
+                    <a href="" style="text-decoration:none;color:inherit;" onclick="event.stopPropagation();">
+                        
+                    </a>
+                    
+                    <svg viewBox="0 0 24 24" style="width:14px;height:14px;vertical-align:middle;" title="Verified Account">
+                        <path d="M12 0L15.3 3.5L20.1 2.3L20.5 7.3L24 10.4L21.7 14.8L22.9 19.6L18 20.8L15.7 25.2L12 23L8.3 25.2L6 20.8L1.1 19.6L2.3 14.8L0 10.4L3.5 7.3L3.9 2.3L8.7 3.5L12 0Z" fill="#F5B800#8A2BE2"/>
+                        <path d="M9.8 15.6L6.2 12L4.8 13.4L9.8 18.4L20 8.2L18.6 6.8L9.8 15.6Z" fill="#FFFFFF"/>
+                    </svg>
+                    
+                </strong>
+                <span>
+                    <a href="" style="text-decoration:none;color:inherit;" onclick="event.stopPropagation();">@</a>
+                    · <span class="rel-time" data-ts=""></span>
+                </span>
+            </div>
+        </div>
+
+        
+        <div class="rf-text bgt bgt- bgt-l font-"></div>
+        
+
+        
+            
+            <div class="rf-media rf-vid">
+                <div class="feed-video-card"
+                     id="rplayer--"
+                     data-post-id=""
+                     data-src="#"
+                     data-username=""
+                     data-fullname=""
+                     data-content=""
+                     data-profile=""
+                     data-likes=""
+                     data-comments=""
+                     data-shares=""
+                     data-saved=""
+                     data-user-liked=""
+                     data-user-saved=""
+                     data-is-following=""
+                     data-verified=""
+                     data-created=""
+                     data-followers=""
+                     data-views=""
+                     data-link-label=""
+                     data-link-url=""
+                     data-music-url=""
+                     data-music-title=""
+                     data-music-artist=""
+                     data-music-cover=""
+                     onclick="event.stopPropagation(); openVideoDetail(, this)"
+                     role="group" tabindex="0">
+                    <video class="feed-video-thumb" src="#" preload="metadata" playsinline muted loop></video>
+                    <div class="feed-video-gradient"></div>
+                    <button type="button" class="feed-video-play" onclick="event.stopPropagation(); toggleFeedVideoPlay(, this);" aria-label="Play/Pause"><i class="fa-solid fa-play"></i></button>
+                    <div class="feed-video-badge"><i class="fa-solid fa-video"></i></div>
+                    <button type="button" class="feed-video-mute" onclick="event.stopPropagation(); toggleFeedVideoMute(this, );" aria-label="Mute"><i class="fa-solid fa-volume-xmark"></i></button>
+                    <button type="button" class="feed-video-expand" onclick="event.stopPropagation(); openVideoDetail(, this.closest('.feed-video-card'));" aria-label="open uwanja mkubwa" title="Uwanja mkubwa"><i class="fa-solid fa-expand"></i></button>
+                </div>
+            </div>
+            
+            <div class="rf-doc">
+                <i class="fa-solid fa-file"></i>
+                <span></span>
+            </div>
+            
+            <div class="rf-media">
+                <img src="#" alt="Post media" loading="lazy">
+            </div>
+            
+        
+    </div>
+    
+    
+    <div class="repost-frame rf-missing">
+        <i class="fa-solid fa-circle-exclamation"></i> Post hii ya asili imefutwa au haipatikani.
+    </div>
+    
+
+
+            
+            <div class="post-media">
+                
+                    <!-- FEED VIDEO CARD — bofya fungua uwanja -->
+                    <div class="feed-video-card"
+                         id="player-"
+                         data-post-id=""
+                         data-src="#"
+                         data-username=""
+                         data-fullname=""
+                         data-content=""
+                         data-profile=""
+                         data-likes=""
+                         data-comments=""
+                         data-shares=""
+                         data-saved=""
+                         data-user-liked=""
+                         data-user-saved=""
+                         data-is-following=""
+                         data-verified=""
+                         data-created=""
+                         data-followers=""
+                         data-views=""
+                         data-link-label=""
+                         data-link-url=""
+                         data-music-url=""
+                         data-music-title=""
+                         data-music-artist=""
+                         data-music-cover=""
+                         onclick="openVideoDetail()"
+                         role="group"
+                         tabindex="0">
+                        <video
+                            class="feed-video-thumb"
+                            src="#"
+                            preload="metadata"
+                            playsinline
+                            muted
+                            loop
+                        ></video>
+                        <div class="feed-video-gradient"></div>
+                        <button type="button" class="feed-video-play" onclick="event.stopPropagation(); toggleFeedVideoPlay();" aria-label="Play/Pause">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                        <div class="feed-video-badge"><i class="fa-solid fa-video"></i></div>
+                        <button type="button" class="feed-video-mute" onclick="event.stopPropagation(); toggleFeedVideoMute(this, );" aria-label="Mute">
+                            <i class="fa-solid fa-volume-xmark"></i>
+                        </button>
+                        <button type="button" class="feed-video-expand" onclick="event.stopPropagation(); openVideoDetail();" aria-label="open uwanja mkubwa" title="Uwanja mkubwa">
+                            <i class="fa-solid fa-expand"></i>
+                        </button>
+                    </div>
+                
+                    <a href="#"
+                       target="_blank" rel="noopener"
+                       class="media-doc-preview"
+                       style="text-decoration:none; margin-bottom:8px;">
+                        <i class="fa-solid fa-file"></i>
+                        <span></span>
+                        <i class="fa-solid fa-download" style="margin-left:auto; font-size:16px;"></i>
+                    </a>
+                
+                    <div class="image-container"
+                         data-post-id=""
+                         data-username=""
+                         data-profile=""
+                         data-content=""
+                         data-likes=""
+                         data-comments=""
+                         data-user-liked=""
+                         data-link-label=""
+                         data-link-url=""
+                         data-music-url=""
+                         data-music-title=""
+                         data-music-artist=""
+                         data-music-cover=""
+                         onclick="openImageFullscreen(, this.querySelector('img').src, this)">
+                        <img src="#" alt="Post Media">
+                        
+                        <div class="feed-img-music-badge" title="">
+                            <i class="fa-solid fa-music"></i>
+                        </div>
+                        
+                    </div>
+                
+            </div>
+            
+
+            {# Feed: usioneshe kadi ya muziki wakati wa scroll.
+               music unaonekana tu ukifungua video (video detail) + button ya Reuse.
+               Picha + muziki hutendewa kama video (media_type=video baada ya export). #}
+            
+
+            {# Idadi zimewekwa kwenye vitufe. Spans zilizofichwa hapa chini ni chanzo ambacho JS ya zamani inasasisha; .kj-n inazinakili kwa muundo mfupi (1.4K). #}
+            <div class="post-stats" style="display:none" aria-hidden="true">
+                <span id="likes-count-"></span>
+                <span id="saved-count-text-"></span>
+                <span id="share-count-text-"></span>
+                <span id="comments-count-text-"></span>
+            </div>
+
+            <div class="post-buttons">
+                <button type="button" onclick="likePost()" id="like-btn-" class="liked" title="like" aria-label="like">
+                    <span class="kj-n" data-src="likes-count-"></span><i class="fa-regular fa-thumbs-up"></i>
+                </button>
+                <button type="button" onclick="toggleComments()" title="comment" aria-label="comment">
+                    <span class="kj-n" data-src="comments-count-text-"></span><i class="fa-regular fa-comment"></i>
+                </button>
+                <button type="button" onclick="sharePost(, '')" title="share" aria-label="share">
+                    <span class="kj-n" data-src="share-count-text-"></span><i class="fa-regular fa-paper-plane"></i>
+                </button>
+                <button type="button" onclick="savePost()" title="save_post" aria-label="save_post">
+                    <span class="kj-n" data-src="saved-count-text-"></span><i class="fa-regular fa-bookmark"></i>
+                </button>
+            </div>
+
+            
+        </div>
+        
+    
+        <div style="text-align: center; color: #65676b; padding: 40px 20px; background: #ffffff; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+            <p style="font-size: 15px;">no_posts_be_first</p>
+        </div>
+    
+<script src="/static/app_nav.js"></script>
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

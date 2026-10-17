@@ -1,0 +1,119 @@
+<style>
+/* ===== Preserve line breaks + spaces (paste) ===== */
+.post-content,
+.rf-text,
+[id^="comment-text-"],
+.comment-item p,
+.reply-item p {
+  white-space: pre-wrap !important;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* ===== Clickable links ===== */
+.post-url-link {
+  color: #00A3DD !important;
+  font-weight: 600;
+  text-decoration: underline !important;
+  word-break: break-all;
+}
+.post-url-link:hover { color: #0077a8 !important; }
+.hashtag-link {
+  color: #00A3DD !important;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+.hashtag-link:hover { text-decoration: underline !important; }
+.mention-link {
+  color: #1EB53A !important;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+
+/* ===== Background colors (text-only posts): kadi kubwa ya kuvutia, maandishi yote yanaonekana ===== */
+.post-content.bgt,
+.rf-text.bgt {
+  --bgt-fg: #ffffff; --bgt-shadow: 0 2px 14px rgba(0,0,0,.28);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  width: 100%; box-sizing: border-box; aspect-ratio: 1 / 1; min-height: 260px;
+  padding: 34px 26px; margin: 6px 0 10px; border-radius: 22px;
+  color: var(--bgt-fg) !important; text-shadow: var(--bgt-shadow);
+  font-size: 24px; font-weight: 800; line-height: 1.28; letter-spacing: .2px;
+  box-shadow: 0 14px 34px rgba(15,23,42,.18), inset 0 0 0 1px rgba(255,255,255,.14);
+}
+.post-content.bgt::before,
+.rf-text.bgt::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(120% 80% at 12% 0%, rgba(255,255,255,.30), transparent 55%),
+              radial-gradient(90% 70% at 100% 100%, rgba(0,0,0,.20), transparent 60%);
+}
+.post-content.bgt::after,
+.rf-text.bgt::after {
+  content: '\201C'; position: absolute; top: 4px; left: 16px; z-index: -1; pointer-events: none;
+  font: 800 96px/1 Georgia, "Times New Roman", serif; color: var(--bgt-fg); opacity: .16; text-shadow: none;
+}
+.post-content.bgt .bgt-in,
+.rf-text.bgt .bgt-in { display: block; max-width: 100%; }
+.post-content.bgt-l1,
+.rf-text.bgt-l1 { font-size: 34px; }
+.post-content.bgt-l2,
+.rf-text.bgt-l2 { font-size: 28px; }
+.post-content.bgt-l3,
+.rf-text.bgt-l3 { font-size: 24px; }
+.post-content.bgt-l4,
+.rf-text.bgt-l4 { font-size: 21px; }
+.post-content.bgt a,
+.post-content.bgt .hashtag-link,
+.post-content.bgt .post-url-link,
+.post-content.bgt .mention-link,
+.rf-text.bgt a,
+.rf-text.bgt .hashtag-link,
+.rf-text.bgt .post-url-link,
+.rf-text.bgt .mention-link {
+  color: inherit !important; text-decoration: underline !important; text-underline-offset: 3px; word-break: break-word;
+}
+.post-content.bgt-g1,
+.rf-text.bgt-g1 { background: linear-gradient(135deg,#1EB53A,#00A3DD); --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g2,
+.rf-text.bgt-g2 { background: linear-gradient(135deg,#7F00FF,#E100FF); }
+.post-content.bgt-g3,
+.rf-text.bgt-g3 { background: linear-gradient(135deg,#f12711,#f5af19); --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g4,
+.rf-text.bgt-g4 { background: linear-gradient(135deg,#232526,#414345); }
+.post-content.bgt-g5,
+.rf-text.bgt-g5 { background: linear-gradient(135deg,#ff0844,#ff7a59); --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g6,
+.rf-text.bgt-g6 { background: linear-gradient(135deg,#0f2027,#2c5364); }
+.post-content.bgt-g7,
+.rf-text.bgt-g7 { background: #111111; }
+.post-content.bgt-g8,
+.rf-text.bgt-g8 { background: linear-gradient(135deg,#11998e,#2bc66b); --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g9,
+.rf-text.bgt-g9 { --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g12,
+.rf-text.bgt-g12 { --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g15,
+.rf-text.bgt-g15 { --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+.post-content.bgt-g16,
+.rf-text.bgt-g16 { --bgt-fg:#0f172a; --bgt-shadow:0 1px 0 rgba(255,255,255,.35); }
+
+/* ===== Fonts ===== */
+.post-content.font-serif,
+.rf-text.font-serif { font-family: Georgia, "Times New Roman", serif !important; }
+.post-content.font-mono,
+.rf-text.font-mono { font-family: "Courier New", Consolas, monospace !important; }
+.post-content.font-rounded,
+.rf-text.font-rounded { font-family: system-ui, -apple-system, sans-serif !important; }
+.post-content.font-bold,
+.rf-text.font-bold { font-weight: 800 !important; letter-spacing: 0.3px; }
+</style>
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>

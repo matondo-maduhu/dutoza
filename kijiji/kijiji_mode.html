@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Kijiji Mode - DUTOZA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --green: #1EB53A;
+            --green-dark: #0f8a2a;
+            --blue: #00A3DD;
+            --yellow: #FCD116;
+            --purple: #8A2BE2;
+            --bg: #f0f4f1;
+            --card: #ffffff;
+            --text: #0f1a12;
+            --muted: #65727a;
+            --line: #e6ece8;
+            --radius: 20px;
+            --shadow: 0 6px 20px rgba(16, 60, 30, 0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); color: var(--text); padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+        a { text-decoration: none; color: inherit; }
+
+        /* ============ HEADER ============ */
+        header {
+            position: sticky; top: 0; z-index: 1000;
+            display: flex; align-items: center; gap: 12px;
+            --col: 600px;
+            padding: 12px max(16px, calc((100% - var(--col)) / 2 + 14px));
+            padding-top: calc(12px + env(safe-area-inset-top, 0px));
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+        }
+        .back-btn {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: #eef5ef; color: var(--green-dark);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; flex-shrink: 0; transition: transform .15s;
+        }
+        .back-btn:active { transform: scale(0.92); }
+        header h1 { flex: 1; min-width: 0; display: flex; align-items: center; font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -.2px; }
+        header h1 i { color: var(--green); margin-right: 8px; font-size: 16px; }
+
+        .container { max-width: 600px; margin: 0 auto; padding: 16px 14px 8px; display: flex; flex-direction: column; }
+        .container > * { flex-shrink: 0; }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+            animation: rise .45s ease both;
+        }
+        .container > *:nth-child(2) { animation-delay: .06s; }
+        .container > *:nth-child(3) { animation-delay: .12s; }
+        .container > *:nth-child(4) { animation-delay: .18s; }
+        .container > *:nth-child(5) { animation-delay: .24s; }
+        @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+        .section-title {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 12px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase;
+            color: var(--muted); margin-bottom: 14px;
+        }
+        .section-title .chip {
+            margin-left: auto; letter-spacing: 0; text-transform: none;
+            background: #eaf7ee; color: var(--green-dark);
+            padding: 3px 10px; border-radius: 999px; font-size: 12px;
+        }
+
+        /* ============ HERO ============ */
+        .hero {
+            position: relative; overflow: hidden;
+            padding: 20px 18px 18px;
+            border-radius: 24px;
+            color: #fff;
+            background: linear-gradient(135deg, #0c8f2c 0%, #1EB53A 42%, #00A3DD 100%);
+            box-shadow: 0 12px 28px rgba(0, 140, 90, 0.32);
+            margin-bottom: 16px;
+            animation: rise .45s ease both;
+        }
+        .hero::before, .hero::after {
+            content: ""; position: absolute; border-radius: 50%; pointer-events: none;
+            background: rgba(255, 255, 255, 0.10);
+        }
+        .hero::before { width: 190px; height: 190px; top: -70px; right: -50px; }
+        .hero::after { width: 130px; height: 130px; bottom: -60px; left: -30px; background: rgba(252, 209, 22, 0.16); }
+        .hero > * { position: relative; z-index: 1; }
+
+        .hero-top { display: flex; align-items: center; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.22); }
+        .hero-icon {
+            width: 54px; height: 54px; border-radius: 18px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            font-size: 22px; color: #fff;
+        }
+        .hero-text { flex: 1; min-width: 0; }
+        .hero-text h2 { font-size: 20px; font-weight: 800; letter-spacing: -.3px; }
+        .hero-text p { font-size: 13px; opacity: .92; margin-top: 3px; line-height: 1.4; }
+
+        /* Switch */
+        .switch { position: relative; display: inline-block; width: 58px; height: 34px; flex-shrink: 0; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; top: 0; right: 0; bottom: 0; left: 0; cursor: pointer;
+            background: rgba(255, 255, 255, 0.32);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-radius: 34px; transition: .25s;
+        }
+        .slider::before {
+            content: ""; position: absolute; left: 3px; top: 3px;
+            width: 26px; height: 26px; border-radius: 50%;
+            background: #fff; transition: .25s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28);
+        }
+        .switch input:checked + .slider { background: var(--yellow); border-color: var(--yellow); }
+        .switch input:checked + .slider::before { transform: translateX(24px); }
+        .switch input:disabled + .slider { opacity: .6; cursor: not-allowed; }
+
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            margin-top: 14px; align-self: flex-start;
+            padding: 7px 14px; border-radius: 999px;
+            font-size: 12px; font-weight: 800; letter-spacing: .6px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .status-badge::before {
+            content: ""; width: 9px; height: 9px; border-radius: 50%; background: #cbd5d0;
+        }
+        .status-badge.on::before { background: var(--yellow); box-shadow: 0 0 0 4px rgba(252, 209, 22, 0.3); animation: pulse 1.8s infinite; }
+        @keyframes pulse { 0%,100% { box-shadow: 0 0 0 3px rgba(252,209,22,.35); } 50% { box-shadow: 0 0 0 7px rgba(252,209,22,.08); } }
+
+        .hero .info-text {
+            margin-top: 12px;
+            font-size: 13px; line-height: 1.65; opacity: .95;
+        }
+        .hero .info-text strong { color: var(--yellow); }
+
+        /* ============ PREVIEW (mini profile) ============ */
+        .mini-profile { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+        .mini-avatar {
+            width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--green), var(--blue));
+            color: #fff; font-weight: 800; font-size: 20px;
+            display: flex; align-items: center; justify-content: center;
+            border: 3px solid #e3f6e8;
+        }
+        .mini-name { font-weight: 800; font-size: 15px; overflow-wrap: anywhere; }
+        .mini-sub { font-size: 12.5px; color: var(--muted); margin-top: 1px; }
+
+        .preview-stats { display: flex; gap: 10px; }
+        .stat {
+            flex: 1; min-width: 0; text-align: center;
+            background: linear-gradient(180deg, #f7fbf8, #eef6f0);
+            border: 1px solid var(--line);
+            border-radius: 16px; padding: 14px 8px;
+        }
+        .stat i { font-size: 15px; margin-bottom: 6px; display: block; }
+        .stat.f i { color: var(--green); }
+        .stat.g i { color: var(--blue); }
+        .stat.fr i { color: var(--purple); }
+        .stat strong { display: block; font-size: 24px; font-weight: 800; letter-spacing: -.5px; }
+        .stat span { font-size: 12px; color: var(--muted); font-weight: 600; }
+
+        /* ============ NOTE ============ */
+        .note {
+            display: flex; gap: 12px;
+            background: #fff9e3; border: 1px solid #fbe7a0;
+            border-radius: 16px; padding: 14px 16px;
+            font-size: 13px; line-height: 1.6; color: #6b5300;
+            margin-bottom: 16px; align-items: flex-start;
+            animation: rise .45s ease both;
+        }
+        .note i { color: #d4a017; font-size: 17px; margin-top: 2px; flex-shrink: 0; }
+        .note span { min-width: 0; }
+
+        /* ============ RECOMMENDABLE ============ */
+        .rec-card { display: flex; align-items: center; gap: 14px; }
+        .rec-card.ok { background: linear-gradient(135deg, #ecfdf3, #e0f8ea); border: 1px solid #bdeccb; }
+        .rec-card.bad { background: linear-gradient(135deg, #fff1f1, #ffe6e6); border: 1px solid #fecaca; }
+        .rec-icon {
+            width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 19px;
+        }
+        .ok .rec-icon { background: linear-gradient(135deg, #1EB53A, #12a04c); box-shadow: 0 6px 14px rgba(30,181,58,.35); }
+        .bad .rec-icon { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 6px 14px rgba(220,38,38,.3); }
+        .rec-card > div:last-child { min-width: 0; }
+        .rec-card strong { font-size: 15px; display: block; }
+        .ok strong { color: #15803d; }
+        .bad strong { color: #b91c1c; }
+        .rec-card p { font-size: 12.8px; margin-top: 3px; line-height: 1.45; }
+        .ok p { color: #166534; }
+        .bad p { color: #991b1b; }
+
+        /* ============ LINKUP ============ */
+        .lu-desc { font-size: 13.5px; line-height: 1.6; color: #4b5a52; margin-bottom: 14px; }
+        .lu-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+        .lu-item {
+            display: grid; grid-template-columns: 46px minmax(0, 1fr); align-items: center; gap: 12px;
+            padding: 12px; border-radius: 16px;
+            background: #f7faf8; border: 1px solid var(--line);
+        }
+        .lu-item.active { background: #effaf2; border-color: #a8e3b9; }
+        .lu-avatar {
+            position: relative; width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--green), var(--blue));
+            color: #fff; font-weight: 800; font-size: 18px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .lu-item.active .lu-avatar { box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--green); }
+        .lu-info { flex: 1; min-width: 0; }
+        .lu-info strong { display: block; font-size: 14.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .lu-info { display: flex; flex-direction: column; align-items: flex-start; }
+        .lu-info > * { max-width: 100%; }
+        .lu-info .meta { font-size: 12px; color: var(--muted); display: block; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .lu-info .tag-active {
+            display: inline-block; margin-top: 5px;
+            font-size: 10.5px; font-weight: 800; letter-spacing: .5px;
+            color: #fff; background: var(--green); padding: 2px 8px; border-radius: 999px;
+        }
+        .lu-actions { grid-column: 1 / -1; display: flex; flex-direction: row; gap: 8px; padding-top: 10px; border-top: 1px solid var(--line); }
+        .lu-item.active .lu-actions { border-top-color: #cdeed6; }
+        .lu-actions .btn-mini { flex: 1; display: flex; align-items: center; justify-content: center; padding: 10px 12px; }
+        .btn-mini {
+            border: none; cursor: pointer; font-weight: 700; font-size: 12px;
+            padding: 8px 12px; border-radius: 10px; text-align: center;
+            transition: transform .15s;
+        }
+        .btn-mini:active { transform: scale(0.95); }
+        .btn-switch { background: #e2f7e8; color: var(--green-dark); }
+        .btn-switch.current { background: var(--green); color: #fff; }
+        .btn-open { background: #eaeff0; color: #37474f; }
+
+        .btn-wide {
+            width: 100%; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 13px; border-radius: 14px; text-align: center;
+            font-size: 14px; font-weight: 700;
+            transition: transform .15s;
+        }
+        .btn-wide:active { transform: scale(0.98); }
+        .btn-back-profile { background: #eef2ef; color: #33413a; margin-bottom: 10px; }
+        .btn-archive { background: #fff; color: #33413a; border: 1.5px solid var(--line); margin-bottom: 10px; }
+        .btn-archive:active { background: #f5f9f6; }
+        .btn-create {
+            background: linear-gradient(135deg, var(--green), var(--blue));
+            color: #fff; box-shadow: 0 8px 18px rgba(0, 150, 120, 0.3);
+        }
+
+        .lu-empty {
+            text-align: center; padding: 22px 14px; margin-bottom: 10px;
+            border: 2px dashed #cfe3d5; border-radius: 16px;
+            color: var(--muted); font-size: 13.5px; line-height: 1.55;
+        }
+        .lu-empty i { display: block; font-size: 26px; color: var(--green); margin-bottom: 8px; }
+
+        /* ============ TOOLS ============ */
+        .tool {
+            display: flex; align-items: center; gap: 14px;
+            padding: 13px 2px; border-bottom: 1px solid var(--line);
+            transition: background .15s;
+        }
+        .tool:last-child { border-bottom: none; padding-bottom: 2px; }
+        .tool:first-of-type { padding-top: 2px; }
+        .tool:active { background: #f5f9f6; }
+        .tool-icon {
+            width: 42px; height: 42px; border-radius: 13px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center; font-size: 17px;
+        }
+        .tool-icon.blue { background: #e1f4fc; color: var(--blue); }
+        .tool-icon.purple { background: #f0e6fc; color: var(--purple); }
+        .tool-icon.yellow { background: #fff6cc; color: #d4a017; }
+        .tool-body { flex: 1; min-width: 0; }
+        .tool-body strong { display: block; font-size: 14.5px; line-height: 1.35; }
+        .tool-body span { display: block; margin-top: 2px; font-size: 12.5px; line-height: 1.4; color: var(--muted); overflow-wrap: anywhere; }
+        .tool .chev { color: #c3cdc7; font-size: 13px; flex-shrink: 0; }
+
+        /* ============ BOTTOM NAV ============ */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 600px; z-index: 1000;
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 8px 12px; padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--line);
+        }
+        @media (min-width: 640px) {
+            .bottom-nav { bottom: 12px; border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding-bottom: 8px; }
+        }
+        .bottom-nav a {
+            flex: 1; max-width: 80px; height: 44px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            color: #76827b; font-size: 20px; transition: background .15s, color .15s;
+        }
+        .bottom-nav a:active { background: #eaf7ee; color: var(--green); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a class="back-btn" href="#"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1><i class="fa-solid fa-tower-broadcast"></i>Kijiji Mode</h1>
+    </header>
+
+    
+
+    <div class="container">
+        
+
+        <!-- ================= HERO + TOGGLE ================= -->
+        <div class="hero">
+            <div class="hero-top">
+                <div class="hero-icon"><i class="fa-solid fa-tower-broadcast"></i></div>
+                <div class="hero-text">
+                    <h2>Kijiji Mode</h2>
+
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="villageModeToggle" checked onchange="toggleVillageMode(this)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <span id="statusBadge" class="status-badge ">
+                
+            </span>
+
+            <p class="info-text">
+                Kijiji Mode ikiwa <strong>ON</strong>, profile yako itaonyesha
+                <strong>followers</strong> na <strong>following</strong> badala ya close_friends,
+            </p>
+          </div>
+
+        <!-- ================= PREVIEW ================= -->
+        <div class="card">
+            <div class="section-title"><i class="fa-solid fa-eye"></i> Profile yako itaonekana hivi</div>
+
+            <div class="mini-profile">
+                <div class="mini-avatar"></div>
+                <div>
+                    <div class="mini-name">@</div>
+                    <div class="mini-sub"></div>
+                </div>
+            </div>
+
+            <div class="preview-stats">
+                
+                <div class="stat f">
+                    <i class="fa-solid fa-users"></i>
+                    <strong></strong>
+                    <span>followers</span>
+                </div>
+                <div class="stat g">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <strong></strong>
+                    <span>following</span>
+                </div>
+                
+                <div class="stat fr">
+                    <i class="fa-solid fa-user-group"></i>
+                    <strong></strong>
+                    <span>close_friends</span>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- ================= NOTE ================= -->
+        <div class="note">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>Kijiji Mode inakupa nafasi ya kuungana na watu kwa mtindo wa Kijiji, kushiriki na kujenga mahusiano ya kijamii kwa urahisi zaidi.
+            close_friends wako wa kawaida hawafutwi wala kupotea; ukiizima Kijiji Mode,
+            profile yako inarudi papo hapo kwenye mfumo wa kawaida wa close_friends
+            Unaweza kubadilisha mode wakati wowote bila kupoteza connections zako.
+            </span>
+        </div>
+
+        
+        <!-- ================= RECOMMENDABLE ================= -->
+        <div class="card rec-card ">
+            <div class="rec-icon">
+                <i class="fa-solid fa-circle-checkfa-triangle-exclamation"></i>
+            </div>
+            <div>
+                
+                <strong>Recommendable</strong>
+                <p>Profile yako inaweza kupendekezwa kwa watumiaji wengine.</p>
+                
+                <strong>Your profile is on risk</strong>
+                <p>Una warning, profile yako haipendekezwi kwa sasa.</p>
+                
+            </div>
+        </div>
+
+        <!-- ================= LINKUP ================= -->
+        <div class="card">
+            <div class="section-title">
+                <i class="fa-solid fa-link"></i> linkup zangu
+                <span class="chip"> / </span>
+            </div>
+
+            <p class="lu-desc">
+                linkup ni ukurasa wako. Unaweza kuwa na Kijiji Mode ON bila linkup.
+            </p>
+
+            
+            <div class="lu-list">
+                
+                
+                <div class="lu-item active">
+                    <div class="lu-avatar"></div>
+                    <div class="lu-info">
+                        <strong></strong>
+                        <span class="meta">@ · </span>
+                        <span class="tag-active">ACTIVE</span>
+                    </div>
+                    <div class="lu-actions">
+                        <button type="button" class="btn-mini btn-switch current" onclick="switchLinkup()">
+                            InatumikaSwitch
+                        </button>
+                        <a class="btn-mini btn-open" href="#">open</a>
+                    </div>
+                </div>
+                
+            </div>
+
+            <button type="button" class="btn-wide btn-back-profile" onclick="switchLinkup(null)">
+                <i class="fa-solid fa-user"></i> Rudi Profile yangu (si linkup)
+            </button>
+            
+            <div class="lu-empty">
+                <i class="fa-solid fa-link"></i>
+                Bado huna linkup. Tengeneza ili uwe na ukurasa wa category yako.
+            </div>
+            
+
+            <a class="btn-wide btn-archive" href="#">
+                <i class="fa-solid fa-box-archive"></i> Zilizopumzishwa / Tupioni
+            </a>
+            
+            <a class="btn-wide btn-create" href="#">
+                <i class="fa-solid fa-plus"></i> Tengeneza linkup
+            </a>
+            
+        </div>
+
+        <!-- ================= TOOLS ================= -->
+        <div class="card">
+            <div class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Vitu vingine vya Kijiji Mode</div>
+
+            <a class="tool" href="/insights">
+                <div class="tool-icon blue"><i class="fa-solid fa-chart-simple"></i></div>
+                <div class="tool-body">
+                    <strong>dashboard / insights</strong>
+                    <span>Fuatilia ukuaji wa profile yako</span>
+                </div>
+                <i class="fa-solid fa-chevron-right chev"></i>
+            </a>
+
+            <a class="tool" href="#">
+                <div class="tool-icon purple"><i class="fa-solid fa-tags"></i></div>
+                <div class="tool-body">
+                    <strong>Category ya Profile</strong>
+                    <span>choose_profile_type</span>
+                </div>
+                <i class="fa-solid fa-chevron-right chev"></i>
+            </a>
+
+            
+            <a class="tool" href="#?open_badge=1&linkup_id=&linkup_name=">
+                <div class="tool-icon yellow"><i class="fa-solid fa-certificate"></i></div>
+                <div class="tool-body">
+                    <strong>request_verified_badge ya linkup</strong>
+                    <span>Kwa ""</span>
+                </div>
+                <i class="fa-solid fa-chevron-right chev"></i>
+            </a>
+            
+            <div class="tool" style="cursor:default;">
+                <div class="tool-icon yellow"><i class="fa-solid fa-certificate"></i></div>
+                <div class="tool-body">
+                    <strong style="color:#9aa79f;">request_verified_badge ya linkup</strong>
+                    <span>Chagua linkup inayotumika (Switch) kwanza</span>
+                </div>
+            </div>
+            
+        </div>
+        
+
+    </div>
+
+    <div class="bottom-nav">
+        <a href="#"><i class="fa-solid fa-house"></i></a>
+        <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <a href="#"><i class="fa-solid fa-bell"></i></a>
+        
+        <a href="" title=""><i class="fa-solid fa-link"></i></a>
+        
+        <a href="#"><i class="fa-solid fa-user"></i></a>
+        
+    </div>
+
+<script>
+function toggleVillageMode(checkbox) {
+    checkbox.disabled = true;
+    var wantOn = checkbox.checked;
+
+    fetch('#', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'
+        },
+        body: 'village_mode=' + (wantOn ? 'on' : 'off')
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+        if (!data || !data.success) {
+            checkbox.checked = !wantOn;
+            return;
+        }
+        var badge = document.getElementById('statusBadge');
+        badge.textContent = data.village_mode ? 'IMEWASHWA' : 'IMEZIMWA';
+        badge.className = 'status-badge ' + (data.village_mode ? 'on' : 'off');
+        window.location.reload();
+    })
+    .catch(function() {
+        checkbox.checked = !wantOn;
+    })
+    .finally(function() {
+        checkbox.disabled = false;
+    });
+}
+
+function switchLinkup(linkupId) {
+    fetch('#', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({ linkup_id: linkupId === null ? null : linkupId })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+        if (data && data.success) {
+            if (data.message && window.KijijiToast) KijijiToast(data.message, 'success');
+            setTimeout(function() {
+                if (data.redirect_url) window.location.href = data.redirect_url;
+                else window.location.reload();
+            }, data.message && window.KijijiToast ? 550 : 0);
+        } else {
+            if (window.KijijiToast) KijijiToast((data && data.message) || 'Imeshindikana', 'error');
+            else alert((data && data.message) || 'Imeshindikana');
+        }
+    })
+    .catch(function() {
+        if (window.KijijiToast) KijijiToast('Imeshindikana', 'error');
+        else alert('Imeshindikana');
+    });
+}
+</script>
+
+
+<!-- DUTOZA Firebase Auth (design haijaguswa) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>
