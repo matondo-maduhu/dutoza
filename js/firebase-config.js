@@ -1,18 +1,17 @@
 /**
  * DUTOZA — Firebase Config
- * Badilisha values hizi na za Firebase project yako
- * (Firebase Console → Project settings → Your apps → Web app)
  */
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCsyX_J5alzQb1Uh3HjF8KS-YlZnoyc_QU",
+  authDomain: "dutoza-304af.firebaseapp.com",
+  projectId: "dutoza-304af",
+  storageBucket: "dutoza-304af.firebasestorage.app",
+  messagingSenderId: "15602132821",
+  appId: "1:15602132821:web:8d6b50fbbdc8af13c071dc",
+  measurementId: "G-Q2ZRE9FHPG"
 };
 
-// Initialize Firebase (compat for simple HTML usage)
+// Initialize Firebase
 if (typeof firebase !== 'undefined' && !firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }

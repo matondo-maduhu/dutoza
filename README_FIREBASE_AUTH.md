@@ -50,3 +50,4 @@ dutozaAuthError(code)  // Swahili messages
 - Pages zisizo public zinalindwa na auth guard (redirect → login)
 
 Design = 100% ile ile.
+# deploy
