@@ -4,7 +4,6 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-<<<<<<< HEAD
       "**/node_modules/**",
       "**/*.md"
     ],
@@ -27,9 +26,5 @@
   },
   "storage": {
     "rules": "storage.rules"
-=======
-      "**/node_modules/**"
-    ]
->>>>>>> 778745291dc412c56e7a913f0b186f5a910085e3
   }
 }
